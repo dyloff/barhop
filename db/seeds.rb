@@ -62,7 +62,7 @@ p "------------"
     name: Faker::Restaurant.name,
     location: addresses[counter],
     price_range: price[rand(4)],
-    rating: rand(0.0..5.0).round(1),
+    rating: rand(3.0..5.0).round(1),
     description: Faker::Restaurant.description,
     image_url: "https://loremflickr.com/800/800/bar,cocktail/all"
   )
