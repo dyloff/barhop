@@ -10,14 +10,19 @@
 <div class="container">
   <h4 class="homepage-featured border-bottom m-4">Featured BarHop</h4>
   <div class="mt-4">
-    <div class="row mt-4 d-flex justify-content-start">
-      <% @bars.sample(3) do |bar| %>
-        <%= render "shared/cards", bar:bar %>
+    <div class="row mt-4 d-flex justify-content-center">
+      <% @bars.sample(3).each do |bar| %>
+        <%= render "shared/barcards", bar: bar %>
       <% end %>
     </div>
   </div>
 </div>
 
-<%= render "shared/map" %>
-
-<%#= render "shared/crawls_map" %>
+<div class="container mb-3 px-0 mt-0">
+  <div class="card mt-2 shadow-sm">
+  <div class="card m-2" style="overflow:hidden">
+    <%= render "shared/map" %>
+  </div>
+  </div>
+</div>
+<%# <%= render "shared/crawls_map" %>
