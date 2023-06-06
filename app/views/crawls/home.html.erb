@@ -1,11 +1,11 @@
 <div class="container"></div>
 <div class="">
   <div class="container p-0">
-    <h4 class="homepage-featured border-bottom">Featured Bars</h4>
+    <h4 class="homepage-featured border-bottom m-4">Featured Bars</h4>
     <div class="mt-4">
-      <div class="row mt-4 d-flex justify-content-start">
+      <div class="row mt-4 d-flex justify-content-center">
       <%# CARDS HERE %>
-        <% @bars.each do |bar| %>
+        <% @bars.sample(3).each do |bar| %>
           <%= render "shared/cards", bar:bar %>
         <% end %>
       </div>
