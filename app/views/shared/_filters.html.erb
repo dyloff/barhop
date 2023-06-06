@@ -1,7 +1,24 @@
-<div class="card" style="width: 18rem; height: 400px">
+<div class="card " style="width: 18rem; height: 400px">
+  <div class="text-center">
+    <h5 class="card-title mt-2">Filters</h5>
+  </div>
   <div class="card-body">
-    <h5 class="card-title">Card title</h5>
-    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-    <a href="#" class="btn btn-primary">Go somewhere</a>
+    <div class="container px-3 ml-2">
+          <%= form_with url: crawls_path, method: :get, html: { class: "d-flex search-icon" } do |f| %>
+            <%= f.text_field :query,
+              value: params[:query],
+              class: "form-control bg-white border border-0",
+              placeholder: "Location..."
+            %>
+          <%= submit_tag "Search", class: "btn btn-primary"%>
+          <% end %>
+        </div>
+        <div class="justify-content-center">
+          <ul class="list-group list-group-horizontal my-3">
+            <li class="list-group-item">Mon-Thur</li>
+            <li class="list-group-item">Fri-Sun</li>
+          </ul>
+        </div>
+    <a href="#" class="btn btn-primary">Generate</a>
   </div>
 </div>
