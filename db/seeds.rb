@@ -58,7 +58,7 @@ price = %w[£ ££ £££ ££££]
 p "Creating new"
 p "------------"
 30.times do
-  bar = Bar.create(
+  bar = Bar.create!(
     name: Faker::Restaurant.name,
     location: addresses[counter],
     price_range: price[rand(4)],
@@ -69,4 +69,38 @@ p "------------"
   p bar
   p "------------"
   counter += 1
+end
+
+user_count = 1
+crawl_counter = 1
+3.times do
+  user = User.create!(
+    email: "user#{user_count}@user.com",
+    password: "123456",
+    username: "user#{user_count}"
+  )
+  p user
+  p "------------"
+  2.times do
+    crawl = Crawl.create!(
+      crawl_name: "Test #{crawl_counter}",
+      completed: false,
+      public: [true, false].sample,
+      date: nil,
+      user: user
+    )
+    p crawl
+    p "------------"
+    crawl_counter += 1
+
+    3.times do
+      crawlbar = Crawlbar.create!(
+        bar: Bar.all.sample,
+        crawl: crawl
+      )
+      p crawlbar
+      p "------------"
+    end
+  end
+  user_count += 1
 end
