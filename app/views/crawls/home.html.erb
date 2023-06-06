@@ -1,14 +1,14 @@
-<div class="container"></div>
-<div class="">
-  <div class="container p-0">
-    <h4 class="homepage-featured border-bottom">Featured Bars</h4>
-    <div class="mt-4">
-      <div class="row mt-4 d-flex justify-content-start">
-      <%# CARDS HERE %>
-        <% @bars.each do |bar| %>
-          <%= render "shared/cards", bar:bar %>
-        <% end %>
-      </div>
+<div class="container home-fullpage">
+<h1>BarHop</h1>
+<h3>Steamline your night out, discover new bars!</h3>
+</div>
+<div class="container">
+  <h4 class="homepage-featured border-bottom">Featured BarHop</h4>
+  <div class="mt-4">
+    <div class="row mt-4 d-flex justify-content-start">
+      <% @bars.sample(3) do |bar| %>
+        <%= render "shared/cards", bar:bar %>
+      <% end %>
     </div>
   </div>
 </div>

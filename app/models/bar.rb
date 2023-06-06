@@ -3,7 +3,7 @@ class Bar < ApplicationRecord
   has_many :favourites
 
   geocoded_by :address
-  after_validation :geocode, if: :will_save_change_to_address?
+  # after_validation :geocode, if: :will_save_change_to_address?
 
   price = %w[£ ££ £££ ££££]
 
