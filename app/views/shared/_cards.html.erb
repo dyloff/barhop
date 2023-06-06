@@ -1,5 +1,9 @@
 <div class="card">
-  <img class="card-img-top" src="<%= bar.image_url %>" alt="Card image cap">
+  <% if bar.image_url.exist? %>
+    <img class="card-img-top" src="<%= bar.image_url %>" alt="Card image cap">
+    <% else %>
+    <img class="card-img-top" src="https://images.unsplash.com/photo-1597290282695-edc43d0e7129?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2075&q=80" alt="Card image cap">
+  <% end %>
   <div class="card-body">
     <h5 class="card-title"><%= bar.name %></h5>
     <p class="card-text"><%= bar.description %></p>
@@ -7,4 +11,3 @@
     <a href="#" class="btn btn-primary">Go somewhere</a>
   </div>
 </div>
-
