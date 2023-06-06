@@ -2,12 +2,17 @@ Rails.application.routes.draw do
   devise_for :users
   root "crawls#home"
 
-  resources :users, only: [:dashboard] do
-    resources :favourites, only: [:new, :create]
-    resources :reviews, only: [:destroy]
+  resources :crawls, only: [:home, :index, :new, :create, :show ] do
+    resources :reviews, only: [:new, :create]
+    resources :shared_withs, only: [:create]
+    resources :crawlbars, only: [:create]
   end
 
-  resources :crawls, only: [:home, :index, :new, :create ] do
-    resources :reviews, only: [:new, :create]
+  resources :users, only: [:dashboard]
+
+  resources :bar, only: [] do
+    resources :favourites, only: [:new, :create]
   end
+
+  resources :reviews, only: [:destroy]
 end
