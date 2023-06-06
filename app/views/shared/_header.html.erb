@@ -1,5 +1,5 @@
 <nav class="navbar bg-lp bg-body-tertiary px-4 border-bottom">
-  <div class="container-fluid ">
+  <div class="container-fluid">
     <div class="d-flex align-items-center">
       <%= link_to root_path do %>
         <%= image_tag "logo_no_background.png", alt:"Logo", width:"64", height:"64", class:"d-inline-block align-text-top" %>
@@ -9,7 +9,6 @@
     <div>
       <%# Changes if a login button is showed or the user avatar %>
       <% if current_user %>
-        <%= link_to "My BarHops", myartworks_path, class:"btn btn-primary mx-2 my-3" %>
         <%= image_tag "default_avatar.png", alt:"User Photo", class:"avatar d-inline-block align-self-center" %>
       <% else %>
         <%= link_to "Login", new_user_session_path, class:"btn btn-primary m-3" %>
