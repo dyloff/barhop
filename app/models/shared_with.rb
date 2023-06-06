@@ -1,7 +1,7 @@
 class SharedWith < ApplicationRecord
   belongs_to :crawl
-  belongs_to :user
+  has_many :users
 
-  validates :crawl_id, presence: true
-  validates :user_id, presence: true
+  # validates :crawl_id, presence: true
+  # validates :user_id, presence: true
 end
