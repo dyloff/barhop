@@ -21,43 +21,32 @@ User.destroy_all
 counter = 0
 
 addresses = [
-            "32 London Bridge Street Southwark London SE1 9SG",
-            "45 Oxford Street Westminster London W1D 2DZ",
-            "47 Oxford Street Westminster London W1D 2DZ",
-            "9 Downing Street Westminster London SW1A 2AA",
-            "76 Regent Street Westminster London W1B 5RL",
-            "5 Leicester Square Westminster London WC2H 7NA",
-            "21 Piccadilly Westminster London W1J 0BH",
-            "14 Trafalgar Square Westminster London WC2N 5DU",
-            "29 Coventry Street Westminster London W1D 7DT",
-            "33 Haymarket Westminster London SW1Y 4LR",
-            "2 Buckingham Palace Road Westminster London SW1W 0PP",
-            "8 Parliament Square Westminster London SW1P 3JX",
-            "17 Fleet Street City of London London EC4Y 1AA",
-            "11 Downing Street Westminster London SW1A 2AB",
-            "26 Whitehall Westminster London SW1A 2WH",
-            "20 Kensington High Street Kensington and Chelsea London W8 4PE",
-            "138 Kingsland Rd London E2 8DY",
-            "42 Knightsbridge Westminster London SW1X 7JU",
-            "10 Downing Street Westminster London SW1A 2AA",
-            "9 Chelsea Embankment Kensington and Chelsea London SW3 4LE",
-            "24 Savile Row Westminster London W1S 2ET",
-            "22 Savile Row Westminster London W1S 2ET",
-            "31 St James's Street Westminster London SW1A 1HD",
-            "46 Harrow View Road London W5 1LZ",
-            "23 King's Road Kensington and Chelsea London SW3 4RP",
-            "3 Notting Hill Gate Kensington and Chelsea London W11 3JQ",
-            "44 Harrow View Road London W5 1LZ",
-            "28 Old Bond Street Westminster London W1S 4QF",
-            "19 Park Lane Westminster London W1K 1PN",
-            "42 Harrow View Road London W5 1LZ"
-          ]
-
+              " 50 -354 Old St, London EC1V 9NQ ",
+              " 397-400 Geffrye St, London E2 8HZ ",
+              " 1 Curtain Rd, London EC2A 3JX " ,
+              " 66-68 Great Eastern St, London EC2A 3JT ",
+              " 78 Hoxton St, London N1 5LH " ,
+              " 2-4 Hoxton Square, London N1 6NU " ,
+              " 8 Kingsland Rd, London E2 8DN " ,
+              " 39A Hoxton Square, London N1 6NL ",
+              " 348 Old St, London EC1V 9NQ ",
+              " 70 Hoxton St, London N1 6LP ",
+              " 11 Hoxton Square, London N1 6NU " ,
+              " 8-9 Hoxton Square, London N1 6NU ",
+              " 5 Rivington St, London EC2A 3QQ ",
+              " 32 Kingsland Rd, Whitmore Estate, London E2 8AX ",
+              " 0 Worship St, London EC2A 2BA ",
+              "  Bishopsgate, London EC2M 4JX ",
+              " 4 Bethnal Grn Rd, London E1 6JY ",
+              "  Ebor St, London E1 6AW ",
+              " 0-50 Willow St, London EC2A 4BH ",
+              "  Kingsland Rd, London E2 8DA "
+            ]
 price = %w[£ ££ £££ ££££]
 
 p "Creating new"
 p "------------"
-30.times do
+20.times do
   bar = Bar.create!(
     name: Faker::Restaurant.name,
     location: addresses[counter],
