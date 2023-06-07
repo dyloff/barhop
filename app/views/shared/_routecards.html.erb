@@ -1,8 +1,8 @@
 <div class="route-cards-container mx-1 my-2">
   <div class="card px-0 bg-white rounded-30" style ="overflow: hidden;">
-      <%= render "shared/uninteractive_map" %>
+      <%= render "shared/uninteractive_cards_map", info:info %>
     <div class="card-body text-center">
-      <h5 class="card-title"><strong><%= crawl.crawl_name %></strong></h5>
+      <h5 class="card-title"><strong><%= info[:crawl].crawl_name %></strong></h5>
     </div>
   </div>
 </div>
