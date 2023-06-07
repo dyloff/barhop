@@ -6,7 +6,7 @@ class Bar < ApplicationRecord
   geocoded_by :address
   # after_validation :geocode, if: :will_save_change_to_address?
 
-  price = %w[£ ££ £££ ££££]
+  price = %w[1 2 3 4]
 
   validates :name, presence: true
   validates :location, presence: true

@@ -1,11 +1,6 @@
-# This file should contain all the record creation needed to seed the database with its default values.
-# The data can then be loaded with the bin/rails db:seed command (or created alongside the database with db:setup).
-#
-# Examples:
-#
-#   movies = Movie.create([{ name: "Star Wars" }, { name: "Lord of the Rings" }])
-#   Character.create(name: "Luke", movie: movies.first)
-require "faker"
+require "uri"
+require "net/http"
+require "json"
 
 p "destroying existing"
 
@@ -18,58 +13,70 @@ Crawl.destroy_all
 Bar.destroy_all
 User.destroy_all
 
-counter = 0
 
-addresses = [
-            "32 London Bridge Street Southwark London SE1 9SG",
-            "45 Oxford Street Westminster London W1D 2DZ",
-            "18 Baker Street Marylebone London W1U 3BS",
-            "9 Downing Street Westminster London SW1A 2AA",
-            "76 Regent Street Westminster London W1B 5RL",
-            "5 Leicester Square Westminster London WC2H 7NA",
-            "21 Piccadilly Westminster London W1J 0BH",
-            "14 Trafalgar Square Westminster London WC2N 5DU",
-            "29 Coventry Street Westminster London W1D 7DT",
-            "33 Haymarket Westminster London SW1Y 4LR",
-            "2 Buckingham Palace Road Westminster London SW1W 0PP",
-            "8 Parliament Square Westminster London SW1P 3JX",
-            "17 Fleet Street City of London London EC4Y 1AA",
-            "11 Downing Street Westminster London SW1A 2AB",
-            "26 Whitehall Westminster London SW1A 2WH",
-            "20 Kensington High Street Kensington and Chelsea London W8 4PE",
-            "42 Knightsbridge Westminster London SW1X 7JU",
-            "1 The Mall Westminster London SW1A 2QH",
-            "10 Downing Street Westminster London SW1A 2AA",
-            "37 Grosvenor Square Westminster London W1K 2HU",
-            "9 Chelsea Embankment Kensington and Chelsea London SW3 4LE",
-            "24 Savile Row Westminster London W1S 2ET",
-            "6 Pall Mall Westminster London SW1Y 5NG",
-            "31 St James's Street Westminster London SW1A 1HD",
-            "7 Portobello Road Kensington and Chelsea London W11 3DA",
-            "23 King's Road Kensington and Chelsea London SW3 4RP",
-            "3 Notting Hill Gate Kensington and Chelsea London W11 3JQ",
-            "12 Marylebone High Street Marylebone London W1U 4PG",
-            "28 Old Bond Street Westminster London W1S 4QF",
-            "19 Park Lane Westminster London W1K 1PN"
-          ]
+def google_api_call(params = {})
 
-price = %w[£ ££ £££ ££££]
 
-p "Creating new"
-p "------------"
-30.times do
-  bar = Bar.create!(
-    name: Faker::Restaurant.name,
-    location: addresses[counter],
-    price_range: price[rand(4)],
-    rating: rand(3.0..5.0).round(1),
-    description: Faker::Restaurant.description,
-    image_url: "https://loremflickr.com/800/800/bar,cocktail/all"
-  )
-  p bar
-  p "------------"
-  counter += 1
+  ###### DO NOT DELETE THE COMMENTED OUT CODE HERE - COMMENT IT BACK IN TO USE THE API ########
+
+
+  # if !params[:next_page_key]
+  #   url = URI("https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=51.531737%2C-0.077025&radius=2000&type=bar&key=#{ENV['GOOGLE_API_KEY']}")
+  # else
+  #   url = URI("https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=51.531737%2C-0.077025&radius=2000&type=bar&key=#{ENV['GOOGLE_API_KEY']}&pagetoken=#{params[:next_page_key]}")
+  # end
+
+  # https = Net::HTTP.new(url.host, url.port)
+  # https.use_ssl = true
+
+  # request = Net::HTTP::Get.new(url)
+
+  # response = https.request(request)
+  # json_reponse = response.read_body
+
+  # JSON.parse(json_reponse)
+
+  local_json = File.read("data.json")
+  JSON.parse(local_json)
+  # RETURNS A HASH
 end
+
+########### UNCOMMENT FOR 60 RESULTS ###############
+
+full_results = []
+first_api_call = google_api_call()
+# sleep(3)
+# second_api_call = google_api_call({ next_page_key: first_api_call["next_page_token"] })
+# sleep(3)
+# third_api_call = google_api_call({ next_page_key: second_api_call["next_page_token"] })
+full_results << first_api_call["results"]
+# full_results << second_api_call["results"]
+# full_results << third_api_call["results"]
+
+full_results = full_results.flatten
+
+full_results.each do |result|
+
+  ########## UNCOMMENT TO HAVE API PHOTOS ##############
+
+  # if result["photos"][0]["photo_reference"]
+  #   photo_url = "https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photo_reference=#{result["photos"][0]["photo_reference"]}&key=#{ENV['GOOGLE_API_KEY']}"
+  # else
+    photo_url = "https://loremflickr.com/cache/resized/65535_52751342904_c22b7c6469_400_400_nofilter.jpg"
+  # end
+
+  Bar.create!(
+    name: result["name"],
+    location: result["vicinity"],
+    longitude: result["geometry"]["location"]["lng"],
+    latitude: result["geometry"]["location"]["lat"],
+    price_range: result["price_level"] || 2,
+    rating: result["rating"],
+    description: "TO SCRAPE",
+    image_url: photo_url
+  )
+end
+
 
 user_count = 1
 crawl_counter = 1
@@ -81,7 +88,7 @@ crawl_counter = 1
   )
   p user
   p "------------"
-  2.times do
+  3.times do
     crawl = Crawl.create!(
       crawl_name: "Test #{crawl_counter}",
       completed: false,
@@ -102,5 +109,27 @@ crawl_counter = 1
       p "------------"
     end
   end
+  2.times do
+    crawl = Crawl.create!(
+      crawl_name: "Test #{crawl_counter}",
+      completed: false,
+      public: [true, false].sample,
+      date: nil,
+      user: user
+    )
+    p crawl
+    p "------------"
+    crawl_counter += 1
+
+    rand(4..6).times do
+      crawlbar = Crawlbar.create!(
+        bar: Bar.all.sample,
+        crawl: crawl
+      )
+      p crawlbar
+      p "------------"
+    end
+  end
+
   user_count += 1
 end
