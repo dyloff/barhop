@@ -15,3 +15,6 @@ class Bar < ApplicationRecord
   validates :description, presence: true
   # validates :image_url, presence: true
 end
+
+# scope :filter_by_price, ->(price) { where price: price }
+# scope :filter_by_artist, ->(artist) { where artist: artist }

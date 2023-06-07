@@ -8,4 +8,6 @@ class Crawl < ApplicationRecord
   validates :crawl_name, presence: true
   validates :completed, inclusion: { in: [true, false] }
   validates :public, inclusion: { in: [true, false] }
+
+  
 end

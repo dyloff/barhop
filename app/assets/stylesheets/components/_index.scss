@@ -5,3 +5,9 @@
 @import "navbar";
 @import "cards";
 @import "slider";
+@import "form_buttons";
+
+.sticky {
+  position: sticky;
+  top: 0;
+}

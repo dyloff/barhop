@@ -1,3 +1,17 @@
-<h1>Crawls#index</h1>
-<p>Find me in app/views/crawls/index.html.erb</p>
-
+<div class="row justify-content-end">
+    <div class="d-flex justify-content-around">
+      <div class="sticky col-4">
+        <%= render "shared/filters" %>
+      </div>
+      <div class="col-7 row mt-4 d-flex justify-content-start text-center">
+        <div class="d-flex justify-content-around">
+          <button type="button" class="btn btn-light">Creators</button>
+          <button type="button" class="btn btn-light">Friends</button>
+          <button type="button" class="btn btn-light">Public</button>
+        </div>
+        <% @crawls.sample(4).each do |crawl| %>
+          <%= render "shared/routecards", crawl: crawl %>
+        <% end %>
+      </div>
+    </div>
+</div>
