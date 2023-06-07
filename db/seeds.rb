@@ -23,7 +23,7 @@ counter = 0
 addresses = [
             "32 London Bridge Street Southwark London SE1 9SG",
             "45 Oxford Street Westminster London W1D 2DZ",
-            "18 Baker Street Marylebone London W1U 3BS",
+            "47 Oxford Street Westminster London W1D 2DZ",
             "9 Downing Street Westminster London SW1A 2AA",
             "76 Regent Street Westminster London W1B 5RL",
             "5 Leicester Square Westminster London WC2H 7NA",
@@ -37,20 +37,20 @@ addresses = [
             "11 Downing Street Westminster London SW1A 2AB",
             "26 Whitehall Westminster London SW1A 2WH",
             "20 Kensington High Street Kensington and Chelsea London W8 4PE",
+            "138 Kingsland Rd London E2 8DY",
             "42 Knightsbridge Westminster London SW1X 7JU",
-            "1 The Mall Westminster London SW1A 2QH",
             "10 Downing Street Westminster London SW1A 2AA",
-            "37 Grosvenor Square Westminster London W1K 2HU",
             "9 Chelsea Embankment Kensington and Chelsea London SW3 4LE",
             "24 Savile Row Westminster London W1S 2ET",
-            "6 Pall Mall Westminster London SW1Y 5NG",
+            "22 Savile Row Westminster London W1S 2ET",
             "31 St James's Street Westminster London SW1A 1HD",
-            "7 Portobello Road Kensington and Chelsea London W11 3DA",
+            "46 Harrow View Road London W5 1LZ",
             "23 King's Road Kensington and Chelsea London SW3 4RP",
             "3 Notting Hill Gate Kensington and Chelsea London W11 3JQ",
-            "12 Marylebone High Street Marylebone London W1U 4PG",
+            "44 Harrow View Road London W5 1LZ",
             "28 Old Bond Street Westminster London W1S 4QF",
-            "19 Park Lane Westminster London W1K 1PN"
+            "19 Park Lane Westminster London W1K 1PN",
+            "42 Harrow View Road London W5 1LZ"
           ]
 
 price = %w[£ ££ £££ ££££]
@@ -69,6 +69,8 @@ p "------------"
   p bar
   p "------------"
   counter += 1
+
+  puts "This #{bar.id} doesn't have lng and lat" if bar.longitude.nil?
 end
 
 user_count = 1
