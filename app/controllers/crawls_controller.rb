@@ -1,7 +1,14 @@
 class CrawlsController < ApplicationController
   def home
-    @bars = Bar.all
-    @crawls = Crawl.all
+    @crawl = Crawl.all.sample
+
+    @markers = @crawl.bars.geocoded.map do |bar|
+      {
+        lat: bar.latitude,
+        lng: bar.longitude,
+        info_window_html: render_to_string(partial: "info_window", locals: {bar: bar})
+      }
+    end
   end
 
   def index
@@ -12,4 +19,5 @@ class CrawlsController < ApplicationController
 
   def create
   end
+
 end
