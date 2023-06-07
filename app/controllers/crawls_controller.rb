@@ -10,6 +10,7 @@ class CrawlsController < ApplicationController
   end
 
   def new
+    raise
     @bars = Bar.all
   end
 
