@@ -1,3 +1,4 @@
+<!--
 <div class="card " style="width: 18rem; height: 500px" data-controller="slider-bar-range" data-controller="slider-price-range">
   <div class="text-center">
     <h5 class="card-title mt-2">Filters</h5>
@@ -53,5 +54,25 @@
         </div>
     <a href="#" class="btn btn-primary">Generate</a>
         </div>
+  </div>
+</div>
+-->
+<div class="p-3">
+  <div class="card  p-4 text-center" style="width: 25rem; height: 500px" data-controller="slider-bar-range" data-controller="slider-price-range">
+    <h5 class="card-title mt-2">Filters</h5>
+      <%= form_with url: new_crawl_path, method: :get, html: { class: "row search-icon", data: { controller: "slider-price-range" } } do |f| %>
+        <%= f.text_field :query, value: params[:query], class: "form-control bg-white border border-black col-12", placeholder: "Location..." %>
+        <h6 class="text-center mt-4 mb-0">Price</h6>
+        <div class="d-flex justify-content-around my-3">
+          <%= f.collection_check_boxes :price_range, Bar.all.map(&:price_range).uniq.sort_by(&:length), :itself, :itself, {}, class: 'tag-selector' %>
+        </div>
+        <%= f.select :day, ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'], { :include_blank => 'Day for crawl' },  class: "form-select select-category dropdown-item my-3"  %>
+        <h6 class="text-center mt-4 mb-0">Venue</h6>
+        <div class="d-flex justify-content-around my-3">
+          <%= f.collection_check_boxes :venue_category, ["🍺", "🍷"], :itself, :itself, {}, class: 'tag-selector2' %>
+        </div>
+        <%= f.select :number_of_bars, [3, 4, 5, 6], { :include_blank => 'Number of bars' }, class: "form-select select-category dropdown-item my-3" %>
+      <%= submit_tag "Generate", class: "btn btn-primary"%>
+      <% end %>
   </div>
 </div>
