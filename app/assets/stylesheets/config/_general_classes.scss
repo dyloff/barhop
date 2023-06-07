@@ -1,0 +1,19 @@
+.text-red {
+  color: $red
+}
+
+.text-pale-red {
+  color: $pale-red;
+}
+
+.bg-red {
+  background-color: $pale-red !important;
+}
+
+.fully-rounded {
+  border-radius: 50vh;
+}
+
+.rounded-30 {
+  border-radius:30px !important;
+}

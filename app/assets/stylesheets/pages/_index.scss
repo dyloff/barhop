@@ -1,2 +1,15 @@
 // Import page-specific CSS files here.
 @import "home";
+
+// .sticky {
+//   position: sticky;
+//   top: 0;
+// }
+
+.index-crawls {
+  height: 80vh;
+  overflow-y: auto;
+  width: calc(95vw - 25rem);
+  padding: 0;
+  text-align: center;
+}

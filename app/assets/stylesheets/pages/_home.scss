@@ -24,7 +24,7 @@
 
 
 .home-fullpage {
-  height: 100vh;
+  height: 85vh;
   display: flex;
   flex-direction:column;
   justify-content: center;
@@ -53,7 +53,7 @@
 }
 
 .search-box input::placeholder{
-  color: $light-gray;
+  color: $pale-red;
 }
 
 .search-box .search-icon{
@@ -68,7 +68,7 @@
   text-align: center;
   line-height: 50px;
   font-size: 20px;
-  background: $purple;
+  background: $red;
   color: #fff;
   cursor: pointer;
   z-index: 1;
