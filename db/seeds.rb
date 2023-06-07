@@ -1,11 +1,6 @@
-# This file should contain all the record creation needed to seed the database with its default values.
-# The data can then be loaded with the bin/rails db:seed command (or created alongside the database with db:setup).
-#
-# Examples:
-#
-#   movies = Movie.create([{ name: "Star Wars" }, { name: "Lord of the Rings" }])
-#   Character.create(name: "Luke", movie: movies.first)
-require "faker"
+require "uri"
+require "net/http"
+require "json"
 
 p "destroying existing"
 
@@ -18,49 +13,70 @@ Crawl.destroy_all
 Bar.destroy_all
 User.destroy_all
 
-counter = 0
 
-addresses = [
-              " 50 -354 Old St, London EC1V 9NQ ",
-              " 397-400 Geffrye St, London E2 8HZ ",
-              " 1 Curtain Rd, London EC2A 3JX " ,
-              " 66-68 Great Eastern St, London EC2A 3JT ",
-              " 78 Hoxton St, London N1 5LH " ,
-              " 2-4 Hoxton Square, London N1 6NU " ,
-              " 8 Kingsland Rd, London E2 8DN " ,
-              " 39A Hoxton Square, London N1 6NL ",
-              " 348 Old St, London EC1V 9NQ ",
-              " 70 Hoxton St, London N1 6LP ",
-              " 11 Hoxton Square, London N1 6NU " ,
-              " 8-9 Hoxton Square, London N1 6NU ",
-              " 5 Rivington St, London EC2A 3QQ ",
-              " 32 Kingsland Rd, Whitmore Estate, London E2 8AX ",
-              " 0 Worship St, London EC2A 2BA ",
-              "  Bishopsgate, London EC2M 4JX ",
-              " 4 Bethnal Grn Rd, London E1 6JY ",
-              "  Ebor St, London E1 6AW ",
-              " 0-50 Willow St, London EC2A 4BH ",
-              "  Kingsland Rd, London E2 8DA "
-            ]
-price = %w[£ ££ £££ ££££]
+def google_api_call(params = {})
 
-p "Creating new"
-p "------------"
-20.times do
-  bar = Bar.create!(
-    name: Faker::Restaurant.name,
-    location: addresses[counter],
-    price_range: price[rand(4)],
-    rating: rand(3.0..5.0).round(1),
-    description: Faker::Restaurant.description,
-    image_url: "https://loremflickr.com/800/800/bar,cocktail/all"
-  )
-  p bar
-  p "------------"
-  counter += 1
 
-  puts "This #{bar.id} doesn't have lng and lat" if bar.longitude.nil?
+  ###### DO NOT DELETE THE COMMENTED OUT CODE HERE - COMMENT IT BACK IN TO USE THE API ########
+
+
+  # if !params[:next_page_key]
+  #   url = URI("https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=51.531737%2C-0.077025&radius=2000&type=bar&key=#{ENV['GOOGLE_API_KEY']}")
+  # else
+  #   url = URI("https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=51.531737%2C-0.077025&radius=2000&type=bar&key=#{ENV['GOOGLE_API_KEY']}&pagetoken=#{params[:next_page_key]}")
+  # end
+
+  # https = Net::HTTP.new(url.host, url.port)
+  # https.use_ssl = true
+
+  # request = Net::HTTP::Get.new(url)
+
+  # response = https.request(request)
+  # json_reponse = response.read_body
+
+  # JSON.parse(json_reponse)
+
+  local_json = File.read("data.json")
+  JSON.parse(local_json)
+  # RETURNS A HASH
 end
+
+########### UNCOMMENT FOR 60 RESULTS ###############
+
+full_results = []
+first_api_call = google_api_call()
+# sleep(3)
+# second_api_call = google_api_call({ next_page_key: first_api_call["next_page_token"] })
+# sleep(3)
+# third_api_call = google_api_call({ next_page_key: second_api_call["next_page_token"] })
+full_results << first_api_call["results"]
+# full_results << second_api_call["results"]
+# full_results << third_api_call["results"]
+
+full_results = full_results.flatten
+
+full_results.each do |result|
+
+  ########## UNCOMMENT TO HAVE API PHOTOS ##############
+
+  # if result["photos"][0]["photo_reference"]
+  #   photo_url = "https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photo_reference=#{result["photos"][0]["photo_reference"]}&key=#{ENV['GOOGLE_API_KEY']}"
+  # else
+    photo_url = "https://loremflickr.com/cache/resized/65535_52751342904_c22b7c6469_400_400_nofilter.jpg"
+  # end
+
+  Bar.create!(
+    name: result["name"],
+    location: result["vicinity"],
+    longitude: result["geometry"]["location"]["lng"],
+    latitude: result["geometry"]["location"]["lat"],
+    price_range: result["price_level"] || 2,
+    rating: result["rating"],
+    description: "TO SCRAPE",
+    image_url: photo_url
+  )
+end
+
 
 user_count = 1
 crawl_counter = 1
@@ -72,7 +88,7 @@ crawl_counter = 1
   )
   p user
   p "------------"
-  2.times do
+  3.times do
     crawl = Crawl.create!(
       crawl_name: "Test #{crawl_counter}",
       completed: false,
@@ -93,5 +109,27 @@ crawl_counter = 1
       p "------------"
     end
   end
+  2.times do
+    crawl = Crawl.create!(
+      crawl_name: "Test #{crawl_counter}",
+      completed: false,
+      public: [true, false].sample,
+      date: nil,
+      user: user
+    )
+    p crawl
+    p "------------"
+    crawl_counter += 1
+
+    rand(4..6).times do
+      crawlbar = Crawlbar.create!(
+        bar: Bar.all.sample,
+        crawl: crawl
+      )
+      p crawlbar
+      p "------------"
+    end
+  end
+
   user_count += 1
 end

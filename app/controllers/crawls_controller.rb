@@ -9,7 +9,6 @@ class CrawlsController < ApplicationController
         info_window_html: render_to_string(partial: "info_window", locals: {bar: bar})
       }
     end
-
   end
 
   def index

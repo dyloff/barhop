@@ -1,17 +1,33 @@
 
 <div class="container home-fullpage">
-<h1>BarHop</h1>
-<h3>Steamline your night out, discover new bars!</h3>
+  <h1>BarHop</h1>
+  <h3>Steamline your night out, discover new bars!</h3>
+  <form class="search-box" action="/crawls" accept-charset="UTF-8" method="get">
+    <input type="text" name="query" id="query" placeholder="Location...">
+    <button type="submit" name="commit" value="Search" class="search-icon" data-disable-with="Search" style="border:0"><i class="fas fa-search"></i></button>
+  </form>
 </div>
 <div class="container">
   <h4 class="homepage-featured border-bottom m-4">Featured BarHop</h4>
   <div class="mt-4">
-    <div class="row mt-4 d-flex justify-content-start">
+
+    <div class="row mt-4 d-flex justify-content-center">
       <% @crawl.bars do |bar| %>
-        <%= render "shared/cards", bar: bar %>
+        <%= render "shared/barcards", bar: bar %>
       <% end %>
     </div>
   </div>
 </div>
 
-<%= render "shared/map" %>
+
+<div class="container mb-3 px-0 mt-0">
+  <div class="card mt-2 shadow-sm">
+    <div class="card m-2" style="overflow:hidden">
+      <%= render "shared/map" %>
+    </div>
+  </div>
+</div>
+<%# <%= render "shared/crawls_map" %>
+<div class="d-flex" style="overflow:hidden">
+  <%= render "shared/filters" %>
+</div>
