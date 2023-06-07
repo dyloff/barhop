@@ -49,8 +49,16 @@ export default class extends Controller {
 
     #addMarkersToMap(){
       console.log(this.markersValue)
+
       this.markersValue.forEach((marker) => {
         const popup = new mapboxgl.Popup().setHTML(marker.info_window_html)
+
+        const customMarker = document.createElement("div");
+        customMarker.innerHTML = marker.marker_html;
+
+        console.log(customMarker.innerHTML);
+
+        // new mapboxgl.Marker(customMarker)
         new mapboxgl.Marker()
         .setLngLat([marker.lng, marker.lat])
         .setPopup(popup)
@@ -96,8 +104,8 @@ export default class extends Controller {
           'line-cap': 'round'
           },
           'paint': {
-          'line-color': '#888',
-          'line-width': 8
+          'line-color': '#D94124',
+          'line-width': 5,
           }
           });
         });
