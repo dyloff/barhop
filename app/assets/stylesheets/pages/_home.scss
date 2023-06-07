@@ -1,4 +1,28 @@
 // Specific CSS for your home-page
+* {
+  box-sizing: border-box;
+}
+
+.barcards-container {
+  display: flex;
+  justify-content: space-between;
+  overflow-x:auto;
+  &::-webkit-scrollbar {
+    width: 5px;
+    height: 5px;
+  }
+  &::-webkit-scrollbar-track {
+    background: $pale-red;
+    border-radius: 10px
+  }
+  &::-webkit-scrollbar-thumb {
+    background-color: $red;
+    border-radius: 10px;
+    border: $red;
+  }
+}
+
+
 .home-fullpage {
   height: 100vh;
   display: flex;
