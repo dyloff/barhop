@@ -15,7 +15,7 @@
 
   <% @crawls.each_with_index do |crawl, i| %>
     <div class="card">
-        <div class="d-flex p-3">
+        <div class="d-flex justify-content-between p-3">
           <% crawl.bars.each do |bar| %>
           <div class="card dashboard-card">
               <h5 class=""><%= bar.name %></h5>

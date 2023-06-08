@@ -8,3 +8,23 @@
     transform: translateX(50%);
   }
 }
+
+.dashboard-container {
+  // display: flex;
+  // width: 50vw;
+  justify-content: space-between;
+  overflow-x:auto;
+  &::-webkit-scrollbar {
+    width: 5px;
+    height: 5px;
+  }
+  &::-webkit-scrollbar-track {
+    background: $pale-red;
+    border-radius: 10px
+  }
+  &::-webkit-scrollbar-thumb {
+    background-color: $red;
+    border-radius: 10px;
+    border: $red;
+  }
+}
