@@ -14,24 +14,26 @@
     <h2 class="m-1">Your Crawls:</h2>
 
   <% @crawls.each_with_index do |crawl, i| %>
-    <div class="crawls mb-3 w-100">
+  <div class="crawls mb-3 w-100">
 
-      <div class="bars-info w-100 d-flex">
-        <% crawl.bars.each do |bar| %>
-          <%= bar.name %>
-          <img src="<%= bar.image_url %>" alt="" style="width: 150px; height:150px">
-          <%# <img src="https://static.standard.co.uk/2022/07/18/17/newFile-2.jpg?width=1024&auto=webp&quality=50&crop=968%3A645%2Csmart" alt=""> %>
-        <% end %>
+    <div class="card">
+      <div class="card-body">
+
+        <div class="d-flex">
+          <% crawl.bars.each do |bar| %>
+              <div class="card">
+                <img src="<%= bar.image_url %>" alt="" class="card-img-top img-fluid" style="max-height: 200px;">
+                  <h5 class="card-title"><%= bar.name %></h5>
+                </div>
+          <% end %>
+        </div>
+
+        <div class="crawl-route">
+          <%= render "shared/routecards", info: @all_info[i] %>
+        </div>
+
       </div>
-
-      <div class="crawl-route">
-        <%= render "shared/routecards", info: @all_info[i] %>
-      </div>
-
     </div>
-  <% end %>
 
-    <% @all_info.each do |info| %>
-      <% render "shared/routecards", info: info%>
-    <% end %>
-</div>
+  </div>
+<% end %>
