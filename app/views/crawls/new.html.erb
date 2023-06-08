@@ -8,7 +8,7 @@
 <h5 class="mt-2" style="text-align: center">Select your favorite bars</h5>
 <div class="d-flex justify-content-center">
   <div class="row mt-0 d-flex justify-content-start">
-    <% @bars.sample(3).each do |bar| %>
+    <% @bars_by_venue.each do |bar| %>
       <%= render "shared/barcards", bar: bar %>
     <% end %>
   </div>

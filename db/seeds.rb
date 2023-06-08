@@ -67,6 +67,7 @@ full_results.each do |result|
 
   Bar.create!(
     name: result["name"],
+    types: result["types"],
     location: result["vicinity"],
     longitude: result["geometry"]["location"]["lng"],
     latitude: result["geometry"]["location"]["lat"],

@@ -11,7 +11,7 @@
     <% else %>
     <p class="card-text"><%= bar.description %></p>
     <% end %>
-    <h6><strong><%= bar.price_range %></strong></h6>
+    <h6><strong><% bar.price_range.to_i.times do %>£<% end %></strong></h6>
     <h6><% bar.rating.to_i.times do  %>
       <i class="fa-solid fa-star fa-lg" style="color:#ffdd00"> <span class="icon-text"></span></i>
     <% end %>
