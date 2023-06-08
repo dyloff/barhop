@@ -79,7 +79,7 @@ full_results.each do |result|
   )
 end
 
-users = ["alek", "lorenzo", "dylon"]
+users = ["alek", "lorenzo", "dylon", "justin"]
 
 crawl_names=[
             "'s Big Night Out",
@@ -96,7 +96,7 @@ crawl_names=[
 
 user_count = 0
 crawl_counter = 0
-3.times do
+users.count.times do
   user = User.create!(
     email: "#{users[user_count]}@user.com",
     password: "123456",
@@ -104,7 +104,7 @@ crawl_counter = 0
   )
   p user
   p "------------"
-  3.times do
+  2.times do
     crawl = Crawl.create!(
       crawl_name: user.username.capitalize + crawl_names.sample,
       completed: false,
@@ -125,7 +125,7 @@ crawl_counter = 0
       p "------------"
     end
   end
-  2.times do
+  1.times do
     crawl = Crawl.create!(
       crawl_name: user.username.capitalize + crawl_names.sample,
       completed: false,
