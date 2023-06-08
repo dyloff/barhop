@@ -1,3 +1,39 @@
-<h1>Welcome <%= current_user.username %></h1>
+<div class="container">
+  <div class="row align-items-center py-4 border-bottom border-black">
+    <div class="col">
+      <h1 class="d-flex justify-content-start ">Welcome <%= current_user.username%>👋</h1>
+    </div>
+    <div class="col text-end mb-1 fs-5">
+      <%# <a href="#" class="p-3">Badges</a> %>
+        <button class="btn btn-outline-primary">Favourite Bars 🍾 </button>
+        <button class="btn btn-primary ">Saved BarCrawls ✨</button>
+      <button class="btn btn-outline-primary">Friends 👽</button>
+    </div>
+  </div>
 
+    <h2 class="m-1">Your Crawls:</h2>
 
+  <% @crawls.each_with_index do |crawl, i| %>
+  <div class="crawls mb-3 w-100">
+
+    <div class="card">
+      <div class="card-body">
+
+        <div class="d-flex">
+          <% crawl.bars.each do |bar| %>
+              <div class="card">
+                <img src="<%= bar.image_url %>" alt="" class="card-img-top img-fluid" style="max-height: 200px;">
+                  <h5 class="card-title"><%= bar.name %></h5>
+                </div>
+          <% end %>
+        </div>
+
+        <div class="crawl-route">
+          <%= render "shared/routecards", info: @all_info[i] %>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+<% end %>

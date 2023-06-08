@@ -14,7 +14,7 @@ class CrawlsController < ApplicationController
 
   def index
     @crawls = Crawl.all
-    @bars = Bar.all
+    # @bars = Bar.all
 
     @all_info = []
 
