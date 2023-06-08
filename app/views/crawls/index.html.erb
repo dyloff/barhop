@@ -9,8 +9,8 @@
       <button type="button" class="btn btn-outline-primary">Public</button>
     </div>
     <div class="index-crawls">
-      <% @crawls.each do |crawl| %>
-        <%= render "shared/routecards", crawl: crawl %>
+      <% @all_info.each do |info| %>
+        <%= render "shared/routecards", info: info%>
       <% end %>
     </div>
   </div>
