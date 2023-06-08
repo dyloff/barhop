@@ -1,0 +1,10 @@
+.dashboard-card {
+  position:relative;
+  text-align: center;
+  h5 {
+    position: absolute;
+    bottom: 0;
+    right: 50%;
+    transform: translateX(50%);
+  }
+}
