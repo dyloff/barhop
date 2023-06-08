@@ -36,7 +36,39 @@ class CrawlsController < ApplicationController
   end
 
   def new
-    # Venue category filter
+    @filtered_bars = filters
+    @markers = filters.map do |bar|
+      {
+        lat: bar.latitude,
+        lng: bar.longitude,
+        info_window_html: render_to_string(partial: "info_window", locals: { bar: bar }),
+        marker_html: render_to_string(partial: "marker")
+      }
+    end
+    @crawl = Crawl.new
+  end
+
+  def show
+    @bars = Bar.all
+  end
+
+  def create
+    @crawl = Crawl.new(crawl_params)
+    @crawl.user = current_user
+    @crawl.save
+    @bars = params[:crawl][:bars].split()
+    @bars.each do |id|
+      bar = Bar.find(id.to_i)
+      crawl_bar = Crawlbar.new()
+      crawl_bar.bar = bar
+      crawl_bar.crawl = @crawl
+      crawl_bar.save
+    end
+    redirect_to crawls_path
+  end
+
+
+  def filters
     if params[:venue_category].include?("restaurant") && params[:venue_category].include?("bar")
       @bars_by_venue
     elsif params[:venue_category].include?("restaurant")
@@ -53,36 +85,10 @@ class CrawlsController < ApplicationController
 
     # Number of bars requested
     @number_of_bars = params[:number_of_bars] == "" ? 3 : params[:number_of_bars].to_i
-    @bars = Bar.all
+    @filtered_bars = @all_filtered_bars.sample(@number_of_bars)
   end
 
-  def show
-    @bars = Bar.all
-  end
-
-  def create
-
-  end
-
-  def filters
-
-    # params[:price] = array
-    # params[:venue_category] = array
-    @bars_by_price = Bar.where("price_range ilike ?", "%#{params[:price]}")
-    @bars_by_venue = Bar.where("price_range ilike ?", "%#{params[:price]}")
-
-
-
-    # @bars_by_venue = Bar.all.map do |bar|
-    #   if params[:venue_category].include?("restaurant")
-    #     return bar.restaurant == true
-    #   end
-    # end
-    # @bars_price_range_search = Bar.filter_by_price(params[:price_range]) if params[:price_range].present?
-    # @bars_venue_search = Bar.filter_by_venue(params[:venue_category]) if params[:venue_category].present?
-    # @bars_number = params[:number_of_bars].to_i
-    # @bars_day = params[:day]
-
-    # @bars_address_price_venue = @bars_price_range_search & @bars_venue_search
+  def crawl_params
+    params.require(:crawl).permit(:crawl_name, :completed, :public, :date)
   end
 end
