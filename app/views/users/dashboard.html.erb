@@ -1,3 +1,15 @@
-<h1>Welcome <%= current_user.username %></h1>
-
-
+<div class="container">
+  <div class="row align-items-center py-4 border-bottom border-black">
+    <div class="col">
+      <h1 class="d-flex justify-content-start ">Welcome <%= current_user.username%>👋</h1>
+    </div>
+    <div class="col text-end mb-1 fs-5">
+      <%# <a href="#" class="p-3">Badges</a> %>
+        <button class="btn btn-outline-primary">Favourite Bars 🍾 </button>
+        <button class="btn btn-primary ">Saved BarCrawls ✨</button>
+      <button class="btn btn-outline-primary">Friends 👽</button>
+    </div>
+  </div>
+    <h2 class="m-1">Your Crawls:</h2>
+    
+</div>
