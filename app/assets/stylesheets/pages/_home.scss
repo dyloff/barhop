@@ -24,10 +24,24 @@
 
 
 .home-fullpage {
-  height: 85vh;
+  height: 100%;
   display: flex;
   flex-direction:column;
   justify-content: center;
+  z-index: 2;
+}
+
+.background-container{
+  height: 85vh;
+  position: relative;
+  overflow: hidden;
+}
+
+.background-image {
+  position: absolute;
+  object-position: 0px -50px;
+  width: 100%;
+  height: auto;
 }
 
 //SEARCH BAR
@@ -37,7 +51,6 @@
   height: 60px;
   width: 350px;
   border-radius: 50%;
-  box-shadow: 5px 5px 30px rgba(0,0,0,.2);
 }
 
 .search-box input{
@@ -45,7 +58,9 @@
   height: 100%;
   border: none;
   border-radius: 50px;
-  background: #fff;
+  background: transparent;
+  border: 2px solid white;
+  box-shadow: 5px 5px 30px rgba(255,255,255,.4);
   outline: none;
   padding: 0 60px 0 20px;
   font-size: 18px;
@@ -53,7 +68,8 @@
 }
 
 .search-box input::placeholder{
-  color: $pale-red;
+  color: white;
+  font-family: $headers-font;
 }
 
 .search-box .search-icon{
