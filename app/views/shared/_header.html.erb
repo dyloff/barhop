@@ -9,7 +9,9 @@
     <div>
       <%# Changes if a login button is showed or the user avatar %>
       <% if current_user %>
-        <%= image_tag "default_avatar.png", alt:"User Photo", class:"avatar d-inline-block align-self-center" %>
+        <%= link_to dashboard_path do %>
+          <%= image_tag "justin.png", alt:"User Photo", class:"avatar d-inline-block align-self-center" %>
+        <% end %>
       <% else %>
         <%= link_to "Login", new_user_session_path, class:"btn btn-primary m-3" %>
       <% end %>
