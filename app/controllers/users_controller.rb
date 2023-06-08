@@ -2,9 +2,7 @@ class UsersController < ApplicationController
   def dashboard
     @crawls = Crawl.all
     # @bars = Bar.all
-
-    current_user
-
+    raise
     @all_info = []
 
     @crawls.each do |crawl|
