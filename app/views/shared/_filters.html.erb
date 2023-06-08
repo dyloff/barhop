@@ -1,29 +1,31 @@
-<div class="card p-4 text-center" style="width: 25rem; height: 500px" data-controller="slider-bar-range" data-controller="slider-price-range">
-  <h5 class="card-title mt-2">Filters</h5>
-  <%= form_with url: new_crawl_path, method: :get, html: { class: "row search-icon", data: { controller: "slider-price-range" } } do |f| %>
-    <%= f.text_field :query, value: params[:query], class: "form-control bg-white border border-black col-12", placeholder: "Location..." %>
-    <h6 class="text-center mt-4 mb-0">Price</h6>
-    <div class="d-flex justify-content-around my-3">
-      <input type="hidden" name="price_range[]" value="" autocomplete="off">
-        <input class="tag-selector" type="checkbox" value="£" name="price_range[]" id="price_range_1">
-        <label for="price_range_1">£</label>
-        <input class="tag-selector" type="checkbox" value="££" name="price_range[]" id="price_range_2">
-        <label for="price_range_2">££</label>
-        <input class="tag-selector" type="checkbox" value="£££" name="price_range[]" id="price_range_3">
-          <label for="price_range_3">£££</label>
-          <input class="tag-selector" type="checkbox" value="££££" name="price_range[]" id="price_range_4">
-        <label for="price_range_4">££££</label>
-    </div>
-    <%= f.select :day, ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'], { :include_blank => 'Day for crawl' },  class: "form-select select-category dropdown-item my-3"  %>
-    <h6 class="text-center mt-4 mb-0">Venue</h6>
-    <div class="d-flex justify-content-around my-3">
-      <input type="hidden" name="venue_category[]" value="" autocomplete="off">
-      <input class="tag-selector2" type="checkbox" value="🍺" name="venue_category[]" id="venue_category_1">
-      <label for="venue_category_1">🍺</label>
-      <input class="tag-selector2" type="checkbox" value="🍷" name="venue_category[]" id="venue_category_2">
-      <label for="venue_category_2">🍷</label>
-    </div>
-    <%= f.select :number_of_bars, [3, 4, 5, 6], { :include_blank => 'Number of bars' }, class: "form-select select-category dropdown-item my-3" %>
-    <%= submit_tag "Generate", class: "btn btn-primary"%>
-  <% end %>
+
+  <div class="card  p-4 text-center" style="width: 25rem; height: 500px" data-controller="slider-bar-range" data-controller="slider-price-range">
+    <h5 class="card-title mt-2">Filters</h5>
+    <%= form_with url: new_crawl_path, method: :get, html: { class: "row search-icon", data: { controller: "slider-price-range" } } do |f| %>
+      <%= f.text_field :query, value: params[:query], class: "form-control bg-white border border-black col-12", placeholder: "Location..." %>
+      <h6 class="text-center mt-4 mb-0">Price</h6>
+      <div class="d-flex justify-content-around my-3">
+        <input type="hidden" name="price_range[]" value="" autocomplete="off">
+          <input class="tag-selector" type="checkbox" value="1" name="price_range[]" id="price_range_1">
+          <label for="price_range_1">£</label>
+          <input class="tag-selector" type="checkbox" value="2" name="price_range[]" id="price_range_2">
+          <label for="price_range_2">££</label>
+          <input class="tag-selector" type="checkbox" value="3" name="price_range[]" id="price_range_3">
+            <label for="price_range_3">£££</label>
+            <input class="tag-selector" type="checkbox" value="4" name="price_range[]" id="price_range_4">
+          <label for="price_range_4">££££</label>
+      </div>
+        <!-- <%= f.select :day, ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'], { :include_blank => 'Day for crawl' },  class: "form-select select-category dropdown-item my-3"  %> -->
+      <h6 class="text-center mt-4 mb-0">Venue</h6>
+      <div class="d-flex justify-content-around my-3">
+        <input type="hidden" name="venue_category[]" value="" autocomplete="off">
+        <input class="tag-selector2" type="checkbox" value="restaurant" name="venue_category[]" id="venue_category_1">
+        <label for="venue_category_1">🍺</label>
+        <input class="tag-selector2" type="checkbox" value="bar" name="venue_category[]" id="venue_category_2">
+        <label for="venue_category_2">🍷</label>
+      </div>
+      <%= f.select :number_of_bars, [3, 4, 5, 6], { :include_blank => 'Prefered number of bars' }, class: "form-select select-category dropdown-item my-3" %>
+      <%= submit_tag "Generate", class: "btn btn-primary"%>
+    <% end %>
+
 </div>
