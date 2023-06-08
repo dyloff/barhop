@@ -1,2 +1,48 @@
 // Import page-specific CSS files here.
 @import "home";
+
+// .sticky {
+//   position: sticky;
+//   top: 0;
+// }
+
+.index-crawls {
+  height: 100%;
+  overflow-y: auto;
+  width: calc(95vw - 25rem);
+  padding: 0;
+  text-align: center;
+  &::-webkit-scrollbar {
+    width: 5px;
+    height: 5px;
+  }
+  &::-webkit-scrollbar-track {
+    background: $pale-red;
+    border-radius: 10px
+  }
+  &::-webkit-scrollbar-thumb {
+    background-color: $red;
+    border-radius: 10px;
+    border: $red;
+  }
+}
+
+
+.barcards-container {
+  display: flex;
+  justify-content: space-between;
+  overflow-x:auto;
+  &::-webkit-scrollbar {
+    width: 5px;
+    height: 5px;
+  }
+  &::-webkit-scrollbar-track {
+    background: $pale-red;
+    border-radius: 10px
+  }
+  &::-webkit-scrollbar-thumb {
+    background-color: $red;
+    border-radius: 10px;
+    border: $red;
+  }
+}
