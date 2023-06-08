@@ -15,7 +15,7 @@ class Bar < ApplicationRecord
   validates :description, presence: true
   # validates :image_url, presence: true
 
-  scope :search_by_address 
+  # scope :search_by_address 
 
 end
 
