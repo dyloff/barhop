@@ -55,7 +55,7 @@ class CrawlsController < ApplicationController
   def create
     @crawl = Crawl.new(crawl_params)
     @crawl.user = current_user
-    @crawl.save
+    @crawl.save!
     @bars = params[:crawl][:bars].split()
     @bars.each do |id|
       bar = Bar.find(id.to_i)
@@ -64,6 +64,7 @@ class CrawlsController < ApplicationController
       crawl_bar.crawl = @crawl
       crawl_bar.save
     end
+
     redirect_to crawls_path
   end
 
