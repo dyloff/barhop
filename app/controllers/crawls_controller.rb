@@ -18,15 +18,24 @@ class CrawlsController < ApplicationController
   end
 
   def new
-    @bars = Bar.all
-    if params[:venue_category].include?("restaurant")
+    # Venue category filter
+    if params[:venue_category].include?("restaurant") && params[:venue_category].include?("bar")
+      @bars_by_venue
+    elsif params[:venue_category].include?("restaurant")
       @bars_by_venue = Bar.all.select { |bar| bar.types.include?('restaurant') }
     else
       @bars_by_venue = Bar.all
     end
-    @bars_by_price = Bar.where("price_range IN (?)", params[:price_range].drop(1))
 
-    @all_filtered_bars = @bars_by_price
+    # Price filter
+    @bars_by_price = params[:price_range] == [""] ? Bar.all : Bar.where("price_range IN (?)", params[:price_range].drop(1))
+
+    # All filtered
+    @all_filtered_bars = @bars_by_price & @bars_by_venue
+
+    # Number of bars requested
+    @number_of_bars = params[:number_of_bars] == "" ? 3 : params[:number_of_bars].to_i
+    @bars = Bar.all
   end
 
   def show
@@ -58,5 +67,4 @@ class CrawlsController < ApplicationController
 
     # @bars_address_price_venue = @bars_price_range_search & @bars_venue_search
   end
-
 end
