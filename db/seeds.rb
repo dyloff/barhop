@@ -1,6 +1,7 @@
 require "uri"
 require "net/http"
 require "json"
+require "faker"
 
 p "destroying existing"
 
@@ -67,31 +68,45 @@ full_results.each do |result|
 
   Bar.create!(
     name: result["name"],
-    types: result["types"],
+    restaurant: result["types"],
     location: result["vicinity"],
     longitude: result["geometry"]["location"]["lng"],
     latitude: result["geometry"]["location"]["lat"],
     price_range: result["price_level"] || 3,
     rating: result["rating"],
-    description: "TO SCRAPE",
+    description: Faker::Restaurant.description,         # "TO SCRAPE"
     image_url: photo_url
   )
 end
 
+users = ["alek", "lorenzo", "dylon"]
 
-user_count = 1
-crawl_counter = 1
+crawl_names=[
+            "'s Big Night Out",
+            "'s Regular Thursday",
+            "'s Brunch Drinks",
+            "'s Bank Holiday Bonanza",
+            "'s Soirée",
+            "'s After Work Drinks",
+            "'s LeWagon Destress",
+            "'s Drinks",
+            "'s Crawl",
+            "'s BarHop"
+          ]
+
+user_count = 0
+crawl_counter = 0
 3.times do
   user = User.create!(
-    email: "user#{user_count}@user.com",
+    email: "#{users[user_count]}@user.com",
     password: "123456",
-    username: "user#{user_count}"
+    username: users[user_count]
   )
   p user
   p "------------"
   3.times do
     crawl = Crawl.create!(
-      crawl_name: "Test #{crawl_counter}",
+      crawl_name: user.username.capitalize + crawl_names.sample,
       completed: false,
       public: [true, false].sample,
       date: nil,
@@ -112,7 +127,7 @@ crawl_counter = 1
   end
   2.times do
     crawl = Crawl.create!(
-      crawl_name: "Test #{crawl_counter}",
+      crawl_name: user.username.capitalize + crawl_names.sample,
       completed: false,
       public: [true, false].sample,
       date: nil,
