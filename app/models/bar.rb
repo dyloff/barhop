@@ -14,6 +14,9 @@ class Bar < ApplicationRecord
   validates :rating, numericality: { greater_than_or_equal_to: 0, less_than_or_equal_to: 5 }
   validates :description, presence: true
   # validates :image_url, presence: true
+
+  # scope :search_by_address 
+
 end
 
 # scope :filter_by_price, ->(price) { where price: price }
