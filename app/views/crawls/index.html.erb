@@ -1,17 +1,17 @@
-<div class="row justify-content-end">
-    <div class="d-flex justify-content-around">
-      <div class="sticky col-4">
-        <%= render "shared/filters" %>
-      </div>
-      <div class="col-7 row mt-4 d-flex justify-content-start text-center">
-        <div class="d-flex justify-content-around">
-          <button type="button" class="btn btn-light">Creators</button>
-          <button type="button" class="btn btn-light">Friends</button>
-          <button type="button" class="btn btn-light">Public</button>
-        </div>
-        <% @crawls.sample(4).each do |crawl| %>
-          <%= render "shared/routecards", crawl: crawl %>
-        <% end %>
-      </div>
+<div class="d-flex p-4">
+  <div class="sticky">
+    <%= render "shared/filters" %>
+  </div>
+  <div class="d-flex flex-column" style="height: 500px">
+    <div class="d-flex justify-content-around pe-4 mb-2">
+      <button type="button" class="active-tab">Creators</button>
+      <button type="button" class="btn btn-outline-primary">Friends</button>
+      <button type="button" class="btn btn-outline-primary">Public</button>
     </div>
+    <div class="index-crawls">
+      <% @all_info.each do |info| %>
+        <%= render "shared/routecards", info: info%>
+      <% end %>
+    </div>
+  </div>
 </div>

@@ -1,5 +1,4 @@
 
-<div class="p-3">
   <div class="card  p-4 text-center" style="width: 25rem; height: 500px" data-controller="slider-bar-range" data-controller="slider-price-range">
     <h5 class="card-title mt-2">Filters</h5>
     <%= form_with url: new_crawl_path, method: :get, html: { class: "row search-icon", data: { controller: "slider-price-range" } } do |f| %>
@@ -28,5 +27,5 @@
       <%= f.select :number_of_bars, [3, 4, 5, 6], { :include_blank => 'Prefered number of bars' }, class: "form-select select-category dropdown-item my-3" %>
       <%= submit_tag "Generate", class: "btn btn-primary"%>
     <% end %>
-  </div>
+
 </div>
