@@ -14,7 +14,7 @@
 </div>
 
 <div class="container">
-  <h4 class="homepage-featured border-bottom m-4">Featured BarHop</h4>
+  <h3 class="homepage-featured m-4">Featured BarHop</h3>
   <div class="mt-4 barcards-container">
     <% @crawl.bars.each do |bar| %>
       <%= render "shared/barcards", bar: bar %>
@@ -25,8 +25,7 @@
 <div class="container mb-3 px-0 mt-0">
   <div class="card mt-2 shadow-sm rounded-30">
     <div class="rounded-30 m-2" style="overflow:hidden">
-      <%= render "shared/map" %>
+      <%= render "shared/uninteractive_main_map" %>
     </div>
   </div>
 </div>
-<%# <%= render "shared/crawls_map" %>
