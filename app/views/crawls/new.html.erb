@@ -15,20 +15,22 @@
 
  <div class="d-flex justify-content-center my-2" data-controller="reload">
   <%# <button type="button" class="btn btn-primary mx-2">Confirm</button> %>
-  <%= form_with model: @crawl do |f| %>
+
     <%= form_with model: @crawl do |f| %>
-    <% f.hidden_field(:bars, value: @filtered_bars.map(&:id)) %>
-    <% f.label :crawl_name %>
-    <% f.text_field :crawl_name, value: "test" %>
-    <% f.label :completed %>
-    <% f.text_field :completed, value: false %>
-    <% f.label :public %>
-    <% f.text_field :public, value: false %>
-    <% f.label :date %>
-    <% f.date_field :date, value: 'Sat, 24 Jun 2023' %>
+    <div class="d-none">
+      <%= f.hidden_field(:bars, value: @filtered_bars.map(&:id)) %>
+      <%= f.label :crawl_name %>
+      <%= f.text_field :crawl_name, value: "test" %>
+      <%= f.label :completed %>
+      <%= f.text_field :completed, value: false %>
+      <%= f.label :public %>
+      <%= f.text_field :public, value: false %>
+      <%= f.label :date %>
+      <%= f.date_field :date, value: Date.parse('Sat, 24 Jun 2023') %>
+    </div>
     <%= f.submit 'Confirm your crawl', class: "btn btn-primary mx-2" %>
   <% end %>
-  <% end %>
+
 
   <button type="button" data-action="click->reload#reload" class="btn btn-secondary">Regenerate</button>
 </div>
