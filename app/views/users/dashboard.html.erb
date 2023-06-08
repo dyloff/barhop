@@ -14,26 +14,17 @@
     <h2 class="m-1">Your Crawls:</h2>
 
   <% @crawls.each_with_index do |crawl, i| %>
-  <div class="crawls mb-3 w-100">
-
     <div class="card">
-      <div class="card-body">
-
-        <div class="d-flex">
+        <div class="d-flex justify-content-between p-3">
           <% crawl.bars.each do |bar| %>
-              <div class="card">
-                <img src="<%= bar.image_url %>" alt="" class="card-img-top img-fluid" style="max-height: 200px;">
-                  <h5 class="card-title"><%= bar.name %></h5>
-                </div>
+          <div class="card dashboard-card">
+              <h5 class=""><%= bar.name %></h5>
+              <img src="<%= bar.image_url %>" alt="" class="card-img-top img-fluid" style="max-height: 200px;">
+          </div>
           <% end %>
+          <div class="card px-0 bg-white rounded-30" style ="overflow: hidden;">
+            <%= render "shared/dashboard_map", info:@all_info[i] %>
+          </div>
         </div>
-
-        <div class="crawl-route">
-          <%= render "shared/routecards", info: @all_info[i] %>
-        </div>
-
-      </div>
     </div>
-
-  </div>
 <% end %>
