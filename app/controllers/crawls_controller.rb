@@ -49,7 +49,15 @@ class CrawlsController < ApplicationController
   end
 
   def show
-    @bars = Bar.all
+    @crawl = Crawl.find(params[:id])
+    @markers = @crawl.bars.map do |bar|
+      {
+        lat: bar.latitude,
+        lng: bar.longitude,
+        info_window_html: render_to_string(partial: "info_window", locals: { bar: bar }),
+        marker_html: render_to_string(partial: "marker")
+      }
+    end
   end
 
   def create
