@@ -20,7 +20,10 @@ class UsersController < ApplicationController
       @all_info << all_crawl_info
     end
     @all_info
+
+    @favourite = Favourite.new
   end
+
 end
 
 
