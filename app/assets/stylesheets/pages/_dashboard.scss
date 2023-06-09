@@ -1,17 +1,18 @@
 .dashboard-card {
-  position:relative;
+  display: flex;
+  flex-direction: column;
   text-align: center;
-  h5 {
-    position: absolute;
-    bottom: 0;
-    right: 50%;
-    transform: translateX(50%);
-  }
+}
+
+.dashboard-header {
+  border-bottom: 1px solid $red;
+  margin: 1rem 1rem;
+  padding: 1rem 0rem;
 }
 
 .dashboard-container {
-  // display: flex;
-  // width: 50vw;
+  display: flex;
+  width: 50vw;
   justify-content: space-between;
   overflow-x:auto;
   &::-webkit-scrollbar {
