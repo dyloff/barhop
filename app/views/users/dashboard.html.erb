@@ -35,3 +35,11 @@
     </div>
 <% end %>
 </div>
+
+<div class="container">
+  <div class="mt-4">
+  <% @bars.each do |bar| %>
+      <%= render "shared/barcards", bar: bar%>
+    <% end %>
+  </div>
+</div>
