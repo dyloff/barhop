@@ -1,5 +1,5 @@
 
-  <div class="card  p-4 text-center" style="width: 25rem; height: 500px" data-controller="slider-bar-range" data-controller="slider-price-range">
+  <div class="card p-4 text-center" style="width: 25rem; height: 500px" data-controller="slider-bar-range" data-controller="slider-price-range">
     <h5 class="card-title mt-2">Filters</h5>
     <%= form_with url: new_crawl_path, method: :get, html: { class: "row search-icon", data: { controller: "slider-price-range" } } do |f| %>
       <%= f.text_field :query, value: params[:query], class: "form-control bg-white border border-black col-12", placeholder: "Location..." %>
@@ -25,7 +25,7 @@
         <label for="venue_category_2"><strong>Bar 🍷</strong></label>
       </div>
       <%= f.select :number_of_bars, [3, 4, 5, 6], { :include_blank => 'Prefered number of bars' }, class: "form-select select-category dropdown-item my-3" %>
-      <%= submit_tag "Generate", class: "btn btn-primary"%>
+      <%= submit_tag "Generate", class: "btn btn-primary mt-4"%>
     <% end %>
 
 </div>

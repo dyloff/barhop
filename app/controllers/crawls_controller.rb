@@ -49,7 +49,15 @@ class CrawlsController < ApplicationController
   end
 
   def show
-    @bars = Bar.all
+    @crawl = Crawl.find(params[:id])
+    @markers = @crawl.bars.map do |bar|
+      {
+        lat: bar.latitude,
+        lng: bar.longitude,
+        info_window_html: render_to_string(partial: "info_window", locals: { bar: bar }),
+        marker_html: render_to_string(partial: "marker")
+      }
+    end
   end
 
   def create
@@ -71,11 +79,11 @@ class CrawlsController < ApplicationController
 
   def filters
     if params[:venue_category].include?("restaurant") && params[:venue_category].include?("bar")
-      @bars_by_venue
+      @bars_by_venue = Bar.all
     elsif params[:venue_category].include?("restaurant")
       @bars_by_venue = Bar.all.select { |bar| bar.types.include?('restaurant') }
     else
-      @bars_by_venue = Bar.all
+      @bars_by_venue = Bar.all.select { |bar| !bar.types.include?('restaurant') }
     end
 
     # Price filter

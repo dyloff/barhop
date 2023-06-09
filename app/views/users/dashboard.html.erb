@@ -24,6 +24,13 @@
           <div class="dashboard-card rounded m-2">
             <img src="<%= bar.image_url %>" alt="" class="" style="max-height: 200px;">
             <h5 class=""><%= bar.name %></h5>
+            <%= form_with model: @favourite, url: bar_favourites_path(bar) do |f| %>
+                <div class="d-none">
+                  <%= f.hidden_field(:bar, value: bar) %>
+                </div>
+                <%= f.submit 'Favourite', class: "btn btn-primary mx-2" %>
+              <% end %>
+
           </div>
         <% end %>
       </div>
@@ -36,3 +43,12 @@
     </div>
   </div>
 <% end %>
+</div>
+
+<div class="container">
+  <div class="mt-4">
+  <% @bars.each do |bar| %>
+      <%= render "shared/barcards", bar: bar%>
+    <% end %>
+  </div>
+</div>

@@ -5,13 +5,30 @@
   </div>
 </div>
 
-<div class="d-flex justify-content-center">
-  <div class="row mt-2 d-flex justify-content-start">
-    <% @bars.sample(3).each do |bar| %>
+  <div class="mt-4 container barcards-container">
+    <% @crawl.bars.each do |bar| %>
       <%= render "shared/barcards", bar: bar %>
     <% end %>
   </div>
-</div>
- <div class="d-flex justify-content-center my-2">
-  <button type="button" class="btn btn-primary">Save this crawl</button>
+
+ <div class="d-flex justify-content-center my-2" data-controller="reload">
+  <%# <button type="button" class="btn btn-primary mx-2">Confirm</button> %>
+
+    <%= form_with model: @crawl do |f| %>
+    <div class="d-none">
+      <%= f.hidden_field(:bars, value: @crawl.bars.map(&:id)) %>
+      <%= f.label :crawl_name %>
+      <%= f.text_field :crawl_name, value: "test" %>
+      <%= f.label :completed %>
+      <%= f.text_field :completed, value: false %>
+      <%= f.label :public %>
+      <%= f.text_field :public, value: false %>
+      <%= f.label :date %>
+      <%= f.date_field :date, value: Date.parse('Sat, 24 Jun 2023') %>
+    </div>
+    <%= f.submit 'Save this BarHop', class: "btn btn-primary mx-2" %>
+  <% end %>
+
+  <%= link_to "Back to BarHops", crawls_path, class:"active-tab" %>
+
 </div>
