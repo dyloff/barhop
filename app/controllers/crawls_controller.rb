@@ -65,7 +65,7 @@ class CrawlsController < ApplicationController
       crawl_bar.save
     end
 
-    redirect_to crawls_path
+    redirect_to dashboard_path
   end
 
 

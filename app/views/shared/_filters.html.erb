@@ -20,9 +20,9 @@
       <div class="d-flex justify-content-around my-3">
         <input type="hidden" name="venue_category[]" value="" autocomplete="off">
         <input class="tag-selector2" type="checkbox" value="restaurant" name="venue_category[]" id="venue_category_1">
-        <label for="venue_category_1">🍺</label>
+        <label for="venue_category_1"><strong>Pub 🍺</strong></label>
         <input class="tag-selector2" type="checkbox" value="bar" name="venue_category[]" id="venue_category_2">
-        <label for="venue_category_2">🍷</label>
+        <label for="venue_category_2"><strong>Bar 🍷</strong></label>
       </div>
       <%= f.select :number_of_bars, [3, 4, 5, 6], { :include_blank => 'Prefered number of bars' }, class: "form-select select-category dropdown-item my-3" %>
       <%= submit_tag "Generate", class: "btn btn-primary"%>
