@@ -1,31 +1,40 @@
 <div class="container">
   <div class="row align-items-center py-4 border-bottom border-black">
     <div class="col">
-      <h1 class="d-flex justify-content-start ">Welcome <%= current_user.username%>👋</h1>
+      <h1 class="d-flex justify-content-start ">Welcome <%= current_user.username.capitalize%>👋</h1>
     </div>
     <div class="col text-end mb-1 fs-5">
       <%# <a href="#" class="p-3">Badges</a> %>
         <button class="btn btn-outline-primary">Favourite Bars 🍾 </button>
-        <button class="btn btn-primary ">Saved BarCrawls ✨</button>
+        <button class="btn btn-primary ">Saved BarHops ✨</button>
       <button class="btn btn-outline-primary">Friends 👽</button>
     </div>
   </div>
 
-    <h2 class="m-1">Your Crawls:</h2>
+    <h2 class="m-3">Your BarHops:</h2>
 
-  <% @crawls.each_with_index do |crawl, i| %>
-    <div class="card">
-        <div class="d-flex justify-content-between p-3">
-          <% crawl.bars.each do |bar| %>
-          <div class="card dashboard-card">
-              <h5 class=""><%= bar.name %></h5>
-              <img src="<%= bar.image_url %>" alt="" class="card-img-top img-fluid" style="max-height: 200px;">
+
+<% @crawls.each_with_index do |crawl, i| %>
+  <div class="dashboard-container">
+    <div class="card mb-3">
+      <div class="card-header bg-white border-0">
+        <h4 class="card-title border-bottom border-black"><%= crawl.crawl_name %></h4>
+      </div>
+
+      <div class="card-body d-flex justify-content-between m-1 p-2">
+        <% crawl.bars.each do |bar| %>
+          <div class="card dashboard-card dashboard-container rounded">
+            <h5 class=""><%= bar.name %></h5>
+            <img src="<%= bar.image_url %>" alt="" class="card-img-top img-fluid" style="max-height: 200px;">
           </div>
-          <% end %>
-          <div class="card px-0 bg-white rounded-30" style ="overflow: hidden;">
-            <%= render "shared/dashboard_map", info:@all_info[i] %>
-          </div>
+        <% end %>
+        <div class="card px-0 bg-white rounded-30" style="overflow: hidden;">
+          <%= render "shared/dashboard_map", info:@all_info[i] %>
         </div>
+      </div>
+      <div class="card-footer bg-white border-0 d-flex justify-content-center">
+        <button class="btn btn-primary">⬇</button>
+      </div>
     </div>
+  </div>
 <% end %>
-</div>
