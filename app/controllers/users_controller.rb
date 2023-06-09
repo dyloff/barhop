@@ -25,6 +25,7 @@ class UsersController < ApplicationController
 
     @favourites = current_user.favourites
     @bars = []
+    @bars
     @favourites.each { |favourite| @bars << Bar.find(favourite.bar_id) }
 
   end

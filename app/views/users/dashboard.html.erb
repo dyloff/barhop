@@ -27,7 +27,7 @@
                     <div class="d-none">
                       <%= f.hidden_field(:bar, value: bar) %>
                     </div>
-                    <%= f.submit 'Favourite', class: "btn btn-primary mx-2" %>
+                   <button class="btn btn-outline-primary" type="submit" name="commit" data-disable-with="Favourite"><i class="fa-solid fa-heart"></i></button>
                   <% end %>
 
               </div>
@@ -47,7 +47,7 @@
 
   <div data-favourites-target="favouriteBars" class="container d-none">
     <div class="row">
-      <% @bars.each do |bar| %>
+      <% @bars.uniq.each do |bar| %>
         <div class="card px-0 bg-white rounded-30 m-2 col-3">
           <%= image_tag bar.image_url, style:"height: 100px; object-fit: cover; border-radius:30px 30px 0px 0px", alt:"Bar card image", class:"card-img-top card-image" %>
           <div class="card-body">
