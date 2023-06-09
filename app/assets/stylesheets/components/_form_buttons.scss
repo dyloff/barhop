@@ -10,10 +10,10 @@
 .tag-selector + label {
   cursor: pointer;
   display: inline-block;
-  font-size: 0.7rem;
+  font-size: 0.8rem;
   border-radius: 50rem;
   padding: 0.1rem 0.5rem;
-  background-color: $pale-red;
+  // background-color: $pale-red;
   color: $red;
   border: 1px solid $red;
   margin-right: 0.6rem;
@@ -37,12 +37,12 @@
 .tag-selector2 + label {
   cursor: pointer;
   display: inline-block;
-  font-size: 0.7rem;
+  font-size: 1.3rem;
   border-radius: 50rem;
   padding: 0.1rem 0.5rem;
-  background-color: $pale-red;
+  // background-color: $pale-red;
   color: $red;
-  border: 1px solid $red;
+  // border: 1px solid $red;
   margin-right: 0.6rem;
   margin-bottom: 0.4rem;
 }
