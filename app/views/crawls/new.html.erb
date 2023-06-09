@@ -19,7 +19,7 @@
     <div class="d-none">
       <%= f.hidden_field(:bars, value: @filtered_bars.map(&:id)) %>
       <%= f.label :crawl_name %>
-      <%= f.text_field :crawl_name, value: "test" %>
+      <%= f.text_field :crawl_name, value:"#{current_user.username}'s BarHop"%>
       <%= f.label :completed %>
       <%= f.text_field :completed, value: false %>
       <%= f.label :public %>
