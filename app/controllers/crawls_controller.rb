@@ -78,12 +78,12 @@ class CrawlsController < ApplicationController
 
 
   def filters
-    if params[:venue_category].include?("restaurant") && params[:venue_category].include?("bar")
+    if params[:venue_category].include?("restaurant")
       @bars_by_venue = Bar.all
-    elsif params[:venue_category].include?("restaurant")
-      @bars_by_venue = Bar.all.select { |bar| bar.types.include?('restaurant') }
+    # elsif params[:venue_category].include?("restaurant")
+    #   @bars_by_venue = Bar.all.select { |bar| bar.types.include?('restaurant') }
     else
-      @bars_by_venue = Bar.all.select { |bar| !bar.types.include?('restaurant') }
+      @bars_by_venue = Bar.all.map { |bar| bar unless bar.types.include?("restaurant") }
     end
 
     # Price filter
