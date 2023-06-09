@@ -21,6 +21,12 @@
               <h5 class=""><%= bar.name %></h5>
               <img src="<%= bar.image_url %>" alt="" class="card-img-top img-fluid" style="max-height: 200px;">
           </div>
+              <%= form_with model: @favourite, url: bar_favourites_path(bar) do |f| %>
+                <div class="d-none">
+                  <%= f.hidden_field(:bar, value: bar) %>
+                </div>
+                <%= f.submit 'Favourite', class: "btn btn-primary mx-2" %>
+              <% end %>
           <% end %>
           <div class="card px-0 bg-white rounded-30" style ="overflow: hidden;">
             <%= render "shared/dashboard_map", info:@all_info[i] %>
@@ -28,4 +34,12 @@
         </div>
     </div>
 <% end %>
+</div>
+
+<div class="container">
+  <div class="mt-4">
+  <% @bars.each do |bar| %>
+      <%= render "shared/barcards", bar: bar%>
+    <% end %>
+  </div>
 </div>

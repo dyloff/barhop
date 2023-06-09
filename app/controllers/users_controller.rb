@@ -20,7 +20,14 @@ class UsersController < ApplicationController
       @all_info << all_crawl_info
     end
     @all_info
+
+    @favourite = Favourite.new
+
+    @favourites = current_user.favourites
+    @bars = []
+    @favourites.each { |favourite| @bars << Bar.find(favourite.bar_id) }
   end
+
 end
 
 
