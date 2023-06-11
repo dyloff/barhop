@@ -25,11 +25,15 @@ class UsersController < ApplicationController
 
     @favourites = current_user.favourites
     @bars = []
-    @bars
-    @favourites.each { |favourite| @bars << Bar.find(favourite.bar_id) }
-
+    @favourites.each do |favourite|
+      if  @bars.any? { |bar| bar.id == favourite.bar_id }
+        index = @bars.index { |bar| bar.id == favourite.bar_id }
+        @bars.delete_at(index)
+      else
+        @bars << Bar.find(favourite.bar_id)
+      end
+    end
   end
-
 end
 
 
