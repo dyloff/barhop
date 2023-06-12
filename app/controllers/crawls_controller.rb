@@ -178,7 +178,7 @@ class CrawlsController < ApplicationController
         latitude: result["geometry"]["location"]["lat"],
         price_range: result["price_level"] || 3,
         rating: result["rating"],
-        description: place_details(result["place_id"])["editorial_summary"]["overview"],
+        description: "Further data unavailable for this location",
         image_url: photo_url
       )
       search_result_bars << temp_bar
