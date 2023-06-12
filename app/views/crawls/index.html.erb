@@ -4,9 +4,9 @@
   </div>
   <div class="d-flex flex-column" style="height: 500px">
     <div class="d-flex justify-content-around pe-4 mb-2">
-      <button type="button" class="active-tab">Creators</button>
-      <button type="button" class="btn btn-outline-primary">Friends</button>
-      <button type="button" class="btn btn-outline-primary">Public</button>
+      <button data-index-tabs-target="creators" data-action="click->disable-button#disable" type="button" class="active-tab">Creators</button>
+      <button data-index-tabs-target="friends"  data-action="click->disable-button#disable" type="button" class="btn btn-outline-primary">Friends</button>
+      <button data-index-tabs-target="public"  data-action="click->disable-button#disable" type="button" class="btn btn-outline-primary">Public</button>
     </div>
     <div class="index-crawls">
       <% @all_info.shuffle.each do |info| %>

@@ -56,9 +56,9 @@ export default class extends Controller {
         const customMarker = document.createElement("div");
         customMarker.innerHTML = marker.marker_html;
 
-        console.log(customMarker.innerHTML);
+      //  console.log(customMarker.innerHTML);
 
-        // new mapboxgl.Marker(customMarker)
+        new mapboxgl.Marker(customMarker)
         new mapboxgl.Marker()
         .setLngLat([marker.lng, marker.lat])
         .setPopup(popup)

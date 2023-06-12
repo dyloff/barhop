@@ -7,19 +7,21 @@
       <%# <a href="#" class="p-3">Badges</a> %>
       <button data-action="click->favourites#hideShowFavourites" data-favourites-target="favouriteBarsButton" class="btn btn-outline-primary">Favourite Bars 🍾 </button>
       <button data-action="click->favourites#hideShowSavedBarhops" data-favourites-target="savedBarsButton" class="btn btn-outline-primary active-button">Saved BarHops ✨</button>
-      <button class="btn btn-outline-primary">Friends 👽</button>
+      <button data-action="click->favourites#hideShowFriendsButton" data-favourites-target="showFriendsButton" class="btn btn-outline-primary">Friends 👽</button>
+      <%# <%= link_to "Friends 👽", friends_path, class: "btn btn-outline-primary" %>
+      <%# <button class="btn btn-outline-primary">Friends 👽</button> %>
     </div>
   </div>
-  <div data-favourites-target="savedBarhops">
+  <div data-favourites-target="savedBarhops" class="">
     <h2 class="m-3">Your BarHops:</h2>
     <% @crawls.each_with_index do |crawl, i| %>
-      <div class="card mb-3 rounded-30" style="overflow: hidden">
+      <div class="card mb-3 rounded-30" style="overflow: hidden;" >
         <h4 class="card-title dashboard-header"><%= crawl.crawl_name %></h4>
         <div class="d-flex justify-content-between ps-1 pe-3">
           <div class="dashboard-container">
             <% crawl.bars.each do |bar| %>
               <div class="dashboard-card rounded m-2">
-                <img src="<%= bar.image_url %>" alt="" class="" style="max-height: 200px;">
+                <img src="<%= bar.image_url %>" alt="" class="" style="; height: 100%">
                 <p class=""><strong><%= bar.name %></strong></p>
                 <%= form_with model: @favourite, url: bar_favourites_path(bar) do |f| %>
                 <div class="d-none">
@@ -57,6 +59,25 @@
               <i class="fa-solid fa-star fa-lg" style="color:#ffdd00"> <span class="icon-text"></span></i>
             <% end %>
             </h6>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  </div>
+  <div data-favourites-target="showFriends" class="container d-none">
+    <div class="row">
+      <h1>Friends</h1>
+      <% @friends.each do |friend| %>
+        <div class="col-md-4">
+          <div class="card">
+            <div class="card-body">
+              <p class="card-text">👤 : <%= friend.username.capitalize %></p>
+              <hr>
+              <p class="card-text">📩 : <%= friend.email %></p>
+              <form action="/users/<%= friend.id %>/unfollow" method="POST">
+                <button type="submit" class="btn btn-danger">Delete</button>
+              </form>
+            </div>
           </div>
         </div>
       <% end %>
