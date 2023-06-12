@@ -1,0 +1,30 @@
+<div class="row">
+  <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+    <div class="friend-card" data-user="<%= user.id %>">
+      <%= user.username %>
+      <%= user.email %>
+      <hr>
+      <% if current_user.is_following?(user.id) && user.is_following?(current_user.id) %>
+        <p>We are friends</p>
+      <% else %>
+        <p>We are not friends</p>
+        <% if user.is_following?(current_user.id) %>
+        <hr>
+          <form action="/users/<%= user.id %>/follow" method="POST">
+            <button type="submit" class="btn btn-primary btn-sm small-button">Accept</button>
+          </form>
+        <% else %>
+          <% if current_user.is_following?(user.id) %>
+            <form action="/users/<%= user.id %>/unfollow" method="POST">
+              <button type="submit" class="btn btn-danger btn-sm small-button">Unsend</button>
+            </form>
+          <% else %>
+            <form action="/users/<%= user.id %>/follow" method="POST">
+              <button type="submit" class="btn btn-success btn-sm small-button">Send</button>
+            </form>
+          <% end %>
+        <% end %>
+      <% end %>
+    </div>
+  </div>
+</div>

@@ -3,6 +3,13 @@ Rails.application.routes.draw do
 
   root "crawls#home"
 
+  resources :users, only: [:index] do
+    member do
+      post :follow
+      post :unfollow
+    end
+  end
+
   resources :crawls, only: [:home, :index, :new, :create, :show ] do
     resources :reviews, only: [:new, :create]
     resources :shared_withs, only: [:create]
@@ -11,6 +18,7 @@ Rails.application.routes.draw do
 
   get 'dashboard', to: 'users#dashboard'
   get 'generate', to: 'crawls#generate'
+  get 'friends', to: 'users#friends'
 
   resources :bar, only: [] do
     resources :favourites, only: [:new, :create]
