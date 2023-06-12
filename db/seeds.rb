@@ -170,23 +170,19 @@
 
 
 
-require "open-uri"
-require "nokogiri"
+require "uri"
+require "net/http"
+require "json"
 
-name = "fabric london"
-location = "77A Charterhouse Street, London"
+def place_details(google_id)
+  url = URI("https://maps.googleapis.com/maps/api/place/details/json?place_id=#{google_id}&key=#{ENV['GOOGLE_API_KEY']}")
 
-name = name.gsub(" ", "+")
-location = location.gsub(" ", "+")
-location = location.gsub(",", "%2C")
+  https = Net::HTTP.new(url.host, url.port)
+  https.use_ssl = true
 
-url = "https://www.google.com/search?q=#{name}%2C+#{location}"
+  request = Net::HTTP::Get.new(url)
 
-html_file = URI.open(url).read
-html_doc = Nokogiri::HTML.parse(html_file)
-
-p html_doc
-
-results = html_doc.search("#kp-wp-tab-overview").each do |el|
-  p el
+  response = https.request(request)
+  parsed_json = JSON.parse(response.read_body)
+  parsed_json["result"]["editorial_summary"]["overview"]
 end

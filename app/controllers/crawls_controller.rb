@@ -106,7 +106,7 @@ class CrawlsController < ApplicationController
     # @bars_by_price = params[:price_range] == [""] ? retrieve_bars_from_api : Bar.where("price_range IN (?)", params[:price_range].drop(1))
 
     # All filtered
-    @all_filtered_bars = @bars_by_price && @bars_by_venue
+    @all_filtered_bars = @bars_by_price & @bars_by_venue
 
     # Number of bars requested
     @number_of_bars = params[:number_of_bars] == "" ? 3 : params[:number_of_bars].to_i
@@ -178,12 +178,25 @@ class CrawlsController < ApplicationController
         latitude: result["geometry"]["location"]["lat"],
         price_range: result["price_level"] || 3,
         rating: result["rating"],
-        description: Faker::Restaurant.description,         # "TO SCRAPE"
+        description: place_details(result["place_id"])["editorial_summary"]["overview"],
         image_url: photo_url
       )
       search_result_bars << temp_bar
     end
     search_result_bars.uniq
+  end
+
+  def place_details(google_id)
+    url = URI("https://maps.googleapis.com/maps/api/place/details/json?place_id=#{google_id}&key=#{ENV['GOOGLE_API_KEY']}")
+
+    https = Net::HTTP.new(url.host, url.port)
+    https.use_ssl = true
+
+    request = Net::HTTP::Get.new(url)
+
+    response = https.request(request)
+    parsed_json = JSON.parse(response.read_body)
+    parsed_json["result"]
   end
 
   def crawl_params
