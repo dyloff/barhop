@@ -68,6 +68,10 @@ class CrawlsController < ApplicationController
       end
     else
       @filtered_bars = filters
+      @filtered_bars_info = []
+      @filtered_bars.each do |bar|
+        @filtered_bars_info << bar.attributes
+      end
       @filtered_bars_ids = @filtered_bars.map(&:place_id)
       @markers = @filtered_bars.map do |bar|
         {
@@ -98,12 +102,26 @@ class CrawlsController < ApplicationController
   end
 
   def create
+    bar_info = eval(params[:crawl][:bars_full_info].gsub("} {", "}, {").insert(0, "[").insert(-1, "]"))
+    @bars = bar_info.map do |bar|
+      Bar.create!(
+        name: bar["name"],
+        types: bar["types"],
+        # restaurant: bar["types"],
+        location: bar["location"],
+        longitude: bar["longitude"],
+        latitude: bar["latitude"],
+        price_range: bar["price_range"],
+        rating: bar["rating"],
+        place_id: bar["place_id"],
+        description: bar["description"],
+        image_url: bar["image_url"]
+      )
+    end
     @crawl = Crawl.new(crawl_params)
     @crawl.user = current_user
     @crawl.save!
-    @bars = params[:crawl][:bars].split()
-    @bars.each do |id|
-      bar = Bar.find(id.to_i)
+    @bars.each do |bar|
       crawl_bar = Crawlbar.new()
       crawl_bar.bar = bar
       crawl_bar.crawl = @crawl

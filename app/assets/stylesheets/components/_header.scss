@@ -6,7 +6,7 @@
   align-self: flex-end;
   margin: 0 0 0 1rem;
   border: 2px solid $red;
-  transition: all ease-in 1s;
+  transition: all ease-in 0.75s;
 }
 
 .search-box-small input{
@@ -15,7 +15,7 @@
   border: none;
   border-radius: 50px;
   background: transparent;
-  color: black;
+  color: $black;
   box-shadow: 5px 5px 30px rgba(255,255,255,.4);
   outline: none;
   padding: 0 1rem;
@@ -24,7 +24,7 @@
 }
 
 .search-box-small input::placeholder{
-  color: black;
+  color: $black;
   font-family: $headers-font;
 }
 

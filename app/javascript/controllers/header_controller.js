@@ -5,7 +5,7 @@ export default class extends Controller {
   static targets = ["smallDiv", "formDiv"]
 
   connect() {
-    console.log("header controller")
+    // console.log("header controller")
   }
 
   maximize() {
