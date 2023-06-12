@@ -7,11 +7,12 @@
       <%# <a href="#" class="p-3">Badges</a> %>
       <button data-action="click->favourites#hideShowFavourites" data-favourites-target="favouriteBarsButton" class="btn btn-outline-primary">Favourite Bars 🍾 </button>
       <button data-action="click->favourites#hideShowSavedBarhops" data-favourites-target="savedBarsButton" class="btn btn-outline-primary active-button">Saved BarHops ✨</button>
-      <%= link_to "Friends 👽", friends_path, class: "btn btn-outline-primary" %>
+      <button data-action="click->favourites#hideShowFriendsButton" data-favourites-target="showFriendsButton" class="btn btn-outline-primary">Friends 👽</button>
+      <%# <%= link_to "Friends 👽", friends_path, class: "btn btn-outline-primary" %>
       <%# <button class="btn btn-outline-primary">Friends 👽</button> %>
     </div>
   </div>
-  <div data-favourites-target="savedBarhops" class="d-none">
+  <div data-favourites-target="savedBarhops" class="">
     <h2 class="m-3">Your BarHops:</h2>
     <% @crawls.each_with_index do |crawl, i| %>
       <div class="card mb-3 rounded-30" style="overflow: hidden">
@@ -63,24 +64,23 @@
       <% end %>
     </div>
   </div>
-</div>
-<<div class="container">
-  <div class="row">
-    <h1>Friends</h1>
-    <% @friends.each do |friend| %>
-      <div class="col-md-4">
-        <div class="card">
-          <div class="card-body">
-            <p class="card-text">👤 : <%= friend.username.capitalize %></p>
-            <hr>
-            <p class="card-text">📩 : <%= friend.email %></p>
-            <form action="/users/<%= friend.id %>/unfollow" method="POST">
-              <button type="submit" class="btn btn-danger">Delete</button>
-            </form>
+  <div data-favourites-target="showFriends" class="container d-none">
+    <div class="row">
+      <h1>Friends</h1>
+      <% @friends.each do |friend| %>
+        <div class="col-md-4">
+          <div class="card">
+            <div class="card-body">
+              <p class="card-text">👤 : <%= friend.username.capitalize %></p>
+              <hr>
+              <p class="card-text">📩 : <%= friend.email %></p>
+              <form action="/users/<%= friend.id %>/unfollow" method="POST">
+                <button type="submit" class="btn btn-danger">Delete</button>
+              </form>
+            </div>
           </div>
         </div>
-      </div>
-    <% end %>
+      <% end %>
+    </div>
   </div>
 </div>
-
