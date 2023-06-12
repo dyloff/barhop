@@ -1,4 +1,6 @@
 class UsersController < ApplicationController
+  before_action :set_user, only: [:follow, :unfollow]
+
   def dashboard
     # @crawls = Crawl.all
     @crawls = current_user.crawls
@@ -33,9 +35,46 @@ class UsersController < ApplicationController
         @bars << Bar.find(favourite.bar_id)
       end
     end
+
+    @users = User.all.select do |user|
+  end
+
+  def friends
+    @users = User.all.select do |user|
+      if current_user.is_following?(user.id) && user.is_following?(current_user.id)
+        user
+      end
+    end
+  end
+
+  def index
+    @users = User.where.not(id: current_user.id)
+  end
+
+  def follow
+    if current_user.follow(@user.id)
+      respond_to do |format|
+        format.html { redirect_to users_path }
+        format.js
+      end
+    end
+  end
+
+  def unfollow
+    if current_user.unfollow(@user.id)
+      respond_to do |format|
+        format.html { redirect_to users_path }
+        format.js { render action: :follow }
+      end
+    end
+  end
+
+  private
+
+  def set_user
+    @user = User.find(params[:id])
   end
 end
-
 
 # def dashboard
 #   @crawls = current_user.crawls

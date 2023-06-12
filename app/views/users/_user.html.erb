@@ -1,0 +1,30 @@
+<li data-user=<%= user.id %>>
+  <%= user.email %>
+  <%# Checking friend relationship %>
+  <% if current_user.is_following?(user.id) && user.is_following?(current_user.id) %>
+    <p>We are friend</p>
+  <% else %>
+    <p>We are not friend</p>
+    <%# Confirming friendship %>
+    <% if user.is_following?(current_user.id) %>
+      <form action="/users/<%= user.id %>/follow" method="POST">
+        <button type="submit">Accept friend request</button>
+      </form>
+    <% else %>
+      <% if current_user.is_following?(user.id) %>
+        <%# link_to "Unfollow", unfollow_user_path(user.id), method: :post, remote: true %>
+        <form action="/users/<%= user.id %>/unfollow" method="POST">
+          <button type="submit">Unsend friend request</button>
+        </form>
+      <% else %>
+        <%# link_to "Follow", follow_user_path(user.id), method: :post, remote: true %>
+        <form action="/users/<%= user.id %>/follow" method="POST">
+          <button type="submit">Send friend request</button>
+        </form>
+      <% end %>
+    <% end %>
+  <% end %>
+
+  <br>
+  <br>
+</li>

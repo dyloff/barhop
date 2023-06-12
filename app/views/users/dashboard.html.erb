@@ -7,10 +7,11 @@
       <%# <a href="#" class="p-3">Badges</a> %>
       <button data-action="click->favourites#hideShowFavourites" data-favourites-target="favouriteBarsButton" class="btn btn-outline-primary">Favourite Bars 🍾 </button>
       <button data-action="click->favourites#hideShowSavedBarhops" data-favourites-target="savedBarsButton" class="btn btn-outline-primary active-button">Saved BarHops ✨</button>
-      <button class="btn btn-outline-primary">Friends 👽</button>
+      <%= link_to "Friends 👽", friends_path, class: "btn btn-outline-primary" %>
+      <%# <button class="btn btn-outline-primary">Friends 👽</button> %>
     </div>
   </div>
-  <div data-favourites-target="savedBarhops">
+  <div data-favourites-target="savedBarhops" class="d-none">
     <h2 class="m-3">Your BarHops:</h2>
     <% @crawls.each_with_index do |crawl, i| %>
       <div class="card mb-3 rounded-30" style="overflow: hidden">
@@ -62,4 +63,9 @@
       <% end %>
     </div>
   </div>
+</div>
+<div class="container">
+  <div class="row">
+    
+    </div>
 </div>
