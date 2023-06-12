@@ -185,6 +185,8 @@ url = "https://www.google.com/search?q=#{name}%2C+#{location}"
 html_file = URI.open(url).read
 html_doc = Nokogiri::HTML.parse(html_file)
 
+p html_doc
+
 results = html_doc.search("#kp-wp-tab-overview").each do |el|
   p el
 end

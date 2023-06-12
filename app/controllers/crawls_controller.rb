@@ -106,9 +106,8 @@ class CrawlsController < ApplicationController
     # @bars_by_price = params[:price_range] == [""] ? retrieve_bars_from_api : Bar.where("price_range IN (?)", params[:price_range].drop(1))
 
     # All filtered
-    @all_filtered_bars = @bars_by_price & @bars_by_venue
+    @all_filtered_bars = @bars_by_price && @bars_by_venue
 
-    raise
     # Number of bars requested
     @number_of_bars = params[:number_of_bars] == "" ? 3 : params[:number_of_bars].to_i
     @filtered_bars = @all_filtered_bars.sample(@number_of_bars)
