@@ -3,11 +3,6 @@ require "net/http"
 require "json"
 require "faker"
 
-serialized_json = URI.open("https://api.mapbox.com/geocoding/v5/mapbox.places/Harrow_View_Road.json?access_token=#{ENV['MAPBOX_API_KEY']}").read
-loc_data = JSON.parse(serialized_json)
-search_long = loc_data["features"][0]["center"][0]
-search_lat = loc_data["features"][0]["center"][1]
-
 p "destroying existing"
 
 SharedWith.destroy_all
@@ -25,7 +20,7 @@ def google_api_call(params = {})
 
   ###### DO NOT DELETE THE COMMENTED OUT CODE HERE - COMMENT IT BACK IN TO USE THE API ########
 
-  serialized_json = URI.open("https://api.mapbox.com/geocoding/v5/mapbox.places/Harrow_View_Road.json?access_token=#{ENV['MAPBOX_API_KEY']}").read
+  serialized_json = URI.open("https://api.mapbox.com/geocoding/v5/mapbox.places/Hoxton.json?access_token=#{ENV['MAPBOX_API_KEY']}").read
   loc_data = JSON.parse(serialized_json)
   search_long = loc_data["features"][0]["center"][0]
   search_lat = loc_data["features"][0]["center"][1]
@@ -80,7 +75,7 @@ full_results.each do |result|
 
     search_result_bars = []
 
-    temp_bar = Bar.new(
+    temp_bar = Bar.create!(
     name: result["name"],
     types: result["types"],
 
@@ -92,7 +87,7 @@ full_results.each do |result|
     price_range: result["price_level"] || 3,
     rating: result["rating"],
     description: Faker::Restaurant.description,         # "TO SCRAPE"
-    image_url: photo_url
+    image_url: photo_url,
     place_id: result["place_id"]
   )
     search_result_bars << temp_bar
@@ -168,4 +163,3 @@ users.count.times do
 
   user_count += 1
 end
-

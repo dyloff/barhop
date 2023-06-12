@@ -117,25 +117,26 @@ class CrawlsController < ApplicationController
 
   def filters
     if params[:venue_category].include?("restaurant")
-      @all_bars_test = retrieve_bars_from_api
-      @bars_by_venue = retrieve_bars_from_api
+      # @all_bars_test = retrieve_bars_from_api
+      @master_bar_list = retrieve_bars_from_api
+      @bars_by_venue = @master_bar_list
     # elsif params[:venue_category].include?("restaurant")
     #   @bars_by_venue = Bar.all.select { |bar| bar.types.include?('restaurant') }
     else
-      @bars_by_venue = retrieve_bars_from_api.map { |bar| bar unless bar.types.include?("restaurant") }
+      @bars_by_venue = @master_bar_list.map { |bar| bar unless bar.types.include?("restaurant") }
     end
 
     # Price filter
     if params[:price_range] == [""]
-      @bars_by_price = retrieve_bars_from_api
+      @bars_by_price = @master_bar_list
     else
-      @bars_by_price = retrieve_bars_from_api.select do |bar|
+      @bars_by_price = @master_bar_list.select do |bar|
         params[:price_range].drop(1).include?(bar.price_range)
       end
     end
 
     ## This no longer works because it uses Active Record
-    # @bars_by_price = params[:price_range] == [""] ? retrieve_bars_from_api : Bar.where("price_range IN (?)", params[:price_range].drop(1))
+    # @bars_by_price = params[:price_range] == [""] ? @master_bar_list : Bar.where("price_range IN (?)", params[:price_range].drop(1))
 
     # All filtered
     @all_filtered_bars = @bars_by_price & @bars_by_venue
@@ -178,13 +179,13 @@ class CrawlsController < ApplicationController
   def retrieve_bars_from_api
     full_results = []
     first_api_call = google_api_call
-    sleep(3)
-    second_api_call = google_api_call({ next_page_key: first_api_call["next_page_token"] })
-    sleep(3)
-    third_api_call = google_api_call({ next_page_key: second_api_call["next_page_token"] })
+    # sleep(3)
+    # second_api_call = google_api_call({ next_page_key: first_api_call["next_page_token"] })
+    # sleep(3)
+    # third_api_call = google_api_call({ next_page_key: second_api_call["next_page_token"] })
     full_results << first_api_call["results"]
-    full_results << second_api_call["results"]
-    full_results << third_api_call["results"]
+    # full_results << second_api_call["results"]
+    # full_results << third_api_call["results"]
 
     full_results = full_results.flatten
     search_result_bars = []
@@ -210,6 +211,7 @@ class CrawlsController < ApplicationController
         latitude: result["geometry"]["location"]["lat"],
         price_range: result["price_level"] || 3,
         rating: result["rating"],
+        place_id: result["place_id"],
         description: "Further data unavailable for this location",
         image_url: photo_url
       )
