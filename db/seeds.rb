@@ -3,6 +3,11 @@ require "net/http"
 require "json"
 require "faker"
 
+serialized_json = URI.open("https://api.mapbox.com/geocoding/v5/mapbox.places/Harrow_View_Road.json?access_token=#{ENV['MAPBOX_API_KEY']}").read
+loc_data = JSON.parse(serialized_json)
+search_long = loc_data["features"][0]["center"][0]
+search_lat = loc_data["features"][0]["center"][1]
+
 p "destroying existing"
 
 SharedWith.destroy_all
@@ -20,25 +25,32 @@ def google_api_call(params = {})
 
   ###### DO NOT DELETE THE COMMENTED OUT CODE HERE - COMMENT IT BACK IN TO USE THE API ########
 
+  serialized_json = URI.open("https://api.mapbox.com/geocoding/v5/mapbox.places/Harrow_View_Road.json?access_token=#{ENV['MAPBOX_API_KEY']}").read
+  loc_data = JSON.parse(serialized_json)
+  search_long = loc_data["features"][0]["center"][0]
+  search_lat = loc_data["features"][0]["center"][1]
 
-  # if !params[:next_page_key]
-  #   url = URI("https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=51.531737%2C-0.077025&radius=2000&type=bar&key=#{ENV['GOOGLE_API_KEY']}")
-  # else
-  #   url = URI("https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=51.531737%2C-0.077025&radius=2000&type=bar&key=#{ENV['GOOGLE_API_KEY']}&pagetoken=#{params[:next_page_key]}")
-  # end
+  if !params[:next_page_key]
+    url = URI("https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=#{search_lat}%2C#{search_long}&radius=2000&type=bar&key=#{ENV['GOOGLE_API_KEY']}")
+  else
+    url = URI("https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=#{search_lat}%2C#{search_long}&radius=2000&type=bar&key=#{ENV['GOOGLE_API_KEY']}&pagetoken=#{params[:next_page_key]}")
+  end
 
-  # https = Net::HTTP.new(url.host, url.port)
-  # https.use_ssl = true
+  https = Net::HTTP.new(url.host, url.port)
+  https.use_ssl = true
 
-  # request = Net::HTTP::Get.new(url)
+  request = Net::HTTP::Get.new(url)
 
-  # response = https.request(request)
-  # json_reponse = response.read_body
+  response = https.request(request)
+  json_reponse = response.read_body
 
-  # JSON.parse(json_reponse)
+  JSON.parse(json_reponse)
 
-  local_json = File.read("data.json")
-  JSON.parse(local_json)
+  ##### LOCAL COPY CODE #####
+
+  # local_json = File.read("data.json")
+  # JSON.parse(local_json)
+
   # RETURNS A HASH
 end
 
@@ -66,7 +78,9 @@ full_results.each do |result|
     photo_url = "https://loremflickr.com/cache/resized/65535_52751342904_c22b7c6469_400_400_nofilter.jpg"
   # end
 
-  Bar.create!(
+    search_result_bars = []
+
+    temp_bar = Bar.new(
     name: result["name"],
     types: result["types"],
 
@@ -78,9 +92,10 @@ full_results.each do |result|
     price_range: result["price_level"] || 3,
     rating: result["rating"],
     description: Faker::Restaurant.description,         # "TO SCRAPE"
-    image_url: photo_url,
+    image_url: photo_url
     place_id: result["place_id"]
   )
+    search_result_bars << temp_bar
 end
 
 users = ["alek", "lorenzo", "dylon", "justin"]
@@ -153,3 +168,4 @@ users.count.times do
 
   user_count += 1
 end
+

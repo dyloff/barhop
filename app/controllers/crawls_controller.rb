@@ -1,3 +1,8 @@
+require "uri"
+require "open-uri"
+require "net/http"
+require "json"
+
 class CrawlsController < ApplicationController
   def home
     @crawl = Crawl.all.sample
@@ -108,18 +113,29 @@ class CrawlsController < ApplicationController
     redirect_to dashboard_path
   end
 
+  private
 
   def filters
     if params[:venue_category].include?("restaurant")
-      @bars_by_venue = Bar.all
+      @all_bars_test = retrieve_bars_from_api
+      @bars_by_venue = retrieve_bars_from_api
     # elsif params[:venue_category].include?("restaurant")
     #   @bars_by_venue = Bar.all.select { |bar| bar.types.include?('restaurant') }
     else
-      @bars_by_venue = Bar.all.map { |bar| bar unless bar.types.include?("restaurant") }
+      @bars_by_venue = retrieve_bars_from_api.map { |bar| bar unless bar.types.include?("restaurant") }
     end
 
     # Price filter
-    @bars_by_price = params[:price_range] == [""] ? Bar.all : Bar.where("price_range IN (?)", params[:price_range].drop(1))
+    if params[:price_range] == [""]
+      @bars_by_price = retrieve_bars_from_api
+    else
+      @bars_by_price = retrieve_bars_from_api.select do |bar|
+        params[:price_range].drop(1).include?(bar.price_range)
+      end
+    end
+
+    ## This no longer works because it uses Active Record
+    # @bars_by_price = params[:price_range] == [""] ? retrieve_bars_from_api : Bar.where("price_range IN (?)", params[:price_range].drop(1))
 
     # All filtered
     @all_filtered_bars = @bars_by_price & @bars_by_venue
@@ -127,6 +143,92 @@ class CrawlsController < ApplicationController
     # Number of bars requested
     @number_of_bars = params[:number_of_bars] == "" ? 3 : params[:number_of_bars].to_i
     @filtered_bars = @all_filtered_bars.sample(@number_of_bars)
+  end
+
+  def google_api_call( pars = {} )
+    # User input formatting
+    location_input = params[:query].gsub(" ", "_")
+
+    # Geocode location long/lat
+    serialized_json = URI.open("https://api.mapbox.com/geocoding/v5/mapbox.places/#{location_input}.json?access_token=#{ENV['MAPBOX_API_KEY']}").read
+    loc_data = JSON.parse(serialized_json)
+    search_long = loc_data["features"][0]["center"][0]
+    search_lat = loc_data["features"][0]["center"][1]
+
+    # Google API call with long/lat
+
+    if !pars[:next_page_key]
+      url = URI("https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=#{search_lat}%2C#{search_long}&radius=2000&type=bar&key=#{ENV['GOOGLE_API_KEY']}")
+    else
+      url = URI("https://maps.googleapis.com/maps/api/place/nearbysearch/json?key=#{ENV['GOOGLE_API_KEY']}&pagetoken=#{pars[:next_page_key]}")
+    end
+
+    https = Net::HTTP.new(url.host, url.port)
+    https.use_ssl = true
+
+    request = Net::HTTP::Get.new(url)
+
+    response = https.request(request)
+    json_reponse = response.read_body
+
+    JSON.parse(json_reponse)
+    # RETURNS A HASH
+  end
+
+  def retrieve_bars_from_api
+    full_results = []
+    first_api_call = google_api_call
+    sleep(3)
+    second_api_call = google_api_call({ next_page_key: first_api_call["next_page_token"] })
+    sleep(3)
+    third_api_call = google_api_call({ next_page_key: second_api_call["next_page_token"] })
+    full_results << first_api_call["results"]
+    full_results << second_api_call["results"]
+    full_results << third_api_call["results"]
+
+    full_results = full_results.flatten
+    search_result_bars = []
+    full_results.each do |result|
+
+    ########## UNCOMMENT TO HAVE API PHOTOS ##############
+
+    # if result["photos"][0]["photo_reference"]
+      # photo_url = "https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photo_reference=#{result["photos"][0]["photo_reference"]}&key=#{ENV['GOOGLE_API_KEY']}"
+    # else
+      photo_url = "https://loremflickr.com/cache/resized/65535_52751342904_c22b7c6469_400_400_nofilter.jpg"
+    # end
+
+
+      temp_bar = Bar.new(
+        name: result["name"],
+        types: result["types"],
+
+        # restaurant: result["types"],
+
+        location: result["vicinity"],
+        longitude: result["geometry"]["location"]["lng"],
+        latitude: result["geometry"]["location"]["lat"],
+        price_range: result["price_level"] || 3,
+        rating: result["rating"],
+        description: "Further data unavailable for this location",
+        image_url: photo_url
+      )
+      search_result_bars << temp_bar
+    end
+    search_result_bars.uniq
+  end
+
+  def place_details(google_id)
+    url = URI("https://maps.googleapis.com/maps/api/place/details/json?place_id=#{google_id}&key=#{ENV['GOOGLE_API_KEY']}")
+
+    https = Net::HTTP.new(url.host, url.port)
+    https.use_ssl = true
+
+    request = Net::HTTP::Get.new(url)
+
+    response = https.request(request)
+    parsed_json = JSON.parse(response.read_body)
+    parsed_json["result"]
   end
 
   def crawl_params

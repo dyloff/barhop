@@ -5,6 +5,8 @@ ruby "3.1.2"
 
 gem "faker"
 gem "geocoder"
+gem "nokogiri"
+gem "google_search_results"
 
 
 # Bundle edge Rails instead: gem "rails", github: "rails/rails", branch: "main"
