@@ -10,6 +10,7 @@ Rails.application.routes.draw do
   end
 
   get 'dashboard', to: 'users#dashboard'
+  get 'generate', to: 'crawls#generate'
 
   resources :bar, only: [] do
     resources :favourites, only: [:new, :create]

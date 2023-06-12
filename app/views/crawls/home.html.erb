@@ -17,7 +17,7 @@
   <h3 class="homepage-featured m-4">Featured BarHop</h3>
   <div class="mt-4 barcards-container">
     <% @crawl.bars.each do |bar| %>
-      <%= render "shared/barcards", bar: bar %>
+      <%= render "barcards", bar: bar %>
     <% end %>
   </div>
 </div>
