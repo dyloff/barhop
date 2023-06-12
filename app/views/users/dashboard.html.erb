@@ -74,6 +74,9 @@
               <p class="card-text">👤 : <%= friend.username.capitalize %></p>
               <hr>
               <p class="card-text">📩 : <%= friend.email %></p>
+              <div style="position: relative;">
+                <img src="" alt="Profile Image" style="position: absolute; bottom: 0; right: 0; width: 100px; height: 100px;">
+              </div>
               <form action="/users/<%= friend.id %>/unfollow" method="POST">
                 <button type="submit" class="btn btn-danger">Delete</button>
               </form>
