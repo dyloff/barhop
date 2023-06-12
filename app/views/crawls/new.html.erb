@@ -9,6 +9,24 @@
   <div class="mt-4 container barcards-container">
     <% @filtered_bars.each do |bar| %>
       <%= render "shared/barcards", bar: bar %>
+    <!-- Added in the bar card because we may need to create a form to lock the bar and a button?
+      <div class="card px-0 bg-white rounded-30 m-2" style="min-width: 30%">
+        <%= image_tag bar.image_url, style:"height: 100px; object-fit: cover; border-radius:30px 30px 0px 0px", alt:"Bar card image", class:"card-img-top card-image" %>
+        <div class="card-body">
+          <h5 class="card-title"><strong><%= bar.name %></strong></h5>
+          <% if bar.description.length > 90 %>
+          <p class="card-text"><%= bar.description.truncate(90, omission: '') %>...</p>
+          <% else %>
+          <p class="card-text"><%= bar.description %></p>
+          <% end %>
+          <h6><strong><% bar.price_range.to_i.times do %>£<% end %></strong></h6>
+          <h6><% bar.rating.to_i.times do  %>
+            <i class="fa-solid fa-star fa-lg" style="color:#ffdd00"> <span class="icon-text"></span></i>
+          <% end %>
+          </h6>
+        </div>
+      </div>
+      -->
     <% end %>
   </div>
 
@@ -31,5 +49,5 @@
   <% end %>
 
 
-  <button type="button" data-action="click->reload#reload" class="active-tab">Regenerate</button>
+  <button type="button" data-action="click->reload#reload" class="btn btn-secondary active-tab">Regenerate</button>
 </div>

@@ -24,7 +24,6 @@
                 <%= form_with model: @favourite, url: bar_favourites_path(bar) do |f| %>
                 <div class="d-none">
                   <%= f.hidden_field(:bar, value: bar) %>
-                  <%= f.hidden_field(:id, value: @favourites.find_by(bar_id: bar.id)&.id) %>
                 </div>
                 <button class="btn btn-outline-primary" type="submit" name="commit" data-disable-with="Favourite"><i class="fa-solid fa-heart"></i></button>
                 <% end %>
