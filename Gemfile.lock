@@ -273,6 +273,7 @@ DEPENDENCIES
   geocoder
   importmap-rails
   jbuilder
+  nokogiri
   pg (~> 1.1)
   puma (~> 5.0)
   rails (~> 7.0.5)
