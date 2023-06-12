@@ -36,16 +36,48 @@ class CrawlsController < ApplicationController
   end
 
   def new
-    @filtered_bars = filters
-    @markers = filters.map do |bar|
-      {
-        lat: bar.latitude,
-        lng: bar.longitude,
-        info_window_html: render_to_string(partial: "info_window", locals: { bar: bar }),
-        marker_html: render_to_string(partial: "marker")
-      }
+    # params[:bar] = []
+    if params[:bars].present?
+      puts @filtered_bars_ids = params[:bars].split(",")
+      @filtered_bars = []
+      @filtered_bars_ids.each { |bar_id| @filtered_bars << Bar.find_by(place_id: bar_id) }
+      @new_bars = []
+      puts @filtered_bars.map(&:name)
+
+      @filtered_bars.each_with_index do |bar, i|
+
+        if params["bar_#{i}"] == "saved"
+          @new_bars << bar
+        else
+          @new_bars << Bar.all.sample
+        end
+      end
+      puts @new_bars.map(&:name)
+      @markers = @new_bars.map do |bar|
+        {
+          lat: bar.latitude,
+          lng: bar.longitude,
+          # info_window_html: render_to_string(partial: "info_window", locals: { bar: bar }),
+          # marker_html: render_to_string(partial: "marker")
+        }
+      end
+    else
+      @filtered_bars = filters
+      @filtered_bars_ids = @filtered_bars.map(&:place_id)
+      @markers = @filtered_bars.map do |bar|
+        {
+          lat: bar.latitude,
+          lng: bar.longitude,
+          # info_window_html: render_to_string(partial: "info_window", locals: { bar: bar }),
+          # marker_html: render_to_string(partial: "marker")
+        }
+      end
     end
     @crawl = Crawl.new
+    respond_to do |format|
+      format.html # Follow regular flow of Rails
+      format.text { render partial: 'crawls/barcards_regeneration', :formats=>[:text, :html], locals: { filtered_bars: @new_bars } }
+    end
   end
 
   def show

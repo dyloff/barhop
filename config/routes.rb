@@ -17,6 +17,7 @@ Rails.application.routes.draw do
   end
 
   get 'dashboard', to: 'users#dashboard'
+  get 'generate', to: 'crawls#generate'
   get 'friends', to: 'users#friends'
 
   resources :bar, only: [] do

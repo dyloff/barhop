@@ -78,7 +78,8 @@ full_results.each do |result|
     price_range: result["price_level"] || 3,
     rating: result["rating"],
     description: Faker::Restaurant.description,         # "TO SCRAPE"
-    image_url: photo_url
+    image_url: photo_url,
+    place_id: result["place_id"]
   )
 end
 

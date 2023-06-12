@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_06_08_112239) do
+ActiveRecord::Schema[7.0].define(version: 2023_06_12_111840) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -27,6 +27,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_08_112239) do
     t.string "image_url"
     t.boolean "restaurant", default: false
     t.text "types", default: [], array: true
+    t.string "place_id"
   end
 
   create_table "crawlbars", force: :cascade do |t|
