@@ -118,7 +118,6 @@ class CrawlsController < ApplicationController
   def filters
     @master_bar_list = retrieve_bars_from_api
     if params[:venue_category].include?("restaurant")
-      # @all_bars_test = retrieve_bars_from_api
       @bars_by_venue = @master_bar_list
     # elsif params[:venue_category].include?("restaurant")
     #   @bars_by_venue = Bar.all.select { |bar| bar.types.include?('restaurant') }
@@ -148,7 +147,7 @@ class CrawlsController < ApplicationController
 
   def google_api_call( pars = {} )
     # User input formatting
-    location_input = params[:query].gsub(" ", "_")
+    location_input = params[:query] == "" ? "London" : params[:query].gsub(" ", "_")
 
     # Geocode location long/lat
     serialized_json = URI.open("https://api.mapbox.com/geocoding/v5/mapbox.places/#{location_input}.json?access_token=#{ENV['MAPBOX_API_KEY']}").read
@@ -212,7 +211,7 @@ class CrawlsController < ApplicationController
         price_range: result["price_level"] || 3,
         rating: result["rating"],
         place_id: result["place_id"],
-        description: "Further data unavailable for this location",
+        description: place_details(result["place_id"])["editorial_summary"]["overview"] || "Further data unavailable for this location",
         image_url: photo_url
       )
       search_result_bars << temp_bar

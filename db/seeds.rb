@@ -49,6 +49,19 @@ def google_api_call(params = {})
   # RETURNS A HASH
 end
 
+def place_details(google_id)
+  url = URI("https://maps.googleapis.com/maps/api/place/details/json?place_id=#{google_id}&key=#{ENV['GOOGLE_API_KEY']}")
+
+  https = Net::HTTP.new(url.host, url.port)
+  https.use_ssl = true
+
+  request = Net::HTTP::Get.new(url)
+
+  response = https.request(request)
+  parsed_json = JSON.parse(response.read_body)
+  parsed_json["result"]
+end
+
 ########### UNCOMMENT FOR 60 RESULTS ###############
 
 full_results = []
@@ -86,7 +99,7 @@ full_results.each do |result|
     latitude: result["geometry"]["location"]["lat"],
     price_range: result["price_level"] || 3,
     rating: result["rating"],
-    description: Faker::Restaurant.description,         # "TO SCRAPE"
+    description: place_details(result["place_id"])["editorial_summary"]["overview"] || "Further data unavailable for this location",
     image_url: photo_url,
     place_id: result["place_id"]
   )
