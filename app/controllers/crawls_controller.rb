@@ -102,21 +102,27 @@ class CrawlsController < ApplicationController
   end
 
   def create
-    bar_info = eval(params[:crawl][:bars_full_info].gsub("} {", "}, {").insert(0, "[").insert(-1, "]"))
-    @bars = bar_info.map do |bar|
-      Bar.create!(
-        name: bar["name"],
-        types: bar["types"],
-        # restaurant: bar["types"],
-        location: bar["location"],
-        longitude: bar["longitude"],
-        latitude: bar["latitude"],
-        price_range: bar["price_range"],
-        rating: bar["rating"],
-        place_id: bar["place_id"],
-        description: bar["description"],
-        image_url: bar["image_url"]
-      )
+    if params[:crawl][:bars_full_info]
+      bar_info = eval(params[:crawl][:bars_full_info].gsub("} {", "}, {").insert(0, "[").insert(-1, "]"))
+      @bars = bar_info.map do |bar|
+        Bar.create!(
+          name: bar["name"],
+          types: bar["types"],
+          # restaurant: bar["types"],
+          location: bar["location"],
+          longitude: bar["longitude"],
+          latitude: bar["latitude"],
+          price_range: bar["price_range"],
+          rating: bar["rating"],
+          place_id: bar["place_id"],
+          description: bar["description"],
+          image_url: bar["image_url"]
+        )
+      end
+    else
+      @bars = eval(params[:crawl][:bars]).map do |id|
+        Crawlbar.find(id).bar
+      end
     end
     @crawl = Crawl.new(crawl_params)
     @crawl.user = current_user
