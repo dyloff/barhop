@@ -116,9 +116,9 @@ class CrawlsController < ApplicationController
   private
 
   def filters
+    @master_bar_list = retrieve_bars_from_api
     if params[:venue_category].include?("restaurant")
       # @all_bars_test = retrieve_bars_from_api
-      @master_bar_list = retrieve_bars_from_api
       @bars_by_venue = @master_bar_list
     # elsif params[:venue_category].include?("restaurant")
     #   @bars_by_venue = Bar.all.select { |bar| bar.types.include?('restaurant') }
