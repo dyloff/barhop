@@ -198,20 +198,24 @@ class CrawlsController < ApplicationController
       photo_url = "https://loremflickr.com/cache/resized/65535_52751342904_c22b7c6469_400_400_nofilter.jpg"
     # end
 
+    # if place_details(result["place_id"])["editorial_summary"] != nil
+      # description = place_details(result["place_id"])["editorial_summary"]["overview"]
+    # else
+      description = "Further data unavailable for this location"
+    # end
+
 
       temp_bar = Bar.new(
         name: result["name"],
         types: result["types"],
-
         # restaurant: result["types"],
-
         location: result["vicinity"],
         longitude: result["geometry"]["location"]["lng"],
         latitude: result["geometry"]["location"]["lat"],
         price_range: result["price_level"] || 3,
         rating: result["rating"],
         place_id: result["place_id"],
-        description: place_details(result["place_id"])["editorial_summary"]["overview"] || "Further data unavailable for this location",
+        description: description,
         image_url: photo_url
       )
       search_result_bars << temp_bar

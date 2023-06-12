@@ -88,6 +88,12 @@ full_results.each do |result|
 
     search_result_bars = []
 
+    # if place_details(result["place_id"])["editorial_summary"] != nil
+      # description = place_details(result["place_id"])["editorial_summary"]["overview"]
+    # else
+      description = "Further data unavailable for this location"
+    # end
+
     temp_bar = Bar.create!(
     name: result["name"],
     types: result["types"],
@@ -99,11 +105,13 @@ full_results.each do |result|
     latitude: result["geometry"]["location"]["lat"],
     price_range: result["price_level"] || 3,
     rating: result["rating"],
-    description: place_details(result["place_id"])["editorial_summary"]["overview"] || "Further data unavailable for this location",
+    description: description,
     image_url: photo_url,
     place_id: result["place_id"]
   )
     search_result_bars << temp_bar
+
+    #place_details(result["place_id"])["editorial_summary"]["overview"] ||
 end
 
 users = ["alek", "lorenzo", "dylon", "justin"]
