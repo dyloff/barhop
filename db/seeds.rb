@@ -142,7 +142,8 @@ users.count.times do
     crawl = Crawl.create!(
       crawl_name: user.username.capitalize + crawl_names.sample,
       completed: false,
-      public: [true, false].sample,
+      public: [true].sample,
+      creator: true,
       date: nil,
       user: user
     )
