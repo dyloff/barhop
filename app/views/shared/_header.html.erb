@@ -1,11 +1,18 @@
 <nav class="navbar bg-body-tertiary px-4 py-0 pb-1 border-bottom">
   <div class="container-fluid">
-    <div class="d-flex align-items-center">
+    <div class="d-flex align-items-center" data-controller="header">
       <%= link_to root_path do %>
         <%= image_tag "logo_no_background.png", alt:"Logo", width:"56", height:"56", class:"d-inline-block align-text-top" %>
       <% end %>
       <%= link_to "BarHop", root_path, class:"m-0 pt-3 text-red h2 header-title" %>
       <%# <h2 class="m-0 pt-3 text-red" style="font-weight: 600">BarHop</h2> %>
+      <div class="search-box-minimized" data-header-target="smallDiv">
+        <button data-action="click->header#maximize" class="search-icon-small" data-disable-with="" style="border:0"><i class="fas fa-search"></i></button>
+      </div>
+      <form class="search-box-small d-none" data-header-target="formDiv" action="/crawls" accept-charset="UTF-8" method="get">
+        <input type="text" name="query" id="query" placeholder="Where to?">
+        <button type="submit" name="commit" value="Search" class="search-icon-small" data-disable-with="Search" style="border:0"><i class="fas fa-search"></i></button>
+      </form>
     </div>
     <div>
       <%# Changes if a login button is showed or the user avatar %>

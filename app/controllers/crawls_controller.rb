@@ -43,7 +43,7 @@ class CrawlsController < ApplicationController
   def new
     # params[:bar] = []
     if params[:bars].present?
-      puts @filtered_bars_ids = params[:bars].split(",")
+      @filtered_bars_ids = params[:bars].split(",")
       @filtered_bars = []
       @filtered_bars_ids.each { |bar_id| @filtered_bars << Bar.find_by(place_id: bar_id) }
       @new_bars = []
