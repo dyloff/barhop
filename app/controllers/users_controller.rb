@@ -21,6 +21,7 @@ class UsersController < ApplicationController
       }
       @all_info << all_crawl_info
     end
+
     @all_info
 
     @favourite = Favourite.new
@@ -35,8 +36,8 @@ class UsersController < ApplicationController
         @bars << Bar.find(favourite.bar_id)
       end
     end
-
-    @users = User.all.select do |user|
+    #friends
+    @friends = friends
   end
 
   def friends
@@ -45,6 +46,7 @@ class UsersController < ApplicationController
         user
       end
     end
+    @users
   end
 
   def index

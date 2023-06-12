@@ -1,30 +1,30 @@
-<li data-user=<%= user.id %>>
-  <%= user.email %>
-  <%# Checking friend relationship %>
-  <% if current_user.is_following?(user.id) && user.is_following?(current_user.id) %>
-    <p>We are friend</p>
-  <% else %>
-    <p>We are not friend</p>
-    <%# Confirming friendship %>
-    <% if user.is_following?(current_user.id) %>
-      <form action="/users/<%= user.id %>/follow" method="POST">
-        <button type="submit">Accept friend request</button>
-      </form>
-    <% else %>
-      <% if current_user.is_following?(user.id) %>
-        <%# link_to "Unfollow", unfollow_user_path(user.id), method: :post, remote: true %>
-        <form action="/users/<%= user.id %>/unfollow" method="POST">
-          <button type="submit">Unsend friend request</button>
-        </form>
+<div class="row">
+  <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+    <div class="friend-card" data-user="<%= user.id %>">
+      <%= user.username %>
+      <%= user.email %>
+      <hr>
+      <% if current_user.is_following?(user.id) && user.is_following?(current_user.id) %>
+        <p>We are friends</p>
       <% else %>
-        <%# link_to "Follow", follow_user_path(user.id), method: :post, remote: true %>
-        <form action="/users/<%= user.id %>/follow" method="POST">
-          <button type="submit">Send friend request</button>
-        </form>
+        <p>We are not friends</p>
+        <% if user.is_following?(current_user.id) %>
+        <hr>
+          <form action="/users/<%= user.id %>/follow" method="POST">
+            <button type="submit" class="btn btn-primary btn-sm small-button">Accept</button>
+          </form>
+        <% else %>
+          <% if current_user.is_following?(user.id) %>
+            <form action="/users/<%= user.id %>/unfollow" method="POST">
+              <button type="submit" class="btn btn-danger btn-sm small-button">Unsend</button>
+            </form>
+          <% else %>
+            <form action="/users/<%= user.id %>/follow" method="POST">
+              <button type="submit" class="btn btn-success btn-sm small-button">Send</button>
+            </form>
+          <% end %>
+        <% end %>
       <% end %>
-    <% end %>
-  <% end %>
-
-  <br>
-  <br>
-</li>
+    </div>
+  </div>
+</div>
