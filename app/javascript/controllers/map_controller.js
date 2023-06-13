@@ -75,15 +75,31 @@ export default class extends Controller {
       .then((response) => response.json())
       .then((data) => {
 
-        console.log("This is route duration")
-        console.log(data.routes[0].duration)
+        // console.log("This is route duration")
+        // console.log(data.routes[0].duration)
 
         const routes = data.routes[0].geometry.coordinates;
         // console.log("This is routes");
         // console.log(routes);
 
-        console.log(this.element)
-        var durationInfo = this.element.insertAdjacentHTML("afterend", `<p>Est duration: ${data.routes[0].duration / 60}</p>`);
+        // console.log("THIS ELEMENT " + this.element)
+        let counter = 0
+        this.markersValue.forEach((marker) => {
+          counter += 1
+        })
+
+        let totalTimeMins = (Math.round(data.routes[0].duration / 60) + (45 * counter)) % 60
+        let totalTimeMins = (Math.round(data.routes[0].duration / 60) + (45 * counter))/60
+        console.log("------------------")
+        console.log(totalTimeHours)
+        console.log("------------------")
+        this.element.parentElement.parentElement.parentElement.children[0].querySelector(".estimated-time").innerHTML = `Est BarHop duration: ${Math.round(data.routes[0].duration / 60) + (45 * counter)}mins`
+        // console.log("-------------")
+        // console.log(this.element.parentElement.parentElement.parentElement.children[0].children[1])
+        // console.log("-------------")
+        // var durationInfo = document.querySelector(".estimated-time").innerHTML("Est duration: ${data.routes[0].duration / 60}")
+
+        // insertAdjacentHTML("afterend", `<p>Est duration: ${data.routes[0].duration / 60}</p>`);
 
         this.map.on('load', () => {
           this.map.addSource('route', {

@@ -79,3 +79,13 @@
 .mapboxgl-canvas {
   // width: 100% !important;
 }
+
+.dashboard-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.estimated-time {
+margin: 0 1.5rem 0 0;
+}
