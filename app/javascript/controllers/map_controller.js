@@ -84,8 +84,8 @@ export default class extends Controller {
         console.log("This is routes");
         console.log(routes);
 
-        // console.log(this.element)
-        // const durationInfo = this.element.insertAdjacentHTML("afterend", `<p>Est duration: ${data.routes[0].duration / 60}</p>`)
+        console.log(this.element)
+        const durationInfo = this.element.insertAdjacentHTML("afterend", `<p>Est duration: ${data.routes[0].duration / 60}</p>`)
 
         this.map.on('load', () => {
           this.map.addSource('route', {
