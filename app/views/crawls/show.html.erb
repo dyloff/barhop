@@ -14,6 +14,7 @@
  <div class="d-flex justify-content-center my-2" data-controller="reload">
   <%# <button type="button" class="btn btn-primary mx-2">Confirm</button> %>
 <%= form_with model: Crawl.new do |f| %>
+  <%= f.hidden_field(:existing_crawl, value: true) %>
     <%# <form action="/crawls" accept-charset="UTF-8" method="post"><input type="hidden" name="_method" value="patch" autocomplete="off"><input type="hidden" name="authenticity_token" value="fnUpUlGoAWrO2okRT6MV04lSTxgy9__3M5jugDDE9Sm4ppauZ6Nl6bktKlb1q-yzgERXcBoix3I96irFbIyjjA" autocomplete="off"> %>
   <div class="d-none">
     <input value= "<%= @crawl.crawlbar_ids %>" autocomplete="off" type="hidden" name="crawl[bars]" id="crawl_bars">
