@@ -31,7 +31,7 @@ class UsersController < ApplicationController
     @markers = @favourites.map { |favourite| {
       lat: favourite.bar.latitude,
       lng: favourite.bar.longitude,
-      # info_window_html: render_to_string(partial: "info_window", locals: { bar: bar }),
+      info_window_html: render_to_string(partial: "info_window", locals: { favourite: favourite }),
       # marker_html: render_to_string(partial: "marker")
     }}
     @bars = []

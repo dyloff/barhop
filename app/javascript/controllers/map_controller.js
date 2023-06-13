@@ -1,12 +1,10 @@
 import { Controller } from "@hotwired/stimulus"
 import mapboxgl from 'mapbox-gl'
 
-
 // fetch ("https://api.mapbox.com/directions/v5/")
 //   .then (response => response.json ())
 //   .then (data = {
 //   });
-
 
 export default class extends Controller {
   static values = {
@@ -68,19 +66,26 @@ export default class extends Controller {
 
     #fitMapToMarkers() {
       const bounds = new mapboxgl.LngLatBounds()
-    this.markersValue.forEach(marker => bounds.extend([ marker.lng, marker.lat ]));
-    this.map.fitBounds(bounds, { padding: 70, maxZoom: 15, duration: 0 });
+      this.markersValue.forEach(marker => bounds.extend([ marker.lng, marker.lat ]));
+      this.map.fitBounds(bounds, { padding: 70, maxZoom: 15, duration: 0 });
   }
 
   #getRoute(fetchQueryString) {
     fetch(fetchQueryString)
       .then((response) => response.json())
       .then((data) => {
+        console.log("This is the route data")
         console.log(data)
+
+        console.log("This is route duration")
+        console.log(data.routes[0].duration)
 
         const routes = data.routes[0].geometry.coordinates;
         console.log("This is routes");
         console.log(routes);
+
+        // console.log(this.element)
+        // const durationInfo = this.element.insertAdjacentHTML("afterend", `<p>Est duration: ${data.routes[0].duration / 60}</p>`)
 
         this.map.on('load', () => {
           this.map.addSource('route', {
@@ -109,70 +114,7 @@ export default class extends Controller {
           }
           });
         });
-
-
-        // const geojson = {
-        //   type: "Feature",
-        //   properties: {},
-        //   geometry: {
-        //     type: "LineString",
-        //     coordinates: routes,
-        //   }
-        // }
-
-        // this.map.addLayer({
-        //   id: "routes",
-        //   type: "line",
-        //   source: {
-        //     type: "geojson",
-        //     data: geojson
-        //   },
-        //   layout: {
-        //     "line-join": "round",
-        //     "line-cap": "round",
-        //   },
-        //   paint: {
-        //     "line-color": "#D94124",
-        //     "line-width": 5,
-        //     "line-opacity": 0.75,
-        //   }
-        // })
       })
 
-      // const routesCoodinates = [];
-      // this.markersValue.forEach((marker) => {
-      //   routesCoodinates.push([marker.lng, marker.lat])
-      // })
-
-      // console.log("This is routesCoodinates")
-      // console.log(routesCoodinates)
-
-      // this.map.on('load', () => {
-      //   this.map.addSource('route', {
-      //   'type': 'geojson',
-      //   'data': {
-      //   'type': 'Feature',
-      //   'properties': {},
-      //   'geometry': {
-      //   'type': 'LineString',
-      //   'coordinates': routesCoodinates
-      //   }
-      //   }
-      // });
-
-      //   this.map.addLayer({
-      //   'id': 'route',
-      //   'type': 'line',
-      //   'source': 'route',
-      //   'layout': {
-      //   'line-join': 'round',
-      //   'line-cap': 'round'
-      //   },
-      //   'paint': {
-      //   'line-color': '#888',
-      //   'line-width': 8
-      //   }
-      //   });
-      // });
     }
 }

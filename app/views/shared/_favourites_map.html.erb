@@ -1,5 +1,5 @@
-<div style="width: 100%; height: 40vh; "
-    data-controller="map"
-      data-map-markers-value="<%= @markers.each.to_json %>"
-      data-map-api-key-value="<%= ENV['MAPBOX_API_KEY'] %>">
+<div style="width: 100%; height: 40vh "
+      data-controller="favourites-map"
+      data-favourites-map-markers-value="<%= @markers.each.to_json %>"
+      data-favourites-map-api-key-value="<%= ENV['MAPBOX_API_KEY'] %>">
 </div>
