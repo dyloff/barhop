@@ -8,8 +8,9 @@
       <button data-index-tabs-target="friends"  data-action="click->disable-button#disable" type="button" class="btn btn-outline-primary">Friends</button>
       <button data-index-tabs-target="public"  data-action="click->disable-button#disable" type="button" class="btn btn-outline-primary">Public</button>
     </div>
+   
     <div class="index-crawls">
-      <% @all_info.shuffle.each do |info| %>
+      <% @friends_info.shuffle.each do |info| %>
         <%= render "shared/routecards", info: info%>
       <% end %>
     </div>
