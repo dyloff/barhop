@@ -6,7 +6,7 @@
 }
 
 .dashboard-header {
-  border-bottom: 1px solid $red;
+  // border-bottom: 1px solid $red;
   margin: 1rem 1rem;
   padding: 1rem 0rem;
 }
@@ -81,11 +81,13 @@
 }
 
 .dashboard-card-header {
+  border-bottom: 1px solid $red;
+  margin: 1rem 1.5rem 1.5rem 1.5rem;
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
 
 .estimated-time {
-margin: 0 1.5rem 0 0;
+  margin: 0;
 }

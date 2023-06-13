@@ -83,17 +83,7 @@ export default class extends Controller {
         // console.log(routes);
 
         // console.log("THIS ELEMENT " + this.element)
-        let counter = 0
-        this.markersValue.forEach((marker) => {
-          counter += 1
-        })
 
-        let totalTimeMins = (Math.round(data.routes[0].duration / 60) + (45 * counter)) % 60
-        let totalTimeMins = (Math.round(data.routes[0].duration / 60) + (45 * counter))/60
-        console.log("------------------")
-        console.log(totalTimeHours)
-        console.log("------------------")
-        this.element.parentElement.parentElement.parentElement.children[0].querySelector(".estimated-time").innerHTML = `Est BarHop duration: ${Math.round(data.routes[0].duration / 60) + (45 * counter)}mins`
         // console.log("-------------")
         // console.log(this.element.parentElement.parentElement.parentElement.children[0].children[1])
         // console.log("-------------")
@@ -128,6 +118,18 @@ export default class extends Controller {
           }
           });
         });
+        
+        let counter = 0
+        this.markersValue.forEach((marker) => {
+          counter += 1
+        })
+
+        let totalTimeMins = (Math.round(data.routes[0].duration / 60) + (45 * counter)) % 60
+        let totalTimeHours = Math.round((Math.round(data.routes[0].duration / 60) + (45 * counter)) / 60)
+        console.log("------------------")
+        console.log(totalTimeHours + ":" + totalTimeMins)
+        console.log("------------------")
+        this.element.parentElement.parentElement.parentElement.children[0].querySelector(".estimated-time").innerHTML = `Est BarHop duration: ${totalTimeHours} hours ${totalTimeMins} mins`
       })
 
     }
