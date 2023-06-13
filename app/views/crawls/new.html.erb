@@ -5,14 +5,14 @@
   </div>
 </div>
 
-<div data-controller="reload" data-reload-bars-value=<%= @filtered_bars_ids.to_json %>>
+<div id="select" data-controller="reload" data-all-bars="<%= @all_bars.to_json %>" data-reload-bars-value=<%= @filtered_bars_ids.to_json %>>
     <%# <% @filtered_bars.each_with_index do |bar, i| %>
       <%= render "barcards_regeneration", filtered_bars: @filtered_bars %>
 
   <div class="d-flex justify-content-center my-2">
   <%# <button type="button" class="btn btn-primary mx-2">Confirm</button> %>
 
-      <%= form_with model: @crawl do |f| %>
+    <%= form_with model: @crawl do |f| %>
       <div class="d-none">
         <%= f.hidden_field(:bars, value: @filtered_bars) %>
         <%= f.hidden_field(:bars_full_info, value: @filtered_bars_info) %>
