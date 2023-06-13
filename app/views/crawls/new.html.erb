@@ -14,7 +14,8 @@
 
       <%= form_with model: @crawl do |f| %>
       <div class="d-none">
-        <%= f.hidden_field(:bars, value: @filtered_bars.map(&:id)) %>
+        <%= f.hidden_field(:bars, value: @filtered_bars) %>
+        <%= f.hidden_field(:bars_full_info, value: @filtered_bars_info) %>
         <%= f.label :crawl_name %>
         <%= f.text_field :crawl_name, value:"#{current_user.username.capitalize}'s BarHop"%>
         <%= f.label :completed %>

@@ -49,6 +49,19 @@ def google_api_call(params = {})
   # RETURNS A HASH
 end
 
+def place_details(google_id)
+  url = URI("https://maps.googleapis.com/maps/api/place/details/json?place_id=#{google_id}&key=#{ENV['GOOGLE_API_KEY']}")
+
+  https = Net::HTTP.new(url.host, url.port)
+  https.use_ssl = true
+
+  request = Net::HTTP::Get.new(url)
+
+  response = https.request(request)
+  parsed_json = JSON.parse(response.read_body)
+  parsed_json["result"]
+end
+
 ########### UNCOMMENT FOR 60 RESULTS ###############
 
 full_results = []
@@ -75,6 +88,12 @@ full_results.each do |result|
 
     search_result_bars = []
 
+    # if place_details(result["place_id"])["editorial_summary"] != nil
+      # description = place_details(result["place_id"])["editorial_summary"]["overview"]
+    # else
+      description = "Further data unavailable for this location"
+    # end
+
     temp_bar = Bar.create!(
     name: result["name"],
     types: result["types"],
@@ -86,11 +105,12 @@ full_results.each do |result|
     latitude: result["geometry"]["location"]["lat"],
     price_range: result["price_level"] || 3,
     rating: result["rating"],
-    description: Faker::Restaurant.description,         # "TO SCRAPE"
+    description: description,
     image_url: photo_url,
     place_id: result["place_id"]
   )
     search_result_bars << temp_bar
+
 end
 
 users = ["alek", "lorenzo", "dylon", "justin"]
@@ -122,7 +142,8 @@ users.count.times do
     crawl = Crawl.create!(
       crawl_name: user.username.capitalize + crawl_names.sample,
       completed: false,
-      public: [true, false].sample,
+      public: [true].sample,
+      creator: true,
       date: nil,
       user: user
     )
@@ -130,9 +151,10 @@ users.count.times do
     p "------------"
     crawl_counter += 1
 
-    3.times do
+    bars = Bar.all.sample(3)
+    bars.each do |bar|
       crawlbar = Crawlbar.create!(
-        bar: Bar.all.sample,
+        bar: bar,
         crawl: crawl
       )
       p crawlbar
@@ -151,9 +173,10 @@ users.count.times do
     p "------------"
     crawl_counter += 1
 
-    rand(4..6).times do
+    bars = Bar.all.sample(rand(4..6))
+    bars.each do |bar|
       crawlbar = Crawlbar.create!(
-        bar: Bar.all.sample,
+        bar: bar,
         crawl: crawl
       )
       p crawlbar

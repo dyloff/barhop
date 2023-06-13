@@ -11,8 +11,10 @@ export default class extends Controller {
   url = `${window.location}&bars=${this.barsValue}`;
 
   connect() {
+
     console.log("This is from reload stimulus");
     // console.log(this.barsListTarget);
+
   }
 
   keepBar(event) {
