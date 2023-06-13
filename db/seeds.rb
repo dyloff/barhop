@@ -111,7 +111,6 @@ full_results.each do |result|
   )
     search_result_bars << temp_bar
 
-    #place_details(result["place_id"])["editorial_summary"]["overview"] ||
 end
 
 users = ["alek", "lorenzo", "dylon", "justin"]
@@ -143,7 +142,8 @@ users.count.times do
     crawl = Crawl.create!(
       crawl_name: user.username.capitalize + crawl_names.sample,
       completed: false,
-      public: [true, false].sample,
+      public: [true].sample,
+      creator: true,
       date: nil,
       user: user
     )
@@ -151,9 +151,10 @@ users.count.times do
     p "------------"
     crawl_counter += 1
 
-    3.times do
+    bars = Bar.all.sample(3)
+    bars.each do |bar|
       crawlbar = Crawlbar.create!(
-        bar: Bar.all.sample,
+        bar: bar,
         crawl: crawl
       )
       p crawlbar
@@ -172,9 +173,10 @@ users.count.times do
     p "------------"
     crawl_counter += 1
 
-    rand(4..6).times do
+    bars = Bar.all.sample(rand(4..6))
+    bars.each do |bar|
       crawlbar = Crawlbar.create!(
-        bar: Bar.all.sample,
+        bar: bar,
         crawl: crawl
       )
       p crawlbar
