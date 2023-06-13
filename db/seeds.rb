@@ -80,11 +80,11 @@ full_results.each do |result|
 
   ########## UNCOMMENT TO HAVE API PHOTOS ##############
 
-  # if result["photos"][0]["photo_reference"]
-  #   photo_url = "https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photo_reference=#{result["photos"][0]["photo_reference"]}&key=#{ENV['GOOGLE_API_KEY']}"
-  # else
+  if result["photos"][0]["photo_reference"]
+    photo_url = "https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photo_reference=#{result["photos"][0]["photo_reference"]}&key=#{ENV['GOOGLE_API_KEY']}"
+  else
     photo_url = "https://loremflickr.com/cache/resized/65535_52751342904_c22b7c6469_400_400_nofilter.jpg"
-  # end
+  end
 
     search_result_bars = []
 

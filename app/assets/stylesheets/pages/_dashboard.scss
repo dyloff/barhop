@@ -3,6 +3,7 @@
   width: 30%;
   flex-direction: column;
   text-align: center;
+  flex-shrink: 0;
 }
 
 .dashboard-header {
@@ -12,7 +13,6 @@
 }
 
 .dashboard-container {
-  margin-left: 2%;
   display: flex;
   width: 50vw;
   justify-content: space-between;

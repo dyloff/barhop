@@ -244,8 +244,8 @@ class CrawlsController < ApplicationController
   private
 
   def filters
-    # @master_bar_list = retrieve_bars_from_api
-    @master_bar_list = Bar.all
+    @master_bar_list = retrieve_bars_from_api
+    # @master_bar_list = Bar.all
 
     if params[:venue_category].include?("restaurant")
       @bars_by_venue = @master_bar_list
@@ -276,7 +276,7 @@ class CrawlsController < ApplicationController
 
   end
 
-  def google_api_call(params = {})
+  def google_api_call(pars = {})
     # User input formatting
     location_input = params[:query] == "" ? "London" : params[:query].gsub(" ", "_")
 
@@ -289,13 +289,10 @@ class CrawlsController < ApplicationController
     search_lat = loc_data["features"][0]["center"][1]
 
     # Google API call with long/lat
-    if params[:next_page_key]
-      url = URI("https://maps.googleapis.com/maps/api/place/nearbysearch/json?key=#{ENV.fetch('GOOGLE_API_KEY',
-                                                                                              nil)}&pagetoken=#{params[:next_page_key]}")
+    if !pars[:next_page_key]
+      url = URI("https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=#{search_lat}%2C#{search_long}&radius=2000&type=bar&key=#{ENV.fetch('GOOGLE_API_KEY', nil)}")
     else
-      url = URI("https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=#{search_lat}%2C#{search_long}&radius=2000&type=bar&key=#{ENV.fetch(
-        'GOOGLE_API_KEY', nil
-      )}")
+      url = URI("https://maps.googleapis.com/maps/api/place/nearbysearch/json?key=#{ENV.fetch('GOOGLE_API_KEY', nil)}&pagetoken=#{pars[:next_page_key]}")
     end
 
     https = Net::HTTP.new(url.host, url.port)
@@ -316,13 +313,13 @@ class CrawlsController < ApplicationController
     first_api_call = google_api_call
     full_results << first_api_call["results"]
 
-    # sleep(3)
-    # second_api_call = google_api_call({ next_page_key: first_api_call["next_page_token"] })
-    # full_results << second_api_call["results"]
+    sleep(2.5)
+    second_api_call = google_api_call({ next_page_key: first_api_call["next_page_token"] })
+    full_results << second_api_call["results"]
 
-    # sleep(3)
-    # third_api_call = google_api_call({ next_page_key: second_api_call["next_page_token"] })
-    # full_results << third_api_call["results"]
+    sleep(2.5)
+    third_api_call = google_api_call({ next_page_key: second_api_call["next_page_token"] })
+    full_results << third_api_call["results"]
 
     full_results = full_results.flatten
     search_result_bars = []
@@ -330,11 +327,11 @@ class CrawlsController < ApplicationController
     full_results.each do |result|
       ###### UNCOMMENT TO HAVE API PHOTOS ######
 
-      # if result["photos"][0]["photo_reference"]
-      # photo_url = "https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photo_reference=#{result["photos"][0]["photo_reference"]}&key=#{ENV['GOOGLE_API_KEY']}"
-      # else
+    if result["photos"][0]["photo_reference"]
+      photo_url = "https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photo_reference=#{result["photos"][0]["photo_reference"]}&key=#{ENV['GOOGLE_API_KEY']}"
+    else
       photo_url = "https://loremflickr.com/cache/resized/65535_52751342904_c22b7c6469_400_400_nofilter.jpg"
-    # end
+    end
 
     # if place_details(result["place_id"])["editorial_summary"] != nil
       # description = place_details(result["place_id"])["editorial_summary"]["overview"]
