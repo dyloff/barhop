@@ -27,13 +27,14 @@ export default class extends Controller {
     console.log(event.currentTarget.dataset.barIndex);
 
     this.url = this.url + `&bar_${event.currentTarget.dataset.bar}=saved`;
-    console.log(this.url);
+    // console.log(this.url);
     event.currentTarget.classList.add("selectedBarColor")
   }
 
   generate() {
     const all_bars = document.querySelector("#select").dataset.allBars
-    this.url += `&all-bar-list=${all_bars}`
+    // this.url += `&all-bar-list=${all_bars}`
+    // console.log(this.url)
 
     fetch(this.url, { headers: { Accept: "text/plain" } })
       .then((response) => response.text())

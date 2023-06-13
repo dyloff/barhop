@@ -76,6 +76,7 @@ class CrawlsController < ApplicationController
   end
 
   def new
+    @filters_local = filters
     # params[:bar] = []
     if params[:bars].present?
       puts "ALL FILTERED"
@@ -83,12 +84,19 @@ class CrawlsController < ApplicationController
       puts @filtered_bars
       puts "-----------"
 
+      puts "!!!!!!!!"
+      puts @all_bars = @filters_local[0]
+      puts "!!!!!!!!"
+
       puts "This is @filtered_bars_ids"
       puts @filtered_bars_ids = params[:bars].split(",")
       @filtered_bars_ids = params[:bars].split(",")
 
       @filtered_bars = []
-      @filtered_bars_ids.each { |bar_id| @filtered_bars << Bar.find_by(place_id: bar_id) }
+      @filtered_bars_ids.each do |bar_id|
+        @filtered_bars << @all_bars.find { |bar| bar.place_id == bar_id }
+      end
+
 
       # raise
 
@@ -101,7 +109,7 @@ class CrawlsController < ApplicationController
         if params["bar_#{i}"] == "saved"
           @new_bars << bar
         else
-          @new_bars << Bar.all.sample
+          @new_bars << @all_bars.sample
         end
       end
 
@@ -148,7 +156,6 @@ class CrawlsController < ApplicationController
         puts @new_bars[0].name
         puts @new_bars[1].name
         puts @new_bars[2].name
-        raise
 
         new_crawl = {
           crawl: @crawl,
