@@ -11,61 +11,108 @@ class CrawlsController < ApplicationController
       {
         lat: bar.latitude,
         lng: bar.longitude,
-        info_window_html: render_to_string(partial: "info_window", locals: { bar: bar }),
+        info_window_html: render_to_string(partial: "info_window", locals: { bar: }),
         marker_html: render_to_string(partial: "marker")
       }
     end
+
+    # puts @crawl.bars
+    # puts @markers
   end
 
   def index
-    @crawls = Crawl.all
+    # @creators = Crawl.where(creator: true)
+    # @public = Crawl.where(public: true)
+    @friends = Crawl.all
     # @bars = Bar.all
 
-    @all_info = []
+    # @creators_info = []
+    # @public_info = []
+    @friends_info = []
 
-    @crawls.each do |crawl|
+    # @creators.each do |crawl|
+    #   all_crawl_info = {
+    #     crawl:,
+    #     markers: crawl.bars.geocoded.map do |bar|
+    #       {
+    #         lat: bar.latitude,
+    #         lng: bar.longitude,
+    #         info_window_html: render_to_string(partial: "info_window", locals: { bar: }),
+    #         marker_html: render_to_string(partial: "marker")
+    #       }
+    #     end
+    #   }
+    #   @creators_info << all_crawl_info
+    # end
+    # @public.each do |crawl|
+    #   all_crawl_info = {
+    #     crawl:,
+    #     markers: crawl.bars.geocoded.map do |bar|
+    #       {
+    #         lat: bar.latitude,
+    #         lng: bar.longitude,
+    #         info_window_html: render_to_string(partial: "info_window", locals: { bar: }),
+    #         marker_html: render_to_string(partial: "marker")
+    #       }
+    #     end
+    #   }
+    #   @public_info << all_crawl_info
+    # end
+    @friends.each do |crawl|
       all_crawl_info = {
         crawl:,
         markers: crawl.bars.geocoded.map do |bar|
           {
             lat: bar.latitude,
             lng: bar.longitude,
-            info_window_html: render_to_string(partial: "info_window", locals: { bar: bar }),
+            info_window_html: render_to_string(partial: "info_window", locals: { bar: }),
             marker_html: render_to_string(partial: "marker")
           }
         end
       }
-      @all_info << all_crawl_info
+      @friends_info << all_crawl_info
     end
-    @all_info
+    @friends_info
   end
 
   def new
     # params[:bar] = []
     if params[:bars].present?
+
+#       puts "This is @filtered_bars_ids"
+#       puts @filtered_bars_ids = params[:bars].split(",")
       @filtered_bars_ids = params[:bars].split(",")
+
       @filtered_bars = []
       @filtered_bars_ids.each { |bar_id| @filtered_bars << Bar.find_by(place_id: bar_id) }
-      @new_bars = []
+
+      # raise
+
+      puts "This is @filtered_bars.map(&:name)"
       puts @filtered_bars.map(&:name)
 
-      @filtered_bars.each_with_index do |bar, i|
+      @new_bars = []
 
+      @filtered_bars.each_with_index do |bar, i|
         if params["bar_#{i}"] == "saved"
           @new_bars << bar
         else
           @new_bars << Bar.all.sample
         end
       end
+
       puts @new_bars.map(&:name)
+
       @markers = @new_bars.map do |bar|
         {
           lat: bar.latitude,
           lng: bar.longitude,
-          # info_window_html: render_to_string(partial: "info_window", locals: { bar: bar }),
+          info_window_html: render_to_string(inline: "<div><%= bar.name %></div>", locals: { bar: bar }),
           # marker_html: render_to_string(partial: "marker")
         }
       end
+
+      # raise
     else
       @filtered_bars = filters
       @filtered_bars_info = []
@@ -77,16 +124,50 @@ class CrawlsController < ApplicationController
         {
           lat: bar.latitude,
           lng: bar.longitude,
-          # info_window_html: render_to_string(partial: "info_window", locals: { bar: bar }),
+          info_window_html: render_to_string(inline: "<div><%= bar.name %></div>", locals: { bar: bar }),
           # marker_html: render_to_string(partial: "marker")
         }
       end
     end
+
+    # * Connected with the generate() in reload.js stimulus
     @crawl = Crawl.new
     respond_to do |format|
       format.html # Follow regular flow of Rails
-      format.text { render partial: 'crawls/barcards_regeneration', :formats=>[:text, :html], locals: { filtered_bars: @new_bars } }
+      format.text do
+        puts "These bars from generate() fetch"
+        # puts @new_bars
+        puts @new_bars[0].name
+        puts @new_bars[1].name
+        puts @new_bars[2].name
+
+        new_crawl = {
+          crawl: @crawl,
+          # markers: @new_bars.geocoded.map do |bar|
+          markers: @new_bars.map do |bar|
+                     {
+                       lat: bar.latitude,
+                       lng: bar.longitude,
+                       info_window_html: render_to_string(inline: "<div><%= bar.name %></div>", locals: { bar: bar }),
+                      #  marker_html: render_to_string(partial: "marker")
+                     }
+                   end
+        }
+
+        puts new_crawl
+        puts new_crawl[:markers]
+
+        # render partial: "crawls/barcards_regeneration", formats: %i[text html], locals: { filtered_bars: @new_bars }
+        # render partial: "shared/map", locals: { markers: new_crawl[:markers] }
+
+        render partial: "crawls/gen_crawl", formats: %i[text html], locals: { filtered_bars: @new_bars, markers: new_crawl[:markers] }
+        # render partial: "crawls/gen_crawl", formats: %i[text html], locals: { markers: new_crawl[:markers] }
+
+        # raise
+      end
     end
+
+    # raise
   end
 
   def show
@@ -95,7 +176,7 @@ class CrawlsController < ApplicationController
       {
         lat: bar.latitude,
         lng: bar.longitude,
-        info_window_html: render_to_string(partial: "info_window", locals: { bar: bar }),
+        info_window_html: render_to_string(partial: "info_window", locals: { bar: }),
         marker_html: render_to_string(partial: "marker")
       }
     end
@@ -127,6 +208,11 @@ class CrawlsController < ApplicationController
     @crawl = Crawl.new(crawl_params)
     @crawl.user = current_user
     @crawl.save!
+
+#     @bars = params[:crawl][:bars].split
+#     @bars.each do |id|
+#       bar = Bar.find(id.to_i)
+#       crawl_bar = Crawlbar.new
     @bars.each do |bar|
       crawl_bar = Crawlbar.new()
       crawl_bar.bar = bar
@@ -137,16 +223,34 @@ class CrawlsController < ApplicationController
     redirect_to dashboard_path
   end
 
-  
+
+  # def map
+  #   @markers = @new_bars.map do |bar|
+  #     {
+  #       lat: bar.latitude,
+  #       lng: bar.longitude,
+  #       # info_window_html: render_to_string(partial: "info_window", locals: { bar: bar }),
+  #       # marker_html: render_to_string(partial: "marker")
+  #     }
+  #   end
+
+  #   respond_to do |format|
+  #     # raise
+  #     format.html { render partial: "shared/map", locals: { markers: @markers } }
+  #   end
+  # end
+
 
   private
 
   def filters
-    @master_bar_list = retrieve_bars_from_api
+    # @master_bar_list = retrieve_bars_from_api
+    @master_bar_list = Bar.all
+
     if params[:venue_category].include?("restaurant")
       @bars_by_venue = @master_bar_list
-    # elsif params[:venue_category].include?("restaurant")
-    #   @bars_by_venue = Bar.all.select { |bar| bar.types.include?('restaurant') }
+      # elsif params[:venue_category].include?("restaurant")
+      #   @bars_by_venue = Bar.all.select { |bar| bar.types.include?('restaurant') }
     else
       @bars_by_venue = @master_bar_list.map { |bar| bar unless bar.types.include?("restaurant") }
     end
@@ -172,22 +276,26 @@ class CrawlsController < ApplicationController
 
   end
 
-  def google_api_call( pars = {} )
+  def google_api_call(params = {})
     # User input formatting
     location_input = params[:query] == "" ? "London" : params[:query].gsub(" ", "_")
 
     # Geocode location long/lat
-    serialized_json = URI.open("https://api.mapbox.com/geocoding/v5/mapbox.places/#{location_input}.json?access_token=#{ENV['MAPBOX_API_KEY']}").read
+    serialized_json = URI.open("https://api.mapbox.com/geocoding/v5/mapbox.places/#{location_input}.json?access_token=#{ENV.fetch(
+      'MAPBOX_API_KEY', nil
+    )}").read
     loc_data = JSON.parse(serialized_json)
     search_long = loc_data["features"][0]["center"][0]
     search_lat = loc_data["features"][0]["center"][1]
 
     # Google API call with long/lat
-
-    if !pars[:next_page_key]
-      url = URI("https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=#{search_lat}%2C#{search_long}&radius=2000&type=bar&key=#{ENV['GOOGLE_API_KEY']}")
+    if params[:next_page_key]
+      url = URI("https://maps.googleapis.com/maps/api/place/nearbysearch/json?key=#{ENV.fetch('GOOGLE_API_KEY',
+                                                                                              nil)}&pagetoken=#{params[:next_page_key]}")
     else
-      url = URI("https://maps.googleapis.com/maps/api/place/nearbysearch/json?key=#{ENV['GOOGLE_API_KEY']}&pagetoken=#{pars[:next_page_key]}")
+      url = URI("https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=#{search_lat}%2C#{search_long}&radius=2000&type=bar&key=#{ENV.fetch(
+        'GOOGLE_API_KEY', nil
+      )}")
     end
 
     https = Net::HTTP.new(url.host, url.port)
@@ -199,29 +307,32 @@ class CrawlsController < ApplicationController
     json_reponse = response.read_body
 
     JSON.parse(json_reponse)
+
     # RETURNS A HASH
   end
 
   def retrieve_bars_from_api
     full_results = []
     first_api_call = google_api_call
+    full_results << first_api_call["results"]
+
     # sleep(3)
     # second_api_call = google_api_call({ next_page_key: first_api_call["next_page_token"] })
+    # full_results << second_api_call["results"]
+
     # sleep(3)
     # third_api_call = google_api_call({ next_page_key: second_api_call["next_page_token"] })
-    full_results << first_api_call["results"]
-    # full_results << second_api_call["results"]
     # full_results << third_api_call["results"]
 
     full_results = full_results.flatten
     search_result_bars = []
+
     full_results.each do |result|
+      ###### UNCOMMENT TO HAVE API PHOTOS ######
 
-    ########## UNCOMMENT TO HAVE API PHOTOS ##############
-
-    # if result["photos"][0]["photo_reference"]
+      # if result["photos"][0]["photo_reference"]
       # photo_url = "https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photo_reference=#{result["photos"][0]["photo_reference"]}&key=#{ENV['GOOGLE_API_KEY']}"
-    # else
+      # else
       photo_url = "https://loremflickr.com/cache/resized/65535_52751342904_c22b7c6469_400_400_nofilter.jpg"
     # end
 
@@ -230,6 +341,7 @@ class CrawlsController < ApplicationController
     # else
       description = "Further data unavailable for this location"
     # end
+
 
 
       temp_bar = Bar.new(
@@ -247,11 +359,14 @@ class CrawlsController < ApplicationController
       )
       search_result_bars << temp_bar
     end
+
     search_result_bars.uniq
   end
 
   def place_details(google_id)
-    url = URI("https://maps.googleapis.com/maps/api/place/details/json?place_id=#{google_id}&key=#{ENV['GOOGLE_API_KEY']}")
+    url = URI("https://maps.googleapis.com/maps/api/place/details/json?place_id=#{google_id}&key=#{ENV.fetch(
+      'GOOGLE_API_KEY', nil
+    )}")
 
     https = Net::HTTP.new(url.host, url.port)
     https.use_ssl = true
