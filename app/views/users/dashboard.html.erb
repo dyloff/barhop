@@ -1,4 +1,5 @@
 <div class="container" data-controller="favourites">
+  <div data-controller="fav-barmap">
   <div class="row align-items-center py-4 border-bottom border-black">
     <div class="col">
       <h1 class="d-flex justify-content-start ">Welcome <%= current_user.username.capitalize%>👋</h1>
@@ -43,14 +44,19 @@
     <% end %>
   </div>
   <div data-favourites-target="favouriteBars" class="container d-none">
-        <div class="mb-3 px-0 mt-0">
-            <div class="card mt-2 shadow-sm rounded-30">
-              <div class="rounded-30 m-2" style="overflow:hidden">
-                <%= render "shared/favourites_map" %>
-              </div>
-            </div>
-          </div>
-    <div class="row justify-content-center">
+  <%# <div data-controller="fav_barmap"> %>
+  <div class="d-flex justify-content-center">
+  <button data-action="click->fav-barmap#toggle" class="btn btn-outline-primary m-3 toggle-map-btn">Map of Bars 🗺️</button>
+  </div>
+  <div class="mb-3 px-0 mt-0 hidden" data-fav-barmap-target="map">
+    <div class="card mt-2 shadow-sm rounded-30">
+      <div class="rounded-30 m-2" style="overflow:hidden">
+        <%= render "shared/favourites_map" %>
+      </div>
+    </div>
+  </div>
+  <%# </div> %>
+    <div class="row justify-content-center" data-fav-barmap-target="barCards">
       <% @bars.uniq.each do |bar| %>
         <div class="card px-0 bg-white rounded-30 m-2 col-3">
           <%= image_tag bar.image_url, style:"height: 100px; object-fit: cover; border-radius:30px 30px 0px 0px", alt:"Bar card image", class:"card-img-top card-image" %>
@@ -92,5 +98,6 @@
         </div>
       <% end %>
     </div>
+  </div>
   </div>
 </div>

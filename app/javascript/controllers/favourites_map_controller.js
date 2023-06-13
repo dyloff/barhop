@@ -34,9 +34,13 @@ export default class extends Controller {
       // }, 1000);
 
       const favBtn = document.querySelector(".favourite-btn")
+      const toggleBtn = document.querySelector(".toggle-map-btn")
       console.log(favBtn)
 
       favBtn.addEventListener("click", () => {
+        this.map.resize();
+      })
+      toggleBtn.addEventListener("click", () => {
         this.map.resize();
       })
     }
