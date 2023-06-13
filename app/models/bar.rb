@@ -8,6 +8,7 @@ class Bar < ApplicationRecord
 
   price = %w[1 2 3 4]
 
+
   validates :name, presence: true
   validates :location, presence: true
   validates :price_range, presence: true, inclusion: { in: price }
@@ -15,7 +16,7 @@ class Bar < ApplicationRecord
   validates :description, presence: true
   # validates :image_url, presence: true
 
-  # scope :search_by_address 
+  # scope :search_by_address
 
 end
 
