@@ -33,15 +33,15 @@ export default class extends Controller {
 
   generate() {
     const all_bars = document.querySelector("#select").dataset.allBars
-    // this.url += `&all-bar-list=${all_bars}`
-    // console.log(this.url)
+    this.url += `&all_bar_list=${all_bars}`
+    console.log(this.url)
 
     fetch(this.url, { headers: { Accept: "text/plain" } })
       .then((response) => response.text())
       .then((data) => {
         // console.log(data);
         this.element.outerHTML = data;
-
+        
         // this.barsListTarget.outerHTML = data;
 
         const mapContainer = document.querySelector(".crawl-map");
