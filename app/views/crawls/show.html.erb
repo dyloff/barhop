@@ -7,27 +7,28 @@
 
   <div class="mt-4 container barcards-container">
     <% @crawl.bars.each do |bar| %>
-      <%= render "shared/barcards", bar: bar %>
+      <%= render "crawls/barcards", bar: bar %>
     <% end %>
   </div>
 
  <div class="d-flex justify-content-center my-2" data-controller="reload">
   <%# <button type="button" class="btn btn-primary mx-2">Confirm</button> %>
-
-    <%= form_with model: @crawl do |f| %>
-    <div class="d-none">
-      <%= f.hidden_field(:bars, value: @crawl.bars.map(&:id)) %>
-      <%= f.label :crawl_name %>
-      <%= f.text_field :crawl_name, value: "test" %>
-      <%= f.label :completed %>
-      <%= f.text_field :completed, value: false %>
-      <%= f.label :public %>
-      <%= f.text_field :public, value: false %>
-      <%= f.label :date %>
-      <%= f.date_field :date, value: Date.parse('Sat, 24 Jun 2023') %>
-    </div>
-    <%= f.submit 'Save this BarHop', class: "btn btn-primary mx-2" %>
-  <% end %>
+<%= form_with model: Crawl.new do |f| %>
+    <%# <form action="/crawls" accept-charset="UTF-8" method="post"><input type="hidden" name="_method" value="patch" autocomplete="off"><input type="hidden" name="authenticity_token" value="fnUpUlGoAWrO2okRT6MV04lSTxgy9__3M5jugDDE9Sm4ppauZ6Nl6bktKlb1q-yzgERXcBoix3I96irFbIyjjA" autocomplete="off"> %>
+  <div class="d-none">
+    <input value= "<%= @crawl.crawlbar_ids %>" autocomplete="off" type="hidden" name="crawl[bars]" id="crawl_bars">
+    <label for="crawl_crawl_name">Crawl name</label>
+    <input value="<%= @crawl.crawl_name %>" type="text" name="crawl[crawl_name]" id="crawl_crawl_name">
+    <label for="crawl_completed">Completed</label>
+    <input value="false" type="text" name="crawl[completed]" id="crawl_completed">
+    <label for="crawl_public">Public</label>
+    <input value="false" type="text" name="crawl[public]" id="crawl_public">
+    <label for="crawl_date">Date</label>
+    <input value="2023-06-24" type="date" name="crawl[date]" id="crawl_date">
+  </div>
+  <input type="submit" name="commit" value="Save this BarHop" class="btn btn-primary mx-2" data-disable-with="Save this BarHop">
+<%# </form> %>
+ <% end %>
 
   <%= link_to "Back to BarHops", crawls_path, class:"active-tab" %>
 

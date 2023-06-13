@@ -15,7 +15,7 @@ export default class extends Controller {
   }
 
   connect() {
-    console.log("This is from map")
+    // console.log("This is from map")
 
     mapboxgl.accessToken = this.apiKeyValue
 
@@ -43,12 +43,12 @@ export default class extends Controller {
         i += 1
       });
 
-      console.log(fetchQueryString)
+      // console.log(fetchQueryString)
       this.#getRoute(fetchQueryString)
     }
 
     #addMarkersToMap(){
-      console.log(this.markersValue)
+      // console.log(this.markersValue)
 
       this.markersValue.forEach((marker) => {
         const popup = new mapboxgl.Popup().setHTML(marker.info_window_html)
@@ -76,11 +76,11 @@ export default class extends Controller {
     fetch(fetchQueryString)
       .then((response) => response.json())
       .then((data) => {
-        console.log(data)
+        // console.log(data)
 
         const routes = data.routes[0].geometry.coordinates;
-        console.log("This is routes");
-        console.log(routes);
+        // console.log("This is routes");
+        // console.log(routes);
 
         this.map.on('load', () => {
           this.map.addSource('route', {

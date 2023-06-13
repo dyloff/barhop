@@ -9,7 +9,7 @@ export default class extends Controller {
   url = `${window.location}&bars=${this.barsValue}`
 
   connect() {
-    console.log("HIIII")
+    // console.log("HIIII")
   }
 
 

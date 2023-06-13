@@ -1,0 +1,75 @@
+.search-box-small{
+  position: relative;
+  height: 40px;
+  width: 250px;
+  border-radius: 50vh;
+  align-self: flex-end;
+  margin: 0 0 0 1rem;
+  border: 2px solid $red;
+  transition: all ease-in 0.75s;
+}
+
+.search-box-small input{
+  width: 100%;
+  height: 40px;
+  border: none;
+  border-radius: 50px;
+  background: transparent;
+  color: $black;
+  box-shadow: 5px 5px 30px rgba(255,255,255,.4);
+  outline: none;
+  padding: 0 1rem;
+  font-size: 16px;
+  opacity: 1;
+}
+
+.search-box-small input::placeholder{
+  color: $black;
+  font-family: $headers-font;
+}
+
+.search-box-small .search-icon-small{
+  position: absolute;
+  right: 4px;
+  top: 50%;
+  transform: translateY(-50%);
+  height: 32px;
+  width: 32px;
+  background: #fff;
+  border-radius: 50%;
+  text-align: center;
+  line-height: 24px;
+  font-size: 16px;
+  background: $red;
+  color: #fff;
+  cursor: pointer;
+  z-index: 1;
+}
+
+.search-box-minimized{
+  height: 40px;
+  width: 40px;
+  border-radius: 50vh;
+  align-self: flex-end;
+  margin: 0 0 0 1rem;
+  border: 2px solid $red;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+
+.search-box-minimized .search-icon-small{
+  height: 32px;
+  width: 32px;
+  background: #fff;
+  border-radius: 50%;
+  text-align: center;
+  line-height: 24px;
+  font-size: 16px;
+  background: $red;
+  color: #fff;
+  cursor: pointer;
+  z-index: 1;
+}
