@@ -12,7 +12,7 @@ export default class extends Controller {
 
   connect() {
 
-    console.log("This is from reload stimulus");
+    // console.log("This is from reload stimulus");
     // console.log(this.barsListTarget);
 
   }
@@ -32,18 +32,21 @@ export default class extends Controller {
   }
 
   generate() {
+    const all_bars = document.querySelector("#select").dataset.allBars
+    this.url += `&all-bar-list=${all_bars}`
+
     fetch(this.url, { headers: { Accept: "text/plain" } })
       .then((response) => response.text())
       .then((data) => {
-        console.log(data);
+        // console.log(data);
         this.element.outerHTML = data;
 
         // this.barsListTarget.outerHTML = data;
 
         const mapContainer = document.querySelector(".crawl-map");
-        console.log(mapContainer);
+        // console.log(mapContainer);
 
-        console.log(this.element);
+        // console.log(this.element);
 
         document.querySelectorAll(".new-crawl-bars-map").forEach((map) => {
           map.classList.add("d-none");
@@ -51,7 +54,7 @@ export default class extends Controller {
 
         const barsMaps = document.querySelectorAll(".new-crawl-bars-map");
 
-        console.log(barsMaps[barsMaps.length - 1]);
+        // console.log(barsMaps[barsMaps.length - 1]);
 
         barsMaps[barsMaps.length - 1].classList.remove("d-none");
 

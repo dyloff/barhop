@@ -78,9 +78,13 @@ class CrawlsController < ApplicationController
   def new
     # params[:bar] = []
     if params[:bars].present?
+      puts "ALL FILTERED"
+      puts params[:bars]
+      puts @filtered_bars
+      puts "-----------"
 
-#       puts "This is @filtered_bars_ids"
-#       puts @filtered_bars_ids = params[:bars].split(",")
+      puts "This is @filtered_bars_ids"
+      puts @filtered_bars_ids = params[:bars].split(",")
       @filtered_bars_ids = params[:bars].split(",")
 
       @filtered_bars = []
@@ -101,8 +105,7 @@ class CrawlsController < ApplicationController
         end
       end
 
-      puts @new_bars.map(&:name)
-
+      # puts @new_bars.map(&:name)
       @markers = @new_bars.map do |bar|
         {
           lat: bar.latitude,
@@ -114,8 +117,13 @@ class CrawlsController < ApplicationController
 
       # raise
     else
-      @filtered_bars = filters
+      @filters_local = filters
+      @all_bars = @filters_local[0]
+      @number_of_bars = @filters_local[1]
+      @filtered_bars = @all_bars.sample(@number_of_bars)
+
       @filtered_bars_info = []
+
       @filtered_bars.each do |bar|
         @filtered_bars_info << bar.attributes
       end
@@ -140,6 +148,7 @@ class CrawlsController < ApplicationController
         puts @new_bars[0].name
         puts @new_bars[1].name
         puts @new_bars[2].name
+        raise
 
         new_crawl = {
           crawl: @crawl,
@@ -272,7 +281,8 @@ class CrawlsController < ApplicationController
 
     # Number of bars requested
     @number_of_bars = params[:number_of_bars] == "" ? 3 : params[:number_of_bars].to_i
-    @filtered_bars = @all_filtered_bars.sample(@number_of_bars)
+    # @filtered_bars = @all_filtered_bars.sample(@number_of_bars)
+    @filtered_bars = [@all_filtered_bars, @number_of_bars]
 
   end
 
@@ -327,11 +337,12 @@ class CrawlsController < ApplicationController
     full_results.each do |result|
       ###### UNCOMMENT TO HAVE API PHOTOS ######
 
-    if result["photos"][0]["photo_reference"]
-      photo_url = "https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photo_reference=#{result["photos"][0]["photo_reference"]}&key=#{ENV['GOOGLE_API_KEY']}"
-    else
+    # if result["photos"]
+    # if result["photos"][0]["photo_reference"]
+      # photo_url = "https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photo_reference=#{result["photos"][0]["photo_reference"]}&key=#{ENV['GOOGLE_API_KEY']}"
+    # else
       photo_url = "https://loremflickr.com/cache/resized/65535_52751342904_c22b7c6469_400_400_nofilter.jpg"
-    end
+    # end
 
     # if place_details(result["place_id"])["editorial_summary"] != nil
       # description = place_details(result["place_id"])["editorial_summary"]["overview"]
