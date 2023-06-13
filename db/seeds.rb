@@ -80,11 +80,11 @@ full_results.each do |result|
 
   ########## UNCOMMENT TO HAVE API PHOTOS ##############
 
-  if result["photos"][0]["photo_reference"]
-    photo_url = "https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photo_reference=#{result["photos"][0]["photo_reference"]}&key=#{ENV['GOOGLE_API_KEY']}"
-  else
+  # if result["photos"][0]["photo_reference"]
+    # photo_url = "https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photo_reference=#{result["photos"][0]["photo_reference"]}&key=#{ENV['GOOGLE_API_KEY']}"
+  # else
     photo_url = "https://loremflickr.com/cache/resized/65535_52751342904_c22b7c6469_400_400_nofilter.jpg"
-  end
+  # end
 
     search_result_bars = []
 
@@ -138,11 +138,11 @@ users.count.times do
   )
   p user
   p "------------"
-  2.times do
+  1.times do
     crawl = Crawl.create!(
       crawl_name: user.username.capitalize + crawl_names.sample,
       completed: false,
-      public: [true].sample,
+      public: false,
       creator: true,
       date: nil,
       user: user
@@ -165,7 +165,81 @@ users.count.times do
     crawl = Crawl.create!(
       crawl_name: user.username.capitalize + crawl_names.sample,
       completed: false,
-      public: [true, false].sample,
+      public: false,
+      creator: true,
+      date: nil,
+      user: user
+    )
+    p crawl
+    p "------------"
+    crawl_counter += 1
+
+    bars = Bar.all.sample(rand(4..6))
+    bars.each do |bar|
+      crawlbar = Crawlbar.create!(
+        bar: bar,
+        crawl: crawl
+      )
+      p crawlbar
+      p "------------"
+    end
+  end
+
+  user_count += 1
+end
+
+
+random_users = ["Mura", "Raiku", "Sanman", "Sola"]
+
+crawl_names=[
+  "'s Crawl for All",
+  "'s Le Wagon Alumni Drinks",
+  "'s Football Social",
+  "'s High End Bars",
+  "'s Massive 21st",
+  "'s Graduation Drinks",
+  "'s Stag Night"
+]
+
+user_count = 0
+crawl_counter = 0
+random_users.count.times do
+  user = User.create!(
+    email: "#{random_users[user_count]}@user.com",
+    password: "123456",
+    username: random_users[user_count]
+  )
+  p user
+  p "------------"
+  1.times do
+    crawl = Crawl.create!(
+      crawl_name: user.username.capitalize + crawl_names.sample,
+      completed: false,
+      public: true,
+      creator: false,
+      date: nil,
+      user: user
+    )
+    p crawl
+    p "------------"
+    crawl_counter += 1
+
+    bars = Bar.all.sample(3)
+    bars.each do |bar|
+      crawlbar = Crawlbar.create!(
+        bar: bar,
+        crawl: crawl
+      )
+      p crawlbar
+      p "------------"
+    end
+  end
+  1.times do
+    crawl = Crawl.create!(
+      crawl_name: user.username.capitalize + crawl_names.sample,
+      completed: false,
+      public: true,
+      creator: false,
       date: nil,
       user: user
     )
