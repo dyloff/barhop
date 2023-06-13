@@ -1,9 +1,3 @@
-require "uri"
-require "open-uri"
-require "net/http"
-require "json"
-require "base64"
-
 class CrawlsController < ApplicationController
   # skip_before_action :authenticate_user!, only: [:home]
   def home
