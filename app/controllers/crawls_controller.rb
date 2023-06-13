@@ -156,6 +156,9 @@ class CrawlsController < ApplicationController
           until !@filtered_bars.include?(new_regen_bar)
             new_regen_bar = @all_bars.sample
           end
+          until !@new_bars.include?(new_regen_bar)
+            new_regen_bar = @all_bars.sample
+          end
           @new_bars << new_regen_bar
         end
       end
