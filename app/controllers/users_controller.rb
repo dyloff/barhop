@@ -26,7 +26,14 @@ class UsersController < ApplicationController
 
     @favourite = Favourite.new
 
+
     @favourites = current_user.favourites
+    @markers = @favourites.map { |favourite| {
+      lat: favourite.bar.latitude,
+      lng: favourite.bar.longitude,
+      info_window_html: render_to_string(partial: "info_window", locals: { favourite: favourite }),
+      # marker_html: render_to_string(partial: "marker")
+    }}
     @bars = []
     @favourites.each do |favourite|
       if  @bars.any? { |bar| bar.id == favourite.bar_id }
@@ -70,7 +77,6 @@ class UsersController < ApplicationController
       end
     end
   end
-
   private
 
   def set_user

@@ -131,6 +131,8 @@ class CrawlsController < ApplicationController
     redirect_to dashboard_path
   end
 
+  
+
   private
 
   def filters
@@ -161,6 +163,7 @@ class CrawlsController < ApplicationController
     # Number of bars requested
     @number_of_bars = params[:number_of_bars] == "" ? 3 : params[:number_of_bars].to_i
     @filtered_bars = @all_filtered_bars.sample(@number_of_bars)
+
   end
 
   def google_api_call( pars = {} )
