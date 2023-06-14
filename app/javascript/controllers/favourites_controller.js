@@ -6,6 +6,7 @@ export default class extends Controller {
   static targets = ["favouriteBars", "savedBarhops", "favouriteBarsButton", "savedBarsButton", "showFriends", "showFriendsButton"]
   connect() {
     console.log("connected to favourites");
+    document.querySelector(".deleteButton").innerHTML = "<i class='fa-solid fa-trash'></i>"
 
   }
 
@@ -17,7 +18,7 @@ export default class extends Controller {
   this.savedBarsButtonTarget.classList.remove("active-button")
   this.favouriteBarsButtonTarget.classList.add("active-button")
   this.showFriendsTarget.classList.add("d-none")
-  this.showFriendsTarget.classList.remove("active-button")
+  this.showFriendsButtonTarget.classList.remove("active-button")
   }
   hideShowSavedBarhops() {
   this.favouriteBarsTarget.classList.add("d-none");
@@ -25,7 +26,7 @@ export default class extends Controller {
   this.savedBarsButtonTarget.classList.add("active-button")
   this.favouriteBarsButtonTarget.classList.remove("active-button")
   this.showFriendsTarget.classList.add("d-none")
-  this.showFriendsTarget.classList.remove("active-button")
+  this.showFriendsButtonTarget.classList.remove("active-button")
   }
   hideShowFriendsButton() {
 

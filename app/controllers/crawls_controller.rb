@@ -21,46 +21,57 @@ class CrawlsController < ApplicationController
     # puts @crawl.bars
     # puts @markers
   end
-
   def index
-    # @creators = Crawl.where(creator: true)
-    # @public = Crawl.where(public: true)
-    @friends = Crawl.all
-    # @bars = Bar.all
 
-    # @creators_info = []
-    # @public_info = []
+    @creators = Crawl.all.select { |crawl| crawl.creator == true }
+    @public = Crawl.all.select { |crawl| crawl.public == true }
+    # @public = Crawl.find_by(public: true)
+    @current_friends = User.all.select do |user|
+      if current_user.is_following?(user.id) && user.is_following?(current_user.id)
+        user
+      end
+    end
+    @my_friends_bars = []
+    @current_friends.each do |friend|
+      bars = Crawl.select { |crawl| crawl.user_id == friend.id }
+      bars.each { |bar| @my_friends_bars << bar }
+    end
+
+
+    # @bars = Bar.all
+    @creators_info = []
+    @public_info = []
     @friends_info = []
 
-    # @creators.each do |crawl|
-    #   all_crawl_info = {
-    #     crawl:,
-    #     markers: crawl.bars.geocoded.map do |bar|
-    #       {
-    #         lat: bar.latitude,
-    #         lng: bar.longitude,
-    #         info_window_html: render_to_string(partial: "info_window", locals: { bar: }),
-    #         marker_html: render_to_string(partial: "marker")
-    #       }
-    #     end
-    #   }
-    #   @creators_info << all_crawl_info
-    # end
-    # @public.each do |crawl|
-    #   all_crawl_info = {
-    #     crawl:,
-    #     markers: crawl.bars.geocoded.map do |bar|
-    #       {
-    #         lat: bar.latitude,
-    #         lng: bar.longitude,
-    #         info_window_html: render_to_string(partial: "info_window", locals: { bar: }),
-    #         marker_html: render_to_string(partial: "marker")
-    #       }
-    #     end
-    #   }
-    #   @public_info << all_crawl_info
-    # end
-    @friends.each do |crawl|
+    @creators.each do |crawl|
+      all_crawl_info = {
+        crawl:,
+        markers: crawl.bars.geocoded.map do |bar|
+          {
+            lat: bar.latitude,
+            lng: bar.longitude,
+            info_window_html: render_to_string(partial: "info_window", locals: { bar: }),
+            marker_html: render_to_string(partial: "marker")
+          }
+        end
+      }
+      @creators_info << all_crawl_info
+    end
+    @public.each do |crawl|
+      all_crawl_info = {
+        crawl:,
+        markers: crawl.bars.geocoded.map do |bar|
+          {
+            lat: bar.latitude,
+            lng: bar.longitude,
+            info_window_html: render_to_string(partial: "info_window", locals: { bar: }),
+            marker_html: render_to_string(partial: "marker")
+          }
+        end
+      }
+      @public_info << all_crawl_info
+    end
+    @my_friends_bars.each do |crawl|
       all_crawl_info = {
         crawl:,
         markers: crawl.bars.geocoded.map do |bar|
@@ -363,6 +374,11 @@ class CrawlsController < ApplicationController
   #     # raise
   #     format.html { render partial: "shared/map", locals: { markers: @markers } }
   #   end
+  # end
+  # def destroy
+  #   @crawl = Crawl.find(params[:id])
+  #   @crawl.destroy
+  #   redirect_to dashboard_path, status: :see_other
   # end
 
 
