@@ -43,6 +43,24 @@ export default class extends Controller {
 
       // console.log(fetchQueryString)
       this.#getRoute(fetchQueryString)
+
+      // favBtn.addEventListener("click", () => {
+      //   this.map.resize();
+      // })
+      // toggleBtn.addEventListener("click", () => {
+      //   this.map.resize();
+      // })
+
+      const indexBtns = document.querySelectorAll(".index-btn")
+      console.log("Testing");
+      console.log(indexBtns);
+
+      indexBtns.forEach((btn) => {
+        btn.addEventListener("click", () => {
+          console.log("Index btn clicked");
+          this.map.resize();
+      })
+    })
     }
 
     #addMarkersToMap(){
@@ -118,7 +136,7 @@ export default class extends Controller {
           }
           });
         });
-        
+
         let counter = 0
         this.markersValue.forEach((marker) => {
           counter += 1
@@ -126,9 +144,9 @@ export default class extends Controller {
 
         let totalTimeMins = (Math.round(data.routes[0].duration / 60) + (45 * counter)) % 60
         let totalTimeHours = Math.round((Math.round(data.routes[0].duration / 60) + (45 * counter)) / 60)
-        console.log("------------------")
-        console.log(totalTimeHours + ":" + totalTimeMins)
-        console.log("------------------")
+        // console.log("------------------")
+        // console.log(totalTimeHours + ":" + totalTimeMins)
+        // console.log("------------------")
         this.element.parentElement.parentElement.parentElement.children[0].querySelector(".estimated-time").innerHTML = `Est BarHop duration: ${totalTimeHours} hours ${totalTimeMins} mins`
       })
 
