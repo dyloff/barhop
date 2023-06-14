@@ -15,7 +15,7 @@
   </div>
   <div data-favourites-target="savedBarhops" class="">
     <h2 class="m-3">Your BarHops:</h2>
-    <% @crawls.reverse.each_with_index do |crawl, i| %>
+    <% @crawls.each_with_index do |crawl, i| %>
       <div class="card pb-3 mb-4 rounded-30" style="overflow: hidden;" >
       <div class="dashboard-card-header">
         <h4 class="card-title dashboard-header m-0"><%= crawl.crawl_name %></h4>

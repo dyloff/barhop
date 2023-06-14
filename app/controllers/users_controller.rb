@@ -4,7 +4,7 @@ class UsersController < ApplicationController
   def dashboard
     # @crawl = Crawl.find(params[:id])
     # @crawls = Crawl.all
-    @crawls = current_user.crawls
+    @crawls = current_user.crawls.reverse
     # @bars = Bar.all
     @all_info = []
 
