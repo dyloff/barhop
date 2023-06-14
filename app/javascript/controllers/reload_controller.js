@@ -41,7 +41,7 @@ export default class extends Controller {
       .then((data) => {
         // console.log(data);
         this.element.outerHTML = data;
-        
+
         // this.barsListTarget.outerHTML = data;
 
         const mapContainer = document.querySelector(".crawl-map");

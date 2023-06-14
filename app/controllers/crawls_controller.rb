@@ -244,6 +244,21 @@ class CrawlsController < ApplicationController
     @crawl.user = current_user
     @crawl.save!
 
+    if params[:crawl][:existing_crawl] == "true"
+
+      crawlbar_ids = eval(params[:crawl][:bars])
+      bars = crawlbar_ids.map { |id| Crawlbar.find(id).bar }
+
+      bars.each do |bar|
+        temp = Crawlbar.new()
+        temp.bar = bar
+        temp.crawl = @crawl
+        temp.save!
+      end
+
+
+    else
+
     # if params[:crawl][:bars_full_info]
     #   bar_info = eval(params[:crawl][:bars_full_info].gsub("} {", "}, {").insert(0, "[").insert(-1, "]"))
     #   @bars = bar_info.map do |bar|
@@ -312,6 +327,7 @@ class CrawlsController < ApplicationController
       temp.bar = bar
       temp.save!
     end
+  end
 
       # @bars = eval(params[:crawl][:bars]).map do |id|
       #   Crawlbar.find(id).bar
