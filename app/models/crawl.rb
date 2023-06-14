@@ -1,6 +1,6 @@
 class Crawl < ApplicationRecord
   belongs_to :user
-  has_many :crawlbars
+  has_many :crawlbars, dependent: :destroy
   has_many :bars, through: :crawlbars
   has_many :reviews
   has_one :shared_withs
@@ -9,5 +9,5 @@ class Crawl < ApplicationRecord
   validates :completed, inclusion: { in: [true, false] }
   validates :public, inclusion: { in: [true, false] }
 
-  
+
 end

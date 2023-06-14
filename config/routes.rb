@@ -16,7 +16,9 @@ Rails.application.routes.draw do
     resources :crawlbars, only: [:create]
   end
 
+  resources :users, only: [:destroy]
   get 'dashboard', to: 'users#dashboard'
+  # delete "dashboard", to: "users#destroy"
   # get 'generate', to: 'crawls#generate'
   get 'friends', to: 'users#friends'
 

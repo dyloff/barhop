@@ -15,11 +15,12 @@
   </div>
   <div data-favourites-target="savedBarhops" class="">
     <h2 class="m-3">Your BarHops:</h2>
-    <% @crawls.each_with_index do |crawl, i| %>
+    <% @crawls.reverse.each_with_index do |crawl, i| %>
       <div class="card pb-3 mb-4 rounded-30" style="overflow: hidden;" >
       <div class="dashboard-card-header">
         <h4 class="card-title dashboard-header m-0"><%= crawl.crawl_name %></h4>
         <p class="estimated-time"></p>
+        <%= link_to "Delete", {:controller => "users", :action => 'destroy', :id => crawl.id}, data: {turbo_method: :delete, turbo_confirm: "Are you sure?"}, class: :deleteButton, remote: true %>
       </div>
         <div class="d-flex justify-content-between ps-3 pe-3">
           <div class="dashboard-container">
@@ -60,7 +61,7 @@
   <div data-favourites-target="favouriteBars" class="container d-none">
   <%# <div data-controller="fav_barmap"> %>
   <div class="d-flex justify-content-center">
-  <button data-action="click->fav-barmap#toggle" class="btn btn-outline-primary m-3 toggle-map-btn">Map of Bars 🗺️</button>
+  <button data-action="click->fav-barmap#toggle" data-fav-barmap-target="buttonText" class="btn btn-outline-primary m-3 toggle-map-btn">Map of Bars 🗺️</button>
   </div>
   <div class="mb-3 px-0 mt-0 hidden" data-fav-barmap-target="map">
     <div class="card mt-2 shadow-sm rounded-30">
@@ -93,7 +94,10 @@
   </div>
   <div data-favourites-target="showFriends" class="container d-none">
     <div class="row">
+    <div class="d-flex justify-content-between">
       <h1>Friends</h1>
+     <%= link_to("Add a friend", users_path) %>
+    </div>
       <% @friends.each do |friend| %>
         <div class="col-md-4">
           <div class="card">

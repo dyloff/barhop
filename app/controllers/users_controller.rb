@@ -2,6 +2,7 @@ class UsersController < ApplicationController
   before_action :set_user, only: [:follow, :unfollow]
 
   def dashboard
+    # @crawl = Crawl.find(params[:id])
     # @crawls = Crawl.all
     @crawls = current_user.crawls
     # @bars = Bar.all
@@ -77,6 +78,13 @@ class UsersController < ApplicationController
       end
     end
   end
+
+  def destroy
+    @crawl = Crawl.find(params[:id])
+    @crawl.destroy
+    redirect_to dashboard_path, status: :see_other
+  end
+
   private
 
   def set_user
