@@ -1,21 +1,23 @@
-
 <div class="d-flex justify-content-center new-crawl-bars-map">
   <div class="card mx-5 mt-2" style="overflow:hidden; border-radius: 35px; width:1250px">
     <%= render "shared/map" %>
   </div>
 </div>
 
-<div id="select" data-controller="reload" data-all-bars="<%= @all_bars.to_json %>" data-reload-bars-value=<%= @filtered_bars_ids.to_json %>>
+<div id="select" data-controller="reload" data-all-bars="<%= @all_bars_base64 %>" data-reload-bars-value=<%= @filtered_bars_ids.to_json %>>
     <%# <% @filtered_bars.each_with_index do |bar, i| %>
       <%= render "barcards_regeneration", filtered_bars: @filtered_bars %>
 
   <div class="d-flex justify-content-center my-2">
   <%# <button type="button" class="btn btn-primary mx-2">Confirm</button> %>
+    <%= @filtered_bars_info %>
 
     <%= form_with model: @crawl do |f| %>
       <div class="d-none">
         <%= f.hidden_field(:bars, value: @filtered_bars) %>
-        <%= f.hidden_field(:bars_full_info, value: @filtered_bars_info) %>
+        <%= f.hidden_field(:bars_ids, value: @filtered_bars.map { |bar| bar.place_id}) %>
+        <#%= f.hidden_field(:bars_full_info, value: @filtered_bars_info) %>
+        <%= f.hidden_field(:all_bars_base_64, value: @all_bars_base64) %>
         <%= f.label :crawl_name %>
         <%= f.text_field :crawl_name, value:"#{current_user.username.capitalize}'s BarHop"%>
         <%= f.label :completed %>

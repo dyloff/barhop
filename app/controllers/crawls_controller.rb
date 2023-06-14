@@ -2,6 +2,7 @@ require "uri"
 require "open-uri"
 require "net/http"
 require "json"
+require "base64"
 
 class CrawlsController < ApplicationController
   def home
@@ -76,7 +77,7 @@ class CrawlsController < ApplicationController
   end
 
   def new
-    @filters_local = filters
+    # @filters_local = filters
     # params[:bar] = []
     if params[:bars].present?
       puts "ALL FILTERED"
@@ -84,9 +85,38 @@ class CrawlsController < ApplicationController
       puts @filtered_bars
       puts "-----------"
 
-      puts "!!!!!!!!"
-      puts @all_bars = @filters_local[0]
-      puts "!!!!!!!!"
+      @all_bars_base64 = params[:all_bar_list]
+
+      @all_bars_hash = JSON.parse(Base64.decode64(@all_bars_base64))
+
+      puts "#################"
+      puts @all_bars_hash
+      puts "-----"
+      puts @all_bars_hash.class
+      puts "-----"
+      puts @all_bars_hash.length
+      puts "-----"
+      puts @all_bars_hash.first
+      puts "-----"
+      puts @all_bars_hash.last
+      puts "#################"
+
+      @all_bars = @all_bars_hash.map do |bar|
+        Bar.new(
+          name: bar["name"],
+          types: bar["types"],
+          # restaurant: bar["types"],
+          location: bar["location"],
+          longitude: bar["longitude"],
+          latitude: bar["latitude"],
+          price_range: bar["price_range"],
+          rating: bar["rating"],
+          place_id: bar["place_id"],
+          description: bar["description"],
+          image_url: bar["image_url"]
+        )
+      end
+      # raise
 
       puts "This is @filtered_bars_ids"
       puts @filtered_bars_ids = params[:bars].split(",")
@@ -103,15 +133,22 @@ class CrawlsController < ApplicationController
       puts "This is @filtered_bars.map(&:name)"
       puts @filtered_bars.map(&:name)
 
+
       @new_bars = []
 
       @filtered_bars.each_with_index do |bar, i|
         if params["bar_#{i}"] == "saved"
           @new_bars << bar
         else
-          @new_bars << @all_bars.sample
+          new_regen_bar = bar
+          until !@filtered_bars.include?(new_regen_bar)
+            new_regen_bar = @all_bars.sample
+          end
+          @new_bars << new_regen_bar
         end
       end
+
+      @new_bars_ids = @new_bars.map { |bar| bar.place_id }
 
       # puts @new_bars.map(&:name)
       @markers = @new_bars.map do |bar|
@@ -130,11 +167,13 @@ class CrawlsController < ApplicationController
       @number_of_bars = @filters_local[1]
       @filtered_bars = @all_bars.sample(@number_of_bars)
 
-      @filtered_bars_info = []
+      @all_bars_base64 = Base64.encode64(@all_bars.to_json)
 
-      @filtered_bars.each do |bar|
-        @filtered_bars_info << bar.attributes
-      end
+      # @filtered_bars_info = []
+
+      # @filtered_bars.each do |bar|
+      #   @filtered_bars_info << bar.attributes
+      # end
       @filtered_bars_ids = @filtered_bars.map(&:place_id)
       @markers = @filtered_bars.map do |bar|
         {
@@ -199,42 +238,95 @@ class CrawlsController < ApplicationController
   end
 
   def create
-    if params[:crawl][:bars_full_info]
-      bar_info = eval(params[:crawl][:bars_full_info].gsub("} {", "}, {").insert(0, "[").insert(-1, "]"))
-      @bars = bar_info.map do |bar|
-        Bar.create!(
-          name: bar["name"],
-          types: bar["types"],
-          # restaurant: bar["types"],
-          location: bar["location"],
-          longitude: bar["longitude"],
-          latitude: bar["latitude"],
-          price_range: bar["price_range"],
-          rating: bar["rating"],
-          place_id: bar["place_id"],
-          description: bar["description"],
-          image_url: bar["image_url"]
-        )
-      end
-    else
-      @bars = eval(params[:crawl][:bars]).map do |id|
-        Crawlbar.find(id).bar
-      end
-    end
+
     @crawl = Crawl.new(crawl_params)
     @crawl.user = current_user
     @crawl.save!
+
+    # if params[:crawl][:bars_full_info]
+    #   bar_info = eval(params[:crawl][:bars_full_info].gsub("} {", "}, {").insert(0, "[").insert(-1, "]"))
+    #   @bars = bar_info.map do |bar|
+    #     Bar.create!(
+    #       name: bar["name"],
+    #       types: bar["types"],
+    #       # restaurant: bar["types"],
+    #       location: bar["location"],
+    #       longitude: bar["longitude"],
+    #       latitude: bar["latitude"],
+    #       price_range: bar["price_range"],
+    #       rating: bar["rating"],
+    #       place_id: bar["place_id"],
+    #       description: bar["description"],
+    #       image_url: bar["image_url"]
+    #     )
+    #   end
+    # else
+    @all_bars_base64 = params[:crawl][:all_bars_base_64]
+    @all_bars_hash = JSON.parse(Base64.decode64(@all_bars_base64))
+    @all_bars = []
+    @all_bars_hash.each do |bar|
+      new_bar = Bar.new(
+        name: bar["name"],
+        types: bar["types"],
+        # restaurant: bar["types"],
+        location: bar["location"],
+        longitude: bar["longitude"],
+        latitude: bar["latitude"],
+        price_range: bar["price_range"],
+        rating: bar["rating"],
+        place_id: bar["place_id"],
+        description: bar["description"],
+        image_url: bar["image_url"]
+      )
+      @all_bars << new_bar
+    end
+
+    # @all_bars = @all_bars_hash.map do |bar|
+    # Bar.new(
+    #   name: bar["name"],
+    #   types: bar["types"],
+    #   # restaurant: bar["types"],
+    #   location: bar["location"],
+    #   longitude: bar["longitude"],
+    #   latitude: bar["latitude"],
+    #   price_range: bar["price_range"],
+    #   rating: bar["rating"],
+    #   place_id: bar["place_id"],
+    #   description: bar["description"],
+    #   image_url: bar["image_url"]
+    # )
+    # end
+
+    @selected_bar_place_ids = params[:crawl][:bars_ids].split()
+
+
+    @selected_bars = []
+    @selected_bar_place_ids.each do |bar_place_id|
+      @selected_bars << @all_bars.find { |bar| bar.place_id == bar_place_id }
+    end
+
+    @selected_bars.each do |bar|
+      temp = Crawlbar.new()
+      temp.crawl = @crawl
+      temp.bar = bar
+      temp.save!
+    end
+
+      # @bars = eval(params[:crawl][:bars]).map do |id|
+      #   Crawlbar.find(id).bar
+      # end
+  # end
 
 #     @bars = params[:crawl][:bars].split
 #     @bars.each do |id|
 #       bar = Bar.find(id.to_i)
 #       crawl_bar = Crawlbar.new
-    @bars.each do |bar|
-      crawl_bar = Crawlbar.new()
-      crawl_bar.bar = bar
-      crawl_bar.crawl = @crawl
-      crawl_bar.save
-    end
+    # @bars.each do |bar|
+    #   crawl_bar = Crawlbar.new()
+    #   crawl_bar.bar = bar
+    #   crawl_bar.crawl = @crawl
+    #   crawl_bar.save
+    # end
 
     redirect_to dashboard_path
   end
@@ -286,6 +378,21 @@ class CrawlsController < ApplicationController
     # All filtered
     @all_filtered_bars = @bars_by_price & @bars_by_venue
 
+    # LIMITS THE BARS TO 10 MAX OUTPUT
+    @all_filtered_bars = @all_filtered_bars.sample(10) if @all_filtered_bars.length > 10
+
+
+    ### THIS NOW ADDS THE DESCRIPTION ONLY TO THE BARS WE USE TO MINIMIZE API CALLS ###
+
+    @all_filtered_bars.each do |bar|
+      # if place_details(bar.place_id)["editorial_summary"] != nil
+        # description = place_details(result["place_id"])["editorial_summary"]["overview"]
+      # else
+        description = "Further data unavailable for this location"
+      # end
+    end
+
+
     # Number of bars requested
     @number_of_bars = params[:number_of_bars] == "" ? 3 : params[:number_of_bars].to_i
     # @filtered_bars = @all_filtered_bars.sample(@number_of_bars)
@@ -334,9 +441,9 @@ class CrawlsController < ApplicationController
     second_api_call = google_api_call({ next_page_key: first_api_call["next_page_token"] })
     full_results << second_api_call["results"]
 
-    sleep(2.5)
-    third_api_call = google_api_call({ next_page_key: second_api_call["next_page_token"] })
-    full_results << third_api_call["results"]
+    # sleep(2.5)
+    # third_api_call = google_api_call({ next_page_key: second_api_call["next_page_token"] })
+    # full_results << third_api_call["results"]
 
     full_results = full_results.flatten
     search_result_bars = []
@@ -351,12 +458,9 @@ class CrawlsController < ApplicationController
       photo_url = "https://loremflickr.com/cache/resized/65535_52751342904_c22b7c6469_400_400_nofilter.jpg"
     # end
 
-    # if place_details(result["place_id"])["editorial_summary"] != nil
-      # description = place_details(result["place_id"])["editorial_summary"]["overview"]
-    # else
-      description = "Further data unavailable for this location"
-    # end
+    ### TEMP DESCRIPTION ALLOCATION IN CASE THE DESCRIPTION DOESNT WORK LATER IN THE PROCESS ###
 
+    description = "Further data unavailable for this location"
 
 
       temp_bar = Bar.new(
