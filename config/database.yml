@@ -81,6 +81,6 @@ test:
 #
 production:
   <<: *default
-  database: barhop_production
-  username: barhop
+  database: ddfu0rgtmab818
+  username: orynagnjxdsjrb
   password: <%= ENV["BARHOP_DATABASE_PASSWORD"] %>
