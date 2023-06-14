@@ -491,7 +491,8 @@ class CrawlsController < ApplicationController
 
     description = "Further data unavailable for this location"
 
-
+      puts result
+      
       temp_bar = Bar.new(
         name: result["name"],
         types: result["types"],
