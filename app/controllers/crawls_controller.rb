@@ -415,11 +415,11 @@ class CrawlsController < ApplicationController
     ### THIS NOW ADDS THE DESCRIPTION ONLY TO THE BARS WE USE TO MINIMIZE API CALLS ###
 
     @all_filtered_bars.each do |bar|
-      # if place_details(bar.place_id)["editorial_summary"] != nil
-        # description = place_details(result["place_id"])["editorial_summary"]["overview"]
-      # else
+      if place_details(bar.place_id)["editorial_summary"] != nil
+        description = place_details(bar.place_id)["editorial_summary"]["overview"]
+      else
         description = "Further data unavailable for this location"
-      # end
+      end
     end
 
 
@@ -481,12 +481,11 @@ class CrawlsController < ApplicationController
     full_results.each do |result|
       ###### UNCOMMENT TO HAVE API PHOTOS ######
 
-    # if result["photos"]
-    # if result["photos"][0]["photo_reference"]
-      # photo_url = "https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photo_reference=#{result["photos"][0]["photo_reference"]}&key=#{ENV['GOOGLE_API_KEY']}"
-    # else
+    if result["photos"]
+      photo_url = "https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photo_reference=#{result["photos"][0]["photo_reference"]}&key=#{ENV['GOOGLE_API_KEY']}"
+    else
       photo_url = "https://loremflickr.com/cache/resized/65535_52751342904_c22b7c6469_400_400_nofilter.jpg"
-    # end
+    end
 
     ### TEMP DESCRIPTION ALLOCATION IN CASE THE DESCRIPTION DOESNT WORK LATER IN THE PROCESS ###
 
