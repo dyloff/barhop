@@ -39,6 +39,10 @@ export default class extends Controller {
     fetch(this.url, { headers: { Accept: "text/plain" } })
       .then((response) => response.text())
       .then((data) => {
+        console.log("This is reload controller element")
+        console.log(this.element);
+
+        console.log("This is data")
         console.log(data);
         this.element.outerHTML = data;
 
@@ -47,7 +51,6 @@ export default class extends Controller {
         const mapContainer = document.querySelector(".crawl-map");
         console.log(mapContainer);
 
-        console.log(this.element);
 
         document.querySelectorAll(".new-crawl-bars-map").forEach((map) => {
           map.classList.add("d-none");
