@@ -5,6 +5,7 @@ require "json"
 require "base64"
 
 class CrawlsController < ApplicationController
+  skip_before_action :authenticate_user!, only: [:home]
   def home
     @crawl = Crawl.all.sample
 
