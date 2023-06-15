@@ -49,3 +49,22 @@
     border: $red;
   }
 }
+
+.activeTabIndex {
+  border-bottom: 3px solid $red;
+  border-top: 3px solid $red;
+  color: $red;
+  font-weight: bold;
+}
+.hoverCursor {
+  cursor: pointer;
+}
+.hoverCursor:hover {
+  cursor: pointer;
+}
+
+.vertical-line {
+  border-right: 2px solid $red;
+  height: 30px;
+
+}
