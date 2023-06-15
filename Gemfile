@@ -7,7 +7,6 @@ gem "faker"
 gem "geocoder"
 gem "nokogiri"
 gem "google_search_results"
-gem "erb-formatter"
 
 
 # Bundle edge Rails instead: gem "rails", github: "rails/rails", branch: "main"
