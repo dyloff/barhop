@@ -36,15 +36,34 @@
                 <button class="btn btn-outline-primary" type="submit" name="commit" data-disable-with="Favourite"><i class="fa-solid fa-heart"></i></button>
                 <% end %> -->
 <!-- ------------ -->
-                  <div style ="position: relative; background-size: cover;background-position: center;height: 194px; width: 100%; background-image: url(<%= bar.image_url %>)">
+                  <div style ="position: relative; background-size: cover;background-position: center;height: 194px; width: 100%; background-image: url(<%= bar.image_url %>); cursor: pointer" data-bs-toggle="modal" data-bs-target="#barModal-<%= bar.id %>">
                     <%= form_with model: @favourite, url: bar_favourites_path(bar) do |f| %>
                     <div class="d-none">
                       <%= f.hidden_field(:bar, value: bar) %>
                     </div>
-                    <button class="btn btn-outline-primary" style="position: absolute; top:0; right:0;border: none" type="submit" name="commit" data-disable-with="Favourite"><i class="fa-solid fa-heart"></i></button>
+                    <button class="btn btn-outline-primary" style="position: absolute; top:0; right:0;border: none;" type="submit" name="commit" data-disable-with="Favourite"><i class="fa-solid fa-heart"></i></button>
                     <% end %>
                   </div>
                 <p class=""><strong><%= bar.name %></strong></p>
+
+                <!-- Modal -->
+                  <div class="modal fade" id="barModal-<%= bar.id %>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered">
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <h1 class="modal-title fs-5" id="exampleModalLabel"><%= bar.name %></h1>
+                          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                        <img src="<%= bar.image_url %>" class="bar-model-image" alt="bar image">
+                        <hr>
+                          <%= bar.description %>
+                          <hr>
+                          <%= bar.location %>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
 <!-- ------------ -->
               </div>
                 <!-- <img src="<%= bar.image_url %>" alt="" class="" style="height: 100%"> -->
