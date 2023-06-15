@@ -54,7 +54,8 @@
   border-bottom: 3px solid $red;
   border-top: 3px solid $red;
   color: $red;
-  font-weight: bold;
+  font-weight: 800;
+  margin-top: 0px !important;
 }
 .hoverCursor {
   cursor: pointer;
@@ -66,5 +67,4 @@
 .vertical-line {
   border-right: 2px solid $red;
   height: 30px;
-
 }
