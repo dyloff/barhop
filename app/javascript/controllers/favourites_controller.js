@@ -6,9 +6,13 @@ export default class extends Controller {
   static targets = ["favouriteBars", "savedBarhops", "favouriteBarsButton", "savedBarsButton", "showFriends", "showFriendsButton"]
   connect() {
     console.log("connected to favourites");
-    document.querySelectorAll(".deleteButton").innerHTML = "<i class='fa-solid fa-trash'></i>"
+    console.log(document.querySelectorAll(".deleteButton"));
 
-  }
+    const allDelete = document.querySelectorAll(".deleteButton");
+    allDelete.forEach((button) => {
+      button.innerHTML = "<i class='fa-solid fa-trash'></i>"
+  } )
+}
 
   hideShowFavourites() {
   console.log(this.favouriteBarsTarget);
