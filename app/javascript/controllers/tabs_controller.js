@@ -10,29 +10,30 @@ export default class extends Controller {
 
   hideShowCreators() {
     console.log(this.creatorsButtonTarget);
-      this.creatorsButtonTarget.classList.add("active-button");
+      this.creatorsButtonTarget.classList.add("activeTabIndex");
+      // this.creatorsButtonTarget.classList.add("active-button");
       this.creatorsCardsTarget.classList.remove("d-none");
       this.friendsCardsTarget.classList.add("d-none");
       this.publicCardsTarget.classList.add("d-none");
-      this.friendsButtonTarget.classList.remove("active-button")
-      this.publicButtonTarget.classList.remove("active-button")
+      this.friendsButtonTarget.classList.remove("activeTabIndex")
+      this.publicButtonTarget.classList.remove("activeTabIndex")
     }
     hideShowFriends() {
       console.log("connected hideShowFriends");
       this.creatorsCardsTarget.classList.add("d-none");
-      this.creatorsButtonTarget.classList.remove("active-button");
+      this.creatorsButtonTarget.classList.remove("activeTabIndex");
       this.friendsCardsTarget.classList.remove("d-none");
       this.publicCardsTarget.classList.add("d-none");
-      this.friendsButtonTarget.classList.add("active-button")
-      this.publicButtonTarget.classList.remove("active-button")
+      this.friendsButtonTarget.classList.add("activeTabIndex")
+      this.publicButtonTarget.classList.remove("activeTabIndex")
     }
     hideShowPublic() {
       console.log("connected hideShowPublic");
       this.creatorsCardsTarget.classList.add("d-none");
-      this.creatorsButtonTarget.classList.remove("active-button");
+      this.creatorsButtonTarget.classList.remove("activeTabIndex");
       this.friendsCardsTarget.classList.add("d-none");
       this.publicCardsTarget.classList.remove("d-none");
-      this.friendsButtonTarget.classList.remove("active-button")
-      this.publicButtonTarget.classList.add("active-button")
+      this.friendsButtonTarget.classList.remove("activeTabIndex")
+      this.publicButtonTarget.classList.add("activeTabIndex")
       }
 }

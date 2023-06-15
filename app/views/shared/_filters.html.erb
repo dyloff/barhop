@@ -1,26 +1,27 @@
 
   <div class="card p-4 text-center" style="width: 25rem; height: 500px" data-controller="slider-bar-range" data-controller="slider-price-range">
-    <h5 class="card-title mt-2">Filters</h5>
+    <h5 class="card-title mt-2 mb-3">Create your own <strong style="color: #D94124">bar crawl</strong></h5>
     <%= form_with url: new_crawl_path, method: :get, html: { class: "row search-icon", data: { controller: "slider-price-range generate-button" } } do |f| %>
       <%= f.text_field :query, value: params[:query], class: "form-control bg-white border border-black col-12", placeholder: "Location..." %>
       <h6 class="text-center mt-4 mb-0">Price</h6>
-      <div class="d-flex justify-content-around my-3">
+      <div class="d-flex justify-content-center my-3" style="padding-right: 50px;">
         <input type="hidden" name="price_range[]" value="" autocomplete="off">
           <input class="tag-selector" type="checkbox" value="1" name="price_range[]" id="price_range_1">
-          <label for="price_range_1">£</label>
+          <label class="mx-3" for="price_range_1">£</label>
           <input class="tag-selector" type="checkbox" value="2" name="price_range[]" id="price_range_2">
-          <label for="price_range_2">££</label>
+          <label class="mx-3" for="price_range_2">££</label>
           <input class="tag-selector" type="checkbox" value="3" name="price_range[]" id="price_range_3">
-            <label for="price_range_3">£££</label>
-            <input class="tag-selector" type="checkbox" value="4" name="price_range[]" id="price_range_4">
-          <label for="price_range_4">££££</label>
+          <label class="mx-3" for="price_range_3">£££</label>
+          <input class="tag-selector" type="checkbox" value="4" name="price_range[]" id="price_range_4">
+          <label class="mx-3" for="price_range_4">££££</label>
       </div>
         <!-- <%= f.select :day, ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'], { :include_blank => 'Day for crawl' },  class: "form-select select-category dropdown-item my-3"  %> -->
       <h6 class="text-center mt-4 mb-0">Venue</h6>
-      <div class="d-flex justify-content-around my-3">
+      <div class="d-flex justify-content-around my-3" style="padding-right: 50px;">
         <input type="hidden" name="venue_category[]" value="" autocomplete="off">
         <input class="tag-selector2" type="checkbox" value="restaurant" name="venue_category[]" id="venue_category_1">
         <label for="venue_category_1"><strong>🍺 + 🍕</strong></label>
+        <div class="vertical-line"></div>
         <input class="tag-selector2" type="checkbox" value="bar" name="venue_category[]" id="venue_category_2">
         <label for="venue_category_2"><strong>🍷</strong></label>
       </div>

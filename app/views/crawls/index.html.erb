@@ -3,10 +3,10 @@
     <%= render "shared/filters" %>
   </div>
   <div class="d-flex flex-column" style="height: 90vh">
-    <div class="d-flex justify-content-around pe-4 mb-2">
-      <button data-tabs-target="creatorsButton" data-action="click->tabs#hideShowCreators" type="button" class="active-button btn btn-outline-primary index-btn">Creators</button>
-      <button data-tabs-target="friendsButton"  data-action="click->tabs#hideShowFriends" type="button" class="btn btn-outline-primary index-btn">Friends</button>
-      <button data-tabs-target="publicButton"  data-action="click->tabs#hideShowPublic" type="button" class="btn btn-outline-primary index-btn">Public</button>
+    <div class="d-flex justify-content-center pe-4 mb-2">
+      <h5 data-tabs-target="friendsButton"  data-action="click->tabs#hideShowFriends"  class="mx-2 hoverCursor">Friends</h5>
+      <h5 data-tabs-target="creatorsButton" data-action="click->tabs#hideShowCreators"  class="activeTabIndex mx-2 hoverCursor">Creators</h5>
+      <h5 data-tabs-target="publicButton"  data-action="click->tabs#hideShowPublic"  class="mx-2 hoverCursor">Public</h5>
     </div>
 
     <div data-tabs-target="creatorsCards" class="index-crawls">
@@ -26,9 +26,9 @@
       </div>
   </div>
 </div>
-<div class="" style="width: 100vw;height: 300px;background-color: #D94124;position: relative">
+<%# <div class="" style="width: 100vw;height: 300px;background-color: #D94124;position: relative">
   <div class="d-flex justify-content-around align-items-center" style="padding-top: 150px;">
     <i class="fa-solid fa-champagne-glasses fa-2xl icon-3x" style="color: #ffffff; font-size: 4em"></i>
     <i class="fa-solid fa-user-group fa-2xl icon-3x" style="color: #ffffff; font-size: 4em"></i>
   </div>
-</div>
+</div> %>

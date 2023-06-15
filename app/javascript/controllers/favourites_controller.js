@@ -6,7 +6,7 @@ export default class extends Controller {
   static targets = ["favouriteBars", "savedBarhops", "favouriteBarsButton", "savedBarsButton", "showFriends", "showFriendsButton"]
   connect() {
     console.log("connected to favourites");
-    document.querySelector(".deleteButton").innerHTML = "<i class='fa-solid fa-trash'></i>"
+    document.querySelectorAll(".deleteButton").innerHTML = "<i class='fa-solid fa-trash'></i>"
 
   }
 
