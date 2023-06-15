@@ -13,13 +13,12 @@
 
       <div class="d-flex justify-content-center my-2">
       <%# <button type="button" class="btn btn-primary mx-2">Confirm</button> %>
-        <%= @filtered_bars_info %>
 
         <%= form_with model: @crawl do |f| %>
           <div class="d-none">
             <%= f.hidden_field(:bars, value: @filtered_bars) %>
             <%= f.hidden_field(:bars_ids, value: @filtered_bars.map { |bar| bar.place_id}) %>
-            <#%= f.hidden_field(:bars_full_info, value: @filtered_bars_info) %>
+            <%= f.hidden_field(:bars_full_info, value: @filtered_bars_info) %>
             <#%= f.hidden_field(:all_bars_base_64, value: @all_bars_base64) %>
             <%= f.label :crawl_name %>
             <%= f.text_field :crawl_name, value:"#{current_user.username.capitalize}'s BarHop"%>
@@ -44,4 +43,3 @@
     <h3 class="text-red">Optimizing your BarHop</h3>
   </div>
 </div>
-
