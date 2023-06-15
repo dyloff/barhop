@@ -2,3 +2,12 @@
   color: $red;
   border: 3px solid $red;
 }
+
+.loading-page {
+  font-size: 32px;
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  justify-content: center;
+  align-items: center;
+}

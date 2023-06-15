@@ -1,5 +1,5 @@
-<div class="">
-  <div class="">
+<div class="" data-controller="new-loading">
+  <div class="" data-new-loading-target="page">
   <h3 class="text-center m-2"><%= current_user.username.capitalize %>'s BarHop</h3>
     <div class="d-flex justify-content-center new-crawl-bars-map">
       <div class="card mx-5 mt-2" style="overflow:hidden; border-radius: 35px; width:1250px">
@@ -33,10 +33,14 @@
           <%= f.submit 'Save your BarHop', class: "btn btn-primary mx-2" %>
         <% end %>
 
-        <button type="button" data-action="click->reload#generate" class="active-tab">Regenerate</button>
+        <button type="button" data-action="click->reload#generate" data-action="click->new-loading#switch" class="active-tab">Regenerate</button>
       </div>
     </div>
   </div>
-  <div class="">
+  <div class="container loading-page hidden" style="height: 90vh" data-new-loading-target="spinner">
+    <div class="spinner-border text-primary" role="status">
+      <span class="visually-hidden"></span>
+    </div>
+    <h3 class="text-red">Optimizing your BarHop</h3>
   </div>
 </div>
