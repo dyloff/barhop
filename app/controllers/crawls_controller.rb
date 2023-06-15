@@ -143,8 +143,8 @@ class CrawlsController < ApplicationController
 
       # raise
 
-      puts "This is @filtered_bars.map(&:name)"
-      puts (@filtered_bars.map{ |bar| bar.name })
+      # puts "This is @filtered_bars.map(&:name)"
+      # puts (@filtered_bars.map{ |bar| bar.name })
 
 
       @new_bars = []
