@@ -1,34 +1,39 @@
-<div class="d-flex justify-content-center new-crawl-bars-map">
-  <div class="card mx-5 mt-2" style="overflow:hidden; border-radius: 35px; width:1250px">
-    <%= render "shared/map", markers: markers %>
-  </div>
-</div>
-
-<div data-controller="reload" data-all-bars="<%= @all_bars_base64 %>" data-reload-bars-value=<%= @new_bars_ids.to_json %>>
-  <%# @filtered_bars.each_with_index do |bar, i| %>
-
-    <%= render "barcards_regeneration", filtered_bars: @new_bars %>
-
-    <div class="d-flex justify-content-center my-2">
-      <%# <button type="button" class="btn btn-primary mx-2">Confirm</button> %>
-      <%= form_with model: @crawl do |f| %>
-        <div class="d-none">
-          <%= f.hidden_field(:bars, value: @new_bars) %>
-          <%= f.hidden_field(:bars_ids, value: @new_bars.map { |bar| bar.place_id}) %>
-          <%= f.hidden_field(:all_bars_base_64, value: @all_bars_base64) %>
-          <%= f.label :crawl_name %>
-          <%= f.text_field :crawl_name, value: "#{current_user.username.capitalize}'s BarHop" %>
-          <%= f.label :completed %>
-          <%= f.text_field :completed, value: false %>
-          <%= f.label :public %>
-          <%= f.text_field :public, value: false %>
-          <%= f.label :date %>
-          <%= f.date_field :date, value: Date.parse("Sat, 24 Jun 2023") %>
-        </div>
-        <%= f.submit "Save your BarHop", class: "btn btn-primary mx-2" %>
-      <% end %>
-      <button type="button" data-action="click->reload#generate" class="btn btn-secondary active-tab">Regenerate</button>
+<div class="">
+  <div class="">
+    <h3 class="text-center m-2"><%= current_user.username.capitalize %>'s BarHop</h3>
+    <div class="d-flex justify-content-center new-crawl-bars-map">
+      <div class="card mx-5 mt-2" style="overflow:hidden; border-radius: 35px; width:1250px">
+        <%= render "shared/map", markers: markers %>
+      </div>
     </div>
-    <%# end %>
+
+    <div data-controller="reload" data-all-bars="<%= @all_bars_base64 %>" data-reload-bars-value=<%= @new_bars_ids.to_json %>>
+      <%# @filtered_bars.each_with_index do |bar, i| %>
+
+        <%= render "barcards_regeneration", filtered_bars: @new_bars %>
+
+        <div class="d-flex justify-content-center my-2">
+          <%# <button type="button" class="btn btn-primary mx-2">Confirm</button> %>
+          <%= form_with model: @crawl do |f| %>
+            <div class="d-none">
+              <%= f.hidden_field(:bars, value: @new_bars) %>
+              <%= f.hidden_field(:bars_ids, value: @new_bars.map { |bar| bar.place_id}) %>
+              <%#= f.hidden_field(:all_bars_base_64, value: @all_bars_base64) %>
+              <%= f.label :crawl_name %>
+              <%= f.text_field :crawl_name, value: "#{current_user.username.capitalize}'s BarHop" %>
+              <%= f.label :completed %>
+              <%= f.text_field :completed, value: false %>
+              <%= f.label :public %>
+              <%= f.text_field :public, value: false %>
+              <%= f.label :date %>
+              <%= f.date_field :date, value: Date.parse("Sat, 24 Jun 2023") %>
+            </div>
+            <%= f.submit "Save your BarHop", class: "btn btn-primary mx-2" %>
+          <% end %>
+          <button type="button" data-action="click->reload#generate" class="active-tab">Regenerate</button>
+        </div>
+        <%# end %>
+      </div>
+    </div>
   </div>
 </div>

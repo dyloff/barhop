@@ -49,8 +49,14 @@ class CrawlsController < ApplicationController
           }
         end
       }
+
       @creators_info << all_crawl_info
     end
+
+    clone = @public[6]
+    @public.delete_at(6)
+    @public = (@public.shuffle << clone)
+
     @public.each do |crawl|
       all_crawl_info = {
         crawl:,
@@ -83,7 +89,7 @@ class CrawlsController < ApplicationController
   end
 
   def new
-    # @filters_local = filters
+    @filters_local = filters
     # params[:bar] = []
     if params[:bars].present?
       puts "ALL FILTERED"
@@ -91,35 +97,36 @@ class CrawlsController < ApplicationController
       puts @filtered_bars
       puts "-----------"
 
-      @all_bars_base64 = params[:all_bar_list]
+      # @all_bars_base64 = params[:all_bar_list]
 
-      @all_bars_hash = JSON.parse(Base64.decode64(@all_bars_base64))
+      # @all_bars_hash = JSON.parse(Base64.decode64(@all_bars_base64))
 
-      puts "#################"
-      puts @all_bars_hash
-      puts "-----"
-      puts @all_bars_hash.class
-      puts "-----"
-      puts @all_bars_hash.length
-      puts "-----"
-      puts @all_bars_hash.first
-      puts "-----"
-      puts @all_bars_hash.last
-      puts "#################"
+      # puts "#################"
+      # puts @all_bars_hash
+      # puts "-----"
+      # puts @all_bars_hash.class
+      # puts "-----"
+      # puts @all_bars_hash.length
+      # puts "-----"
+      # puts @all_bars_hash.first
+      # puts "-----"
+      # puts @all_bars_hash.last
+      # puts "#################"
 
-      @all_bars = @all_bars_hash.map do |bar|
+
+      @all_bars = @filters_local[0].map do |bar|
         Bar.new(
-          name: bar["name"],
-          types: bar["types"],
-          # restaurant: bar["types"],
-          location: bar["location"],
-          longitude: bar["longitude"],
-          latitude: bar["latitude"],
-          price_range: bar["price_range"],
-          rating: bar["rating"],
-          place_id: bar["place_id"],
-          description: bar["description"],
-          image_url: bar["image_url"]
+          name: bar.name,
+          types: bar.types,
+          # restaurant: bar.types,
+          location: bar.location,
+          longitude: bar.longitude,
+          latitude: bar.latitude,
+          price_range: bar.price_range,
+          rating: bar.rating,
+          place_id: bar.place_id,
+          description: bar.description,
+          image_url: bar.image_url
         )
       end
       # raise
@@ -137,7 +144,7 @@ class CrawlsController < ApplicationController
       # raise
 
       puts "This is @filtered_bars.map(&:name)"
-      puts @filtered_bars.map(&:name)
+      puts (@filtered_bars.map{ |bar| bar.name })
 
 
       @new_bars = []
@@ -171,12 +178,12 @@ class CrawlsController < ApplicationController
 
       # raise
     else
-      @filters_local = filters
+      # @filters_local = filters
       @all_bars = @filters_local[0]
       @number_of_bars = @filters_local[1]
       @filtered_bars = @all_bars.sample(@number_of_bars)
 
-      @all_bars_base64 = Base64.encode64(@all_bars.to_json)
+      # @all_bars_base64 = Base64.encode64(@all_bars.to_json)
 
       # @filtered_bars_info = []
 
