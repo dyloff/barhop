@@ -3,7 +3,8 @@ import { Controller } from "@hotwired/stimulus"
 // Connects to data-controller="index-tabs"
 export default class extends Controller {
 
-  static targets = ["creatorsButton", "friendsButton", "publicButton", "creatorsCards", "publicCards", "friendsCards"]
+  static targets = ["creatorsButton", "plusMinusNumber" , "friendsButton", "publicButton", "creatorsCards", "publicCards", "friendsCards"]
+  static values = { numbers: Array };
   connect() {
     console.log("connected to index tabs controller");
   }
@@ -35,5 +36,30 @@ export default class extends Controller {
       this.publicCardsTarget.classList.remove("d-none");
       this.friendsButtonTarget.classList.remove("activeTabIndex")
       this.publicButtonTarget.classList.add("activeTabIndex")
+      }
+
+
+      updateSelectedNumber() {
+        this.selectedNumberTarget.value = this.numbersValue[this.selectedIndex];
+      }
+      minus() {
+        if (this.splusMinusNumberTarget.value >=3 && this.splusMinusNumberTarget.value <= 6 ) {
+          this.splusMinusNumberTarget.value = this.splusMinusNumberTarget.value - 1
+        }
+        else {
+          this.elementTarget.setAttribute("disabled", true)
+        }
+
+      }
+
+      plus() {
+        if (this.splusMinusNumberTarget.value >=3 && this.splusMinusNumberTarget.value <= 6 ) {
+          this.splusMinusNumberTarget.value = this.splusMinusNumberTarget.value + 1
+        }
+        else {
+          this.elementTarget.setAttribute("disabled", true)
+        }
+
+
       }
 }
