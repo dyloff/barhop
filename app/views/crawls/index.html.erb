@@ -15,7 +15,7 @@
           <% end %>
         </div>
         <% if @friends_info.present? %>
-          <div data-tabs-target="friendsCards" class="index-crawls d-none">
+          <div data-tabs-target="friendsCards" class="index-crawls">
             <% @friends_info.shuffle.each do |info| %>
               <%= render "shared/routecards", info: info%>
             <% end %>
