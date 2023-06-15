@@ -6,17 +6,19 @@
       </div>
     </div>
 
-    <div data-controller="reload" data-all-bars="<%= @all_bars_base64 %>" data-reload-bars-value=<%= @new_bars_ids.to_json %>>
+    <div data-controller="reload" data-reload-bars-value=<%= @new_bars_ids.to_json %>>
       <%# @filtered_bars.each_with_index do |bar, i| %>
 
         <%= render "barcards_regeneration", filtered_bars: @new_bars %>
 
         <div class="d-flex justify-content-center my-2">
+        WE ARE IN THE GEN CRAWL HTML FILE
           <%# <button type="button" class="btn btn-primary mx-2">Confirm</button> %>
           <%= form_with model: @crawl do |f| %>
             <div class="d-none">
               <%= f.hidden_field(:bars, value: @new_bars) %>
               <%= f.hidden_field(:bars_ids, value: @new_bars.map { |bar| bar.place_id}) %>
+              <%= f.hidden_field(:bars_full_info, value: @all_bars_info) %>
               <%#= f.hidden_field(:all_bars_base_64, value: @all_bars_base64) %>
               <%= f.label :crawl_name %>
               <%= f.text_field :crawl_name, value: "#{current_user.username.capitalize}'s BarHop" %>
