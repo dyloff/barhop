@@ -416,9 +416,9 @@ class CrawlsController < ApplicationController
 
     @all_filtered_bars.each do |bar|
       if place_details(bar.place_id)["editorial_summary"] != nil
-        description = place_details(bar.place_id)["editorial_summary"]["overview"]
+        bar.description = place_details(bar.place_id)["editorial_summary"]["overview"]
       else
-        description = "Further data unavailable for this location"
+        bar.description = "Further data unavailable for this location"
       end
     end
 
@@ -492,7 +492,7 @@ class CrawlsController < ApplicationController
     description = "Further data unavailable for this location"
 
       puts result
-      
+
       temp_bar = Bar.new(
         name: result["name"],
         types: result["types"],

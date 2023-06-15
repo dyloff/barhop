@@ -8,7 +8,7 @@ export default class extends Controller {
     bars: Array,
   };
 
-  url = `${window.location}&bars=${this.barsValue}`;
+  url = `${window.location.href}&bars=${this.barsValue}`;
 
   connect() {
 
@@ -39,15 +39,18 @@ export default class extends Controller {
     fetch(this.url, { headers: { Accept: "text/plain" } })
       .then((response) => response.text())
       .then((data) => {
-        // console.log(data);
+        console.log("This is reload controller element")
+        console.log(this.element);
+
+        console.log("This is data")
+        console.log(data);
         this.element.outerHTML = data;
 
         // this.barsListTarget.outerHTML = data;
 
         const mapContainer = document.querySelector(".crawl-map");
-        // console.log(mapContainer);
+        console.log(mapContainer);
 
-        // console.log(this.element);
 
         document.querySelectorAll(".new-crawl-bars-map").forEach((map) => {
           map.classList.add("d-none");
@@ -55,39 +58,9 @@ export default class extends Controller {
 
         const barsMaps = document.querySelectorAll(".new-crawl-bars-map");
 
-        // console.log(barsMaps[barsMaps.length - 1]);
+        console.log(barsMaps[barsMaps.length - 1]);
 
         barsMaps[barsMaps.length - 1].classList.remove("d-none");
-
-        // Rails.ajax({
-        //   url: this.data.get("url").replace(":id", id),
-        //   type: "PATCH",
-        //   data: data,
-        //   success: function () {
-        //     console.log("Try to get a updated map");
-        //     // document.location.reload();
-
-        //     fetch(`/routes/${routeId}/map`)
-        //       // .then((res) => res.json())
-        //       // .then((data) => {
-        //       //   console.log(data.json);
-        //       //   console.log(data.template);
-        //       //   console.log(data.map);
-        //       // });
-        //       .then((res) => {
-        //         console.log(res);
-        //         // console.log(res.text());
-        //         return res.text();
-        //       })
-        //       .then((data) => {
-        //         console.log("Checking Fetch Get Response");
-        //         // console.log(data);
-
-        //         mapContainer.innerHTML = data;
-        //         // mapContainer.insertAdjacentHTML("beforeend", data);
-        //       });
-        //   },
-        // });
       });
   }
 

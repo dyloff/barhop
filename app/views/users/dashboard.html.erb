@@ -95,8 +95,10 @@
   <div data-favourites-target="showFriends" class="container d-none">
     <div class="row">
     <div class="d-flex justify-content-between">
-      <h1>Friends</h1>
-     <%= link_to("Add a friend", users_path) %>
+      <h1 class="mt-2">Friends</h1>
+     <%= link_to users_path do %>
+      <i class="fa-solid fa-user-group mt-3">+</i>
+     <% end %>
     </div>
       <% @friends.each do |friend| %>
         <div class="col-md-4">
