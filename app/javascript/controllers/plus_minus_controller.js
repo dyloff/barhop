@@ -29,7 +29,7 @@ export default class extends Controller {
       this.finalBarsTarget.value = parseInt(this.numberOfBarsTarget.innerText)
     }
     else {
-      document.getElementById("minus").disabled = true;
+      document.getElementById("minus").disabled = true
     }
   }
 

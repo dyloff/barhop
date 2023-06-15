@@ -37,29 +37,4 @@ export default class extends Controller {
       this.friendsButtonTarget.classList.remove("activeTabIndex")
       this.publicButtonTarget.classList.add("activeTabIndex")
       }
-
-
-      updateSelectedNumber() {
-        this.selectedNumberTarget.value = this.numbersValue[this.selectedIndex];
-      }
-      minus() {
-        if (this.splusMinusNumberTarget.value >=3 && this.splusMinusNumberTarget.value <= 6 ) {
-          this.splusMinusNumberTarget.value = this.splusMinusNumberTarget.value - 1
-        }
-        else {
-          this.elementTarget.setAttribute("disabled", true)
-        }
-
-      }
-
-      plus() {
-        if (this.splusMinusNumberTarget.value >=3 && this.splusMinusNumberTarget.value <= 6 ) {
-          this.splusMinusNumberTarget.value = this.splusMinusNumberTarget.value + 1
-        }
-        else {
-          this.elementTarget.setAttribute("disabled", true)
-        }
-
-
-      }
 }
