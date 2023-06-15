@@ -65,7 +65,7 @@ export default class extends Controller {
     const markersIcons = document.querySelectorAll(".mapboxgl-marker");
 
     markersIcons.forEach((icon) => {
-      icon.firstElementChild.children[2].setAttribute("fill", "#000");
+      icon.firstElementChild.children[2].setAttribute("fill", "#D94124");
     });
   }
 
