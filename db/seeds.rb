@@ -119,13 +119,8 @@ crawl_names=[
             "'s Big Night Out",
             "'s Regular Thursday",
             "'s Brunch Drinks",
-            "'s Bank Holiday Bonanza",
-            "'s Soirée",
             "'s After Work Drinks",
-            "'s LeWagon Destress",
-            "'s Drinks",
-            "'s Crawl",
-            "'s BarHop"
+            "'s LeWagon Destress"
           ]
 
 user_count = 0
@@ -140,7 +135,7 @@ users.count.times do
   p "------------"
   1.times do
     crawl = Crawl.create!(
-      crawl_name: user.username.capitalize + crawl_names.sample,
+      crawl_name: user.username.capitalize + crawl_names[user_count],
       completed: false,
       public: false,
       creator: true,
@@ -161,35 +156,12 @@ users.count.times do
       p "------------"
     end
   end
-  1.times do
-    crawl = Crawl.create!(
-      crawl_name: user.username.capitalize + crawl_names.sample,
-      completed: false,
-      public: false,
-      creator: true,
-      date: nil,
-      user: user
-    )
-    p crawl
-    p "------------"
-    crawl_counter += 1
-
-    bars = Bar.all.sample(rand(4..6))
-    bars.each do |bar|
-      crawlbar = Crawlbar.create!(
-        bar: bar,
-        crawl: crawl
-      )
-      p crawlbar
-      p "------------"
-    end
-  end
 
   user_count += 1
 end
 
 
-random_users = ["Mura", "Raiku", "Sanman", "Sola"]
+random_users = ["Mura", "Raiku", "Sanman"]
 
 crawl_names=[
   "'s Crawl for All",
@@ -259,4 +231,31 @@ random_users.count.times do
   end
 
   user_count += 1
+end
+
+rachael = User.create!(
+  email: "rachael@user.com",
+  password: "123456",
+  username: "rachael"
+)
+p rachael
+p "------------"
+1.times do
+  crawl = Crawl.create!(
+    crawl_name: rachael.username.capitalize + "'s Batch#1230 Afterparty",
+    completed: false,
+    public: true,
+    creator: false,
+    date: nil,
+    user: rachael
+  )
+  bars = Bar.all.sample(4)
+  bars.each do |bar|
+    crawlbar = Crawlbar.create!(
+      bar: bar,
+      crawl: crawl
+    )
+    p crawlbar
+    p "------------"
+  end
 end

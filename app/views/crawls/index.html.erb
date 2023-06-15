@@ -15,7 +15,7 @@
       <% end %>
     </div>
     <div data-tabs-target="publicCards" class="index-crawls d-none">
-      <% @public_info.shuffle.each do |info| %>
+      <% @public_info.each do |info| %>
         <%= render "shared/routecards", info: info%>
       <% end %>
     </div>

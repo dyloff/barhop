@@ -8,7 +8,6 @@ gem "geocoder"
 gem "nokogiri"
 gem "google_search_results"
 
-
 # Bundle edge Rails instead: gem "rails", github: "rails/rails", branch: "main"
 gem "rails", "~> 7.0.5"
 
