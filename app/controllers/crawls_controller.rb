@@ -49,8 +49,14 @@ class CrawlsController < ApplicationController
           }
         end
       }
+
       @creators_info << all_crawl_info
     end
+
+    clone = @public[6]
+    @public.delete_at(6)
+    @public = (@public.shuffle << clone)
+
     @public.each do |crawl|
       all_crawl_info = {
         crawl:,
