@@ -68,3 +68,32 @@
   border-right: 2px solid $red;
   height: 30px;
 }
+
+.round-bordered {
+  border: 1px solid $red;
+  border-radius: 50%;
+  width: 35px;
+  font-size: 18px;
+  height: 35px;
+  padding: 3px;
+  color: $red;
+}
+
+.round-bordered:hover {
+  color: white;
+  height: 35px;
+  padding: 3px;
+  border-radius: 50%;
+  width: 35px;
+  font-size: 18px;
+  background-color: $red;
+  color: white;
+}
+
+#counter {
+  margin: 0 15px;
+}
+
+.pound {
+  font-weight: 900;
+}

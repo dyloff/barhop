@@ -3,7 +3,8 @@ import { Controller } from "@hotwired/stimulus"
 // Connects to data-controller="index-tabs"
 export default class extends Controller {
 
-  static targets = ["creatorsButton", "friendsButton", "publicButton", "creatorsCards", "publicCards", "friendsCards"]
+  static targets = ["creatorsButton", "plusMinusNumber" , "friendsButton", "publicButton", "creatorsCards", "publicCards", "friendsCards"]
+  static values = { numbers: Array };
   connect() {
     console.log("connected to index tabs controller");
   }
