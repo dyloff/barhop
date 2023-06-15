@@ -62,6 +62,17 @@ export default class extends Controller {
 
         barsMaps[barsMaps.length - 1].classList.remove("d-none");
       });
+
+      // const spinner = document.querySelector("#spinner")
+      // const page = document.querySelector("#page")
+
+      // spinner.classList.toggle("hidden");
+      // page.classList.toggle("hidden");
+
+      // setTimeout(() => {
+      //   spinner.className = "container loading-page hidden"
+      //   page.className = ""
+      // }, 20000);
   }
 
   reload() {
