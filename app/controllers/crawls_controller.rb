@@ -292,25 +292,41 @@ class CrawlsController < ApplicationController
     #     )
     #   end
     # else
-    @all_bars_base64 = params[:crawl][:all_bars_base_64]
-    @all_bars_hash = JSON.parse(Base64.decode64(@all_bars_base64))
-    @all_bars = []
-    @all_bars_hash.each do |bar|
-      new_bar = Bar.new(
-        name: bar["name"],
-        types: bar["types"],
-        # restaurant: bar["types"],
-        location: bar["location"],
-        longitude: bar["longitude"],
-        latitude: bar["latitude"],
-        price_range: bar["price_range"],
-        rating: bar["rating"],
-        place_id: bar["place_id"],
-        description: bar["description"],
-        image_url: bar["image_url"]
-      )
-      @all_bars << new_bar
-    end
+    @filters_local = filters
+    @all_bars = @filters_local[0].map do |bar|
+        Bar.new(
+          name: bar.name,
+          types: bar.types,
+          # restaurant: bar.types,
+          location: bar.location,
+          longitude: bar.longitude,
+          latitude: bar.latitude,
+          price_range: bar.price_range,
+          rating: bar.rating,
+          place_id: bar.place_id,
+          description: bar.description,
+          image_url: bar.image_url
+        )
+      end
+    # @all_bars_base64 = params[:crawl][:all_bars_base_64]
+    # @all_bars_hash = JSON.parse(Base64.decode64(@all_bars_base64))
+    # @all_bars = []
+    # @all_bars_hash.each do |bar|
+    #   new_bar = Bar.new(
+    #     name: bar["name"],
+    #     types: bar["types"],
+    #     # restaurant: bar["types"],
+    #     location: bar["location"],
+    #     longitude: bar["longitude"],
+    #     latitude: bar["latitude"],
+    #     price_range: bar["price_range"],
+    #     rating: bar["rating"],
+    #     place_id: bar["place_id"],
+    #     description: bar["description"],
+    #     image_url: bar["image_url"]
+    #   )
+    #   @all_bars << new_bar
+    # end
 
     # @all_bars = @all_bars_hash.map do |bar|
     # Bar.new(
