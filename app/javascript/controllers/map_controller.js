@@ -58,16 +58,17 @@ export default class extends Controller {
     //   this.map.resize();
     // })
 
-    const indexBtns = document.querySelectorAll(".index-btn");
-    console.log("Testing");
-    console.log(indexBtns);
+    const friendButton = document.querySelector(".friendButton");
+    const publicButton = document.querySelector(".publicButton");
 
-    indexBtns.forEach((btn) => {
-      btn.addEventListener("click", () => {
-        console.log("Index btn clicked");
+      friendButton.addEventListener("click", () => {
+        console.log("friend btn btn clicked");
         this.map.resize();
       });
-    });
+      publicButton.addEventListener("click", () => {
+        console.log("public btn btn clicked");
+        this.map.resize();
+      });
   }
 
   #addMarkersToMap() {

@@ -9,20 +9,20 @@ export default class extends Controller {
     console.log("connected to index tabs controller");
   }
 
-  hideShowCreators() {
-    console.log(this.creatorsButtonTarget);
-      this.creatorsButtonTarget.classList.add("activeTabIndex");
-      // this.creatorsButtonTarget.classList.add("active-button");
-      this.creatorsCardsTarget.classList.remove("d-none");
-      this.friendsCardsTarget.classList.add("d-none");
-      this.publicCardsTarget.classList.add("d-none");
-      this.friendsButtonTarget.classList.remove("activeTabIndex")
-      this.publicButtonTarget.classList.remove("activeTabIndex")
-    }
+  // hideShowCreators() {
+  //   console.log(this.creatorsButtonTarget);
+  //     this.creatorsButtonTarget.classList.add("activeTabIndex");
+  //     // this.creatorsButtonTarget.classList.add("active-button");
+  //     this.creatorsCardsTarget.classList.remove("d-none");
+  //     this.friendsCardsTarget.classList.add("d-none");
+  //     this.publicCardsTarget.classList.add("d-none");
+  //     this.friendsButtonTarget.classList.remove("activeTabIndex")
+  //     this.publicButtonTarget.classList.remove("activeTabIndex")
+  //   }
     hideShowFriends() {
       console.log("connected hideShowFriends");
-      this.creatorsCardsTarget.classList.add("d-none");
-      this.creatorsButtonTarget.classList.remove("activeTabIndex");
+      // this.creatorsCardsTarget.classList.add("d-none");
+      // this.creatorsButtonTarget.classList.remove("activeTabIndex");
       this.friendsCardsTarget.classList.remove("d-none");
       this.publicCardsTarget.classList.add("d-none");
       this.friendsButtonTarget.classList.add("activeTabIndex")
@@ -30,8 +30,8 @@ export default class extends Controller {
     }
     hideShowPublic() {
       console.log("connected hideShowPublic");
-      this.creatorsCardsTarget.classList.add("d-none");
-      this.creatorsButtonTarget.classList.remove("activeTabIndex");
+      // this.creatorsCardsTarget.classList.add("d-none");
+      // this.creatorsButtonTarget.classList.remove("activeTabIndex");
       this.friendsCardsTarget.classList.add("d-none");
       this.publicCardsTarget.classList.remove("d-none");
       this.friendsButtonTarget.classList.remove("activeTabIndex")
