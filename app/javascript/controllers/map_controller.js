@@ -96,7 +96,7 @@ export default class extends Controller {
       markersIcons.forEach((icon) => {
 
 
-        icon.firstElementChild.children[2].setAttribute("fill", "#000");
+        icon.firstElementChild.children[2].setAttribute("fill", "#D94124");
       });
     });
   }
@@ -151,7 +151,7 @@ export default class extends Controller {
               "line-cap": "round",
             },
             paint: {
-              "line-color": "#D94124",
+              "line-color": "#ABB0B8",
               "line-width": 5,
             },
           });
